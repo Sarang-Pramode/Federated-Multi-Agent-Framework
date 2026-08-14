@@ -30,6 +30,17 @@ export function AppHeader() {
         <h1 className="truncate text-lg font-semibold tracking-tight text-foreground">
           Architecture Demo
         </h1>
+        <p className="mt-0.5 text-xs text-muted-foreground">
+          by{" "}
+          <a
+            href="https://pramode.dev"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="font-medium text-foreground/80 underline-offset-4 transition-colors hover:text-foreground hover:underline"
+          >
+            Sarang Pramode
+          </a>
+        </p>
       </div>
 
       <div className="flex items-center gap-3">
