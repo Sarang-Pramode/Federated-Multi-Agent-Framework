@@ -1412,3 +1412,451 @@ Table. Sourcing guidance by capability class. The pattern is that anything on th
 | Quantization and distillation | Outsource or consult initially, internalise at Tier L | It is project-shaped work with clear deliverables, and the tooling changes fast |
 | GPU infrastructure and scheduling | Cloud or colocation at Tier S and M; consider owning at Tier L | The crossover follows the same arithmetic as {tbl:frontier-cost} |
 | Red teaming | External, on a schedule, plus internal continuous replay | Independence is the point, and internal teams develop blind spots by construction |
+
+# Assurance {#part-assurance}
+
+Part V covers the apparatus that makes the architecture defensible: how changes are evaluated, how judges are kept honest, what a trace must carry, how faults are contained, and where security and governance controls attach.
+
+## The Evaluation Hierarchy {#ch-evaluation}
+
+### Evaluation is a release gate, not an activity {#sec-eval-gate}
+
+The distinction that decides whether an evaluation programme survives contact with delivery pressure is whether it is something a team does or something the pipeline computes. An activity is negotiable under deadline. A gate is not, and the difference in outcome is total.
+
+For a gate to be defensible it needs three properties, all of which the reference implementation demonstrates. The change must be detected by the platform rather than declared by the changing team, which it does by comparing runtime snapshots and observing a prompt fingerprint move from `8ab1` to `91fd`. The suites must be selected from the change type by rule rather than by judgement, which is why a prompt edit in a domain participating in cross-domain journeys selects `cross_domain` whether or not the changing team would have thought of it. And the verdict must be bound to the artefact, which the `manifest-published` and `eval-executed` checks enforce by hash.
+
+::: figure src=evaluation-lifecycle.svg id=fig-evals width=full
+The evaluation lifecycle as a computed gate. The matrix in the middle is the operative artefact: it maps change types to the suites they require, so that suite selection is a lookup rather than a decision made under release pressure. The closing note states why the auditor must not be the team that made the change.
+:::
+
+### The hierarchy {#sec-eval-hierarchy}
+
+Five levels, each answering a different question, each with a different owner and cadence. Conflating them is the most common structural failure in agent evaluation, and it usually presents as a single large suite that is slow, flaky, owned by nobody and eventually ignored.
+
+Table. The evaluation hierarchy. The owner column is the load-bearing one: a level whose owner is "the team" is a level with no owner. {#tbl-eval-hierarchy}
+
+| Level | Question it answers | Owner | Cadence | Blocking |
+|---|---|---|---|---|
+| Unit and contract | Does the capability honour its declared schema, ranges and error taxonomy? | Domain team | Every commit | Yes |
+| Domain golden set | Is the answer correct according to this domain's rules? | Domain team, curated with the business | Every change to the domain bundle | Yes |
+| Routing and tool selection | Does the platform choose the right capability and extract the right arguments? | Platform team | Every central or catalogue change | Yes |
+| Cross-domain composition | Does a journey spanning domains produce a correct composed answer? | Platform team, with domain-supplied expectations | Every bundle change in a participating domain | Yes |
+| Safety and rails | Do the rails catch what they must and pass what they should? | Security with platform | Every rail, threshold or model change | Yes |
+| Production sampling and drift | Is quality where it was last week, per slice? | Platform, reviewed with domains | Continuous | No, alerting only |
+
+The fourth level is the one most often missing, and it is the one that caught the reference implementation's regression. Cross-domain composition cannot be owned solely by either side: the domain knows the expectation, and only the platform can execute the journey. The workable arrangement is that domains contribute expectations as data, and the platform owns the harness that runs them.
+
+### Suite selection by change type {#sec-eval-selection}
+
+Table. Which suites a change type requires. This matrix is the artefact that makes targeted evaluation sound rather than merely economical, and it is only sound because the closed-world reachability check of Section {sec:auditor} guarantees that the affected surface is a computable set. {#tbl-eval-matrix}
+
+| Change type | Domain golden | Contract | Safety rails | Latency budget | Cross-domain |
+|---|---|---|---|---|---|
+| Domain prompt edit | required | review | review | not triggered | required |
+| New tool added | required | required | review | review | review |
+| New skill added | required | required | review | review | required |
+| Model or quantization swap | required | review | required | required | required |
+| Central routing policy change | review | required | review | required | required |
+| Guardrail threshold change | review | not triggered | required | required | review |
+| Manifest version bump | required | required | review | review | required |
+
+The row that surprises people is the model or quantization swap, which triggers almost everything. Section {sec:quant-loss} explains why: a format change moves the score distribution that thresholds were calibrated against and can degrade tool-argument correctness far more than an aggregate benchmark suggests. Treating a quantization change as an infrastructure change rather than a model change is a recurring and expensive category error.
+
+### Golden sets that stay useful {#sec-eval-golden}
+
+A golden set decays. Traffic shifts, capabilities are added, and the set gradually stops representing what users actually ask, at which point a passing suite means nothing. Four practices keep it alive.
+
+Grow it from production rather than from imagination. Every incident, every reported wrong answer and every case that reached human review becomes a case. The reference implementation's `c13` is exactly this shape: a specific expectation, `300 points`, tied to a specific rule, with a recorded reason for the failure it caught.
+
+Include near-miss pairs deliberately. The valuable routing cases are the ones where two capabilities are plausible, because that is where the margin threshold of Section {sec:tier-confidence} is actually tested. A golden set of unambiguous requests measures nothing that is at risk.
+
+Keep expectations diagnostic. An expectation of "answer contains 300" tells you a case failed. An expectation with a recorded reason, as in "bad prompt applied grocery 2x instead of restaurant 3x", tells you why, and the difference is hours of investigation per failure.
+
+Version the set with the domain bundle, so that a case can be traced to the rule it encodes and retired when the rule changes. Cases that outlive their rules are the main source of flakiness, and flaky suites are how gates lose their authority.
+
+### What evaluation cannot do {#sec-eval-limits}
+
+Three limits worth stating, because overclaiming here undermines the rest of the argument.
+
+Evaluation measures the cases it contains. A suite that passes tells you the system did not regress on known cases, which is meaningfully weaker than "the system is correct". The mitigation is production sampling and a corpus that grows from real failures, not a larger synthetic set.
+
+Evaluation of composition is expensive and partial. Doing it properly requires several domains simultaneously at known versions, which is either a shared environment with its own coordination cost or contract-level mocking that can pass while production composition is broken. Section {sec:worse-eval} concedes this as a genuine cost of federation.
+
+Evaluation cannot adjudicate a rule that nobody has stated. The reference implementation's regression was catchable because someone had written down that a restaurant transaction earns 3x. Where the rule exists only in a system's behaviour, evaluation can detect change but not incorrectness, and the correct response is to extract the rule rather than to write a cleverer suite.
+
+## Judges, Calibration and Quota Isolation {#ch-judges}
+
+### Where a judge belongs {#sec-judge-placement}
+
+An LLM-as-judge is a model asked to score another model's output. It is genuinely useful for properties that are expensive to express as assertions, such as whether an answer is helpful, whether a refusal was appropriately worded, or whether a summary omitted something material. It is also non-deterministic, expensive relative to the thing it is judging, and subject to well-documented biases, which is why its placement matters more than its prompt.
+
+Judges belong off the critical path. Concretely: on a sample of production traffic, in a queue, with their own capacity and their own budget, producing metrics and regression cases rather than gating responses. The one exception is the inline groundedness rail of {tbl:rails-output}, which is a bounded comparison against evidence returned in the same turn, is priced at 20 to 60 ms, and fails open. That is a different kind of check from an open-ended quality judgement, and conflating the two is how quality assurance ends up on the request path.
+
+### Calibration is the whole game {#sec-judge-calibration}
+
+An uncalibrated judge produces numbers with no established relationship to human judgement, which is worse than no numbers because it invites decisions. Calibration is the process of establishing and maintaining that relationship, and it has a minimum viable form.
+
+Take a stratified sample of a few hundred outputs, covering each journey class and deliberately over-sampling the disagreement region rather than the easy cases. Have humans with domain authority label them against the same rubric the judge uses. Compute agreement, not accuracy: a correlation or a Cohen's kappa against the human labels, reported with the number of items and the confidence interval. Then decide whether the agreement is sufficient for the decision the score will inform, which is a lower bar for tracking a trend than for gating a release.
+
+Recalibrate whenever the judge model changes, whenever the rubric changes, and on a fixed schedule regardless, because the traffic distribution drifts underneath a static rubric. A judge whose calibration date is unknown should be treated as uncalibrated.
+
+Four biases are worth designing against explicitly, because all four are documented and all four are easy to reduce. Position bias, where the first of two candidates is favoured, is addressed by randomising order and scoring both directions. Verbosity bias, where longer answers score higher, is addressed by including length-matched pairs in calibration. Self-preference, where a judge prefers text from its own model family, is addressed by using a different family for the judge than for the generator. And rubric drift, where graders reinterpret a scale over time, is addressed by anchoring each point on the scale to a concrete example.
+
+> **Warning.** Do not use the same model family as both generator and judge on the fast path. Self-preference produces a system that scores itself well and degrades quietly, and the failure is invisible precisely because the metric says everything is fine.
+
+### Quota isolation is a hard requirement {#sec-judge-quota}
+
+If judges share capacity with user traffic, then an evaluation run competes with customers, and the mechanism that exists to protect quality becomes a mechanism that degrades availability. This is stated in Section {sec:frontier-second-order} as a consequence of API quota coupling, and it applies with equal force to on-prem pools.
+
+The requirement has three parts. Judges run on a separate pool, or at minimum a separate quota with a hard concurrency cap that cannot be raised by the judging system itself. Judge work is preemptible, and rung 2 of the degradation ladder in {tbl:degradation} drops sampling to zero before any user-visible degradation occurs. And judge cost is attributed separately in the cost model, because assurance spend that is invisible inside the model bill will be cut on the wrong basis.
+
+The Tier L note is worth repeating here: at 50,000 concurrent sessions, judging 10 percent of turns is a larger inference workload than most Tier M deployments serve in total. Sampling rate is a capacity decision.
+
+### Sampling that produces usable evidence {#sec-judge-sampling}
+
+Uniform random sampling is the wrong default, because it spends most of the budget on the traffic that is least informative. Stratify instead: sample heavily from journeys that recently changed, from slices with low volume but high consequence, from turns that escalated to Tier 3, from turns where a rail fired, and from turns where the user rephrased immediately, which is the cheapest available implicit signal of a bad answer. Then sample the remainder uniformly at a low rate to retain an unbiased baseline, and record the stratum with each score so the aggregate can be reweighted rather than misread.
+
+## Observability and Trace Semantics {#ch-observability}
+
+### What a trace must carry {#sec-obs-trace}
+
+Conventional distributed tracing records what happened and how long it took. An agent platform additionally needs to record why a decision was made, because the questions asked of it after an incident are about decisions rather than durations. The reference implementation's traces are the shape being described: a root per user request, spans per stage, per-hop status and duration, and a recorded reason on the spans that decided something.
+
+Table. Required span attributes beyond conventional tracing, with the question each one answers. A trace missing the reason attributes can tell you that a request was slow and not why it was wrong. {#tbl-trace-attrs}
+
+| Attribute | Example value | Question it answers |
+|---|---|---|
+| `agent.tier` | `tier1` | Which tier answered, and was the ladder behaving? |
+| `agent.escalation_reason` | `margin_below_threshold` | Why did this turn cost more than the median? |
+| `agent.model` and `agent.quantization` | `router-4b`, `fp8` | Which artefact produced this, for regression attribution |
+| `agent.prompt_fingerprint` | `c3e4` | Which prompt version was live, tied to the manifest |
+| `agent.manifest_hash` | `m-rew-12` | Which published bundle served this request |
+| `agent.tokens_in` and `agent.tokens_out` | `712`, `118` | Cost attribution, and the input to capacity models |
+| `agent.rail_decision` and `agent.rail_reason` | `pass`, `injection_score_0.12` | What the rails did, and whether refusals were correct |
+| `agent.authority_decision` | `permit`, with the policy identifier | The reproducible answer to "was this allowed" |
+| `agent.degraded` and `agent.partial_reason` | `true`, `rewards_unavailable` | Whether the user got a named partial, and why |
+
+The last row deserves emphasis because it is the difference between the reference implementation's step 11 being a demonstration of fault containment and being an unexplained gap in a response. A degraded answer that is not marked as degraded is indistinguishable, downstream, from a complete one.
+
+### Cost attribution belongs on the trace {#sec-obs-cost}
+
+An undifferentiated model bill cannot be managed, and the only place with enough context to attribute cost is the trace. With tokens, tier and model on every span, cost per turn is a sum, cost per journey class is a group-by, and the question "which journey is responsible for the increase in spend" becomes a query rather than an investigation.
+
+This also makes the tiering ladder auditable. The target distribution in {tbl:tiers} is a claim about production behaviour, and without per-tier accounting it is an unverified one. A weekly report of tier shares, escalation reasons and cost per journey is the smallest artefact that keeps the ladder from silently collapsing into "everything escalates".
+
+### The three questions observability must answer {#sec-obs-questions}
+
+A useful test of an observability implementation is whether it can answer these without a code change or a database query written by hand.
+
+**For this request identifier, what did the system do and why?** Every stage, every decision with its reason, every model call with its cost, and the final status. This is the reproduction requirement, and it is what makes an incident review a reading exercise rather than an archaeological one.
+
+**For this change, what moved?** Given a manifest hash, the before and after distributions of latency, cost, escalation rate, rail firing rate and quality score, by journey. This is what makes canary deployment meaningful rather than ceremonial.
+
+**For this slice of users or journeys, is quality where it was?** Drift by slice, because aggregate quality metrics hide the failure of one journey inside the success of twenty. A platform that only measures aggregates will discover slice failures from complaints.
+
+### Sampling, retention and the cost of observability {#sec-obs-sampling}
+
+Full-fidelity tracing of every request at Tier L is expensive enough to become its own capacity problem. Tail-based sampling is the standard answer: retain everything for errors, degraded responses, rail firings, escalations and slow requests, and retain a low uniform rate of the rest. Retain aggregate metrics at full fidelity, because they are cheap and are what alerting runs on.
+
+One retention rule is not negotiable. Authority decisions and their inputs are retained in full for the period the organisation's obligations require, independently of trace sampling, because "we sampled that request away" is not an acceptable answer to a regulator asking why an action was permitted.
+
+## Reliability and Fault Containment {#ch-reliability}
+
+### Containment is six mechanisms, not a diagram {#sec-rel-mechanisms}
+
+Drawing services in separate boxes does not contain faults. The reference implementation's step 11, where Rewards fails in 12 ms while Transactions continues to serve in 130 ms and the customer receives a named partial, depends on six specific mechanisms being present. Any one of them missing turns a contained fault into an outage.
+
+Table. The six containment mechanisms, with the failure that occurs when each is absent. {#tbl-containment}
+
+| Mechanism | What it does | Failure without it |
+|---|---|---|
+| Per-dependency budget | Bounds how long any single domain call may take, derived from the remaining request budget | A slow domain consumes the whole budget, and every journey times out rather than degrading |
+| Per-domain circuit breaker | Stops calling a domain that is failing, and probes for recovery | Retries against a failing domain amplify its incident and consume platform capacity |
+| Bulkheaded connection and thread pools | Prevents one domain's slowness from exhausting shared resources | One slow domain starves every other, which is the in-process failure of Section {sec:in-process-fault} |
+| Named partial results | Tells the user which capability is missing rather than silently omitting it | A degraded answer becomes a misleading answer, which is worse than an error |
+| Idempotent writes with client-supplied keys | Makes a retry safe after an ambiguous failure | Retries duplicate effects, and the safe response becomes "never retry", which loses availability |
+| A pre-agreed degraded mode | Defines what the journey does when a capability is unavailable | The behaviour under failure is whatever the code happens to do, discovered in production |
+
+### Timeouts are derived, not chosen {#sec-rel-timeouts}
+
+A per-dependency timeout configured as a constant is a guess that is wrong on both ends: too long to protect the budget, too short for the legitimate tail. The correct construction is a deadline established at the edge and propagated with the request, from which each stage computes its own allowance as the remaining time minus the time reserved for the stages that must still run.
+
+This is the mechanism whose absence Section {sec:p2p-deadline} identifies as the defining failure of peer topologies, and it is worth noting that implementing it is not difficult. It requires a deadline in the request context, arithmetic at each hop, and the discipline to fail fast when the remaining budget cannot accommodate the call. What it requires organisationally is an owner of the end-to-end number, which is the part that does not exist without a centre.
+
+### Retries do more damage than they prevent {#sec-rel-retries}
+
+Retry policy is where well-intentioned reliability engineering most often produces outages. Three rules keep it useful.
+
+Retry only what is safe and only where it is likely to help. An idempotent read with a client-supplied key and a fast failure is a good candidate; a write whose failure mode is ambiguous is not, unless idempotency is guaranteed end to end.
+
+Budget retries globally rather than per call. A retry budget expressed as a maximum fraction of total requests, typically a few percent, prevents the failure where every layer retries three times and a single user request becomes twenty-seven backend calls during exactly the incident that made the first one fail.
+
+Never retry into a saturated dependency. Circuit breakers exist for this, and the retry path must consult them. The failure signature to watch is the ratio of retry traffic to first-attempt traffic, named in Section {sec:overload-alerts} as an early warning.
+
+### Failure isolation, revisited {#sec-rel-isolation}
+
+{fig:isolation} in Part II shows the same fault under two architectures. It belongs to this chapter as much as to the critique, because the mechanisms it names are the implementation checklist. The property being bought is not that failures do not happen; it is that the set of journeys affected by a failure is a computable subset rather than everything, and that the affected users are told something true.
+
+### Reliability targets that mean something {#sec-rel-targets}
+
+Table. Suggested service level objectives by component class, expressed as the properties users experience rather than as component uptimes. Targets are illustrative and should be set from business requirements. **Modelled** guidance. {#tbl-slo}
+
+| Objective | Suggested target | Why this one |
+|---|---|---|
+| Availability of an answer, possibly degraded | 99.9% of turns | A named partial is a success for this objective, which is the behaviour the architecture is designed to produce |
+| Availability of a complete answer | 99.5% of turns | Separating the two makes degradation visible rather than hidden inside a single number |
+| Time to first token, p95 | Under the conversational budget of Chapter 13 | The product constraint, measured per journey class rather than in aggregate |
+| Authority decision correctness | 100%, with any exception treated as an incident | Deterministic code has no acceptable error rate here |
+| Trace completeness for authority decisions | 100% | Retention of the audit path is not subject to sampling |
+| Control plane availability | 99.99%, with last-known-good fallback | It is the correlated failure mode of Section {sec:worse-control-plane} |
+
+## Security and Governance {#ch-security}
+
+### The threat model, briefly {#sec-sec-threats}
+
+Agent platforms add attack surface that conventional application security practice does not fully cover, and the additions are worth naming precisely rather than gesturing at.
+
+Prompt injection, direct and indirect, is covered in Chapter 16 and is the most discussed and least well defended. Excessive agency, meaning a model able to cause effects beyond what the user was entitled to, is defended by deterministic authority rather than by prompts. Sensitive information disclosure, where a model reveals data it retrieved legitimately to a user not entitled to it, is defended by scoping retrieval to the caller's entitlements before the model sees anything, never by asking the model to filter afterwards. Supply chain risk now includes model weights, adapters and quantized artefacts, which need provenance and integrity checks like any other dependency. And unbounded resource consumption is both an availability risk and a cost risk, defended by the admission control of Chapter 24.
+
+### Authority is the control that matters most {#sec-sec-authority}
+
+The single most important security property in this architecture is that the model never holds authority. It is worth restating as an implementation requirement rather than a principle.
+
+Entitlement is evaluated by deterministic code against structured state, before any effect occurs, at stage 9 of {tbl:stage-budget}. The evaluation produces a decision, a policy identifier and a receipt, all of which are recorded on the trace. A plan proposed by a model is an input to that evaluation, never a substitute for it. And the set of capabilities reachable at all is the closed set of the published manifest, verified independently by the `reachability-closed` check, which means the authority evaluation is operating over a bounded and known action space rather than over whatever the runtime happens to have wired.
+
+Retrieval scoping is the same principle applied to reads. The query is constrained by the caller's entitlements before execution, so that data the caller may not see is never retrieved, never enters a prompt, and therefore cannot be disclosed by any subsequent model behaviour. Filtering after retrieval is a weaker control that fails in the presence of injection, and it also leaks through timing and error behaviour.
+
+### Data protection across the boundaries {#sec-sec-data}
+
+Table. Data protection controls by boundary, with the specific exposure each addresses. The residency row is the one that most often changes an architecture decision, as Section {sec:frontier-second-order} argues. {#tbl-data-protection}
+
+| Boundary | Control | Exposure addressed |
+|---|---|---|
+| User to platform | PII detection and redaction before logging, tracing or prompting | Regulated data entering systems not cleared to hold it |
+| Platform to model, on-prem | Prompt minimisation and short retention of prompt logs | Prompt logs becoming an unmanaged copy of customer data |
+| Platform to model, third-party | Residency and processing terms, plus redaction before egress | Raw utterances leaving the estate, especially on the classification hop |
+| Platform to domain | Entitlement-scoped requests, never a broad query with client-side filtering | Over-retrieval that creates disclosure risk downstream |
+| Domain to platform | Data classification on returned fields | Composition emitting a field into a channel not cleared for it |
+| Platform to user | Egress rail against the channel's data classification | Correct data delivered through an inappropriate channel |
+| Everything to observability | Redaction in traces, with authority records exempt and separately protected | Traces becoming the easiest place to find customer data |
+
+### Governance artefacts, and who consumes them {#sec-sec-governance}
+
+Governance functions do not need access to the implementation; they need artefacts that answer their questions without it. Four are sufficient for most regimes, and all four are produced by mechanisms already described.
+
+The manifest and its hash answer what the system was permitted to do at a given moment. The auditor verdict answers whether that state was independently verified, and by which checks. The evaluation record, bound to the manifest hash, answers what evidence supported the release. And the authority decision record on the trace answers why a specific action was permitted for a specific customer at a specific time.
+
+The property that makes these useful is that all four are produced as a by-product of running the system correctly, rather than assembled on request. An artefact that must be assembled for an audit is an artefact that describes the system as someone remembers it, which is a different system from the one that ran.
+
+> **Decision.** Treat the audit artefacts as production outputs with retention requirements, not as reporting. If producing them requires a project, the governance story is a promise rather than a property.
+
+### Model and prompt supply chain {#sec-sec-supply}
+
+Weights, adapters, quantized artefacts and prompts are dependencies, and they need the treatment dependencies get. Record provenance for every artefact, including the base model, the quantization method and its calibration set, and the evaluation results that admitted it. Verify integrity by hash at load time, because a silently swapped adapter is indistinguishable from a quality regression until someone checks. Pin versions explicitly and roll forward deliberately, since a serving stack that resolves "latest" is a system whose behaviour changes without a change record. And keep the previous artefact loadable, because the fastest remediation for a bad model is the previous model, and that is only true if rollback has been exercised.
+
+# Practice {#part-practice}
+
+Part VI is the residue: the order in which to build this, the mistakes that recur often enough to be named, the questions to ask in a design review, and a short conclusion. The appendices are worksheets meant to be copied and filled in rather than read.
+
+## The Roadmap {#ch-roadmap}
+
+### Sequenced to retire risk, not to build components {#sec-roadmap-principle}
+
+The phases below are ordered by the risk each one removes, which is deliberately different from the order in which the components appear in an architecture diagram. Two consequences of that ordering are worth stating up front, because both contradict the instinct to start with the interesting part.
+
+Federation comes late. Section {sec:premature} argues that decomposing before the boundaries are known is worse than not decomposing, so the early phases build a single well-structured agent and split it when the change log, rather than a diagram, shows where the seams are.
+
+Evaluation comes first, before any model is chosen. Every subsequent decision in this document, including model selection, quantization, threshold tuning and hardware sizing, is a decision whose correctness can only be established by measurement. A team that builds the measurement apparatus last has been making unfalsifiable decisions until then.
+
+### The phases {#sec-roadmap-phases}
+
+Table. Phased roadmap, with the risk each phase retires and the signal that the next phase is justified. The exit signal matters more than the phase content: advancing without it is how organisations acquire control planes they do not need. {#tbl-roadmap}
+
+| Phase | What is built | Risk retired | Signal to advance |
+|---:|---|---|---|
+| 0 | Golden sets, evaluation harness, trace instrumentation, cost attribution | Unfalsifiable decisions | A change can be shown to have made things better or worse, with evidence |
+| 1 | Single agent, in-process modules, frontier APIs for everything, deterministic authority from day one | Boundary risk, and the cost of a platform team before it is needed | Three or more teams contributing capability, or a change surface that has made full regression unaffordable |
+| 2 | Agent cards, manifests, hashes, registry, closed-world reachability check, independent auditor | Unverifiable change impact | Targeted evaluation is being relied on and needs to be sound |
+| 3 | Service federation: domains as separately deployed services, per-dependency budgets, breakers, named partials | Shared-process fault and cadence coupling | A domain incident has taken down unrelated journeys, or release coupling is measurably taxing delivery |
+| 4 | Model tiering: Tier 0 deterministic, Tier 1 on-prem quantized, escalation gate and thresholds | Latency and cost on the control path | Control-path spend or p99 latency has become the binding constraint, per Section {sec:frontier-crossover} |
+| 5 | Guardrail cascade, output rails, red-team corpus, rail evaluation | Unmeasured safety posture | Traffic is external, adversarial, or regulated |
+| 6 | Capacity engineering: knee curves, pool separation, admission control, degradation ladder | Overload behaviour and unbounded cost | Approaching Tier M load, or the first saturation incident |
+| 7 | Multi-region cells, prefill and decode disaggregation, provisioned frontier throughput | Regional failure and scale non-linearity | Tier L load, with measurement showing one pool starving another |
+
+Phase 1 contains one item that is not negotiable at any scale and is therefore worth calling out: deterministic authority from day one. It is cheap to build at the start and extremely expensive to retrofit, because retrofitting it means finding every place a model was trusted to decide something and proving that it no longer is.
+
+### What to build in the first ninety days {#sec-roadmap-first}
+
+If only one phase can be funded, it is phase 0, and the concrete deliverables are small. A golden set of a few hundred cases per candidate domain, curated with the people who can adjudicate correctness. A harness that runs it on every change and reports diagnostically. Trace instrumentation with the attributes of {tbl:trace-attrs}, especially tier, reason and token counts. And a cost attribution report by journey class.
+
+None of that requires a decision about frameworks, models or hardware, which is the point. It is the apparatus that makes those decisions measurable, and it is equally useful whichever way they go.
+
+## The Anti-Pattern Catalogue {#ch-antipatterns}
+
+### How to use this list {#sec-anti-use}
+
+Each entry names a pattern, states why it is attractive, and describes the failure it produces. They are collected here because they recur, and because naming a pattern is what allows a design review to reject it in one sentence rather than in an argument.
+
+### Architecture anti-patterns {#sec-anti-architecture}
+
+> **Anti-pattern.** The mega-prompt. One system prompt holding every capability description in the organisation. Attractive because it is the simplest thing that works at four capabilities. Fails because the prompt is a shared mutable global, its change surface is everything, and prefill cost plus instruction dilution grow with the catalogue, as Chapter 6 develops.
+
+> **Anti-pattern.** The chatty mesh. Domains calling each other directly because it is the shortest path to a feature. Fails because reachability stops being computable, no participant owns the deadline, and delegation loops become an emergent property rather than a design decision.
+
+> **Anti-pattern.** Authority by prompt. Deciding entitlement, limits or write permission inside a model's reasoning. Attractive because the model already has the context. Fails because the answer to "was this permitted" becomes a generation rather than a lookup, and because it is one prompt injection away from being wrong in the most expensive direction.
+
+> **Anti-pattern.** The clever centre. A central agent that accumulates domain knowledge, one useful sentence at a time. Each addition is locally reasonable and the aggregate is a monolith with extra network hops, which is the worst combination available.
+
+> **Anti-pattern.** Cards as documentation. Publishing agent cards without a check that the reachable surface equals the published one. The two drift, always in the direction of extra reachable capability, and every property that depends on the card becomes unfounded.
+
+### Runtime and model anti-patterns {#sec-anti-runtime}
+
+> **Anti-pattern.** Frontier-by-default. Routing every turn's control path through the most capable model available because it is the safest choice. It is the safest choice for quality on the hardest 2 percent of turns and the wrong choice for the other 98, and it buys quota coupling, availability inheritance and residency exposure as described in Chapter 15.
+
+> **Anti-pattern.** The guardrail tax. Chaining every safety model on every request, then disabling the expensive ones when latency becomes a complaint, without recording which were disabled. The result is a control catalogue that does not describe the running system.
+
+> **Anti-pattern.** Escalation as a default. An escalation policy that says when to escalate but not when not to. Tier shares drift upward, cost follows, and the ladder becomes an expensive way to reach the same model every time.
+
+> **Anti-pattern.** Threshold archaeology. Carrying a calibrated threshold across a model or quantization change. Thresholds are properties of a score distribution, and the distribution moved.
+
+> **Anti-pattern.** The synchronous judge. Putting an open-ended quality judgement on the request path. It doubles latency, and it fails open in practice anyway, because nobody is willing to block a user on an unavailable scorer.
+
+### Sizing and operations anti-patterns {#sec-anti-sizing}
+
+> **Anti-pattern.** Sizing from someone else's benchmark. Using a published tokens-per-second figure measured on a different model, format, prompt shape and concurrency. Chapter 23 exists to replace this with a knee curve produced on a rented instance.
+
+> **Anti-pattern.** The homogeneous fleet. One card type for every pool, because procurement is simpler. Either the routers are on hardware three times more expensive than they need, or the synthesis pool is bandwidth-starved.
+
+> **Anti-pattern.** Utilisation maximisation. Driving inference pools to the utilisation targets appropriate for stateless web services. Queue wait then dominates service time and the p99 leaves the budget, as Chapter 24 shows.
+
+> **Anti-pattern.** Shared assurance capacity. Judges, shadow traffic and rails drawing on the same pool or quota as user turns. The first large evaluation run becomes an availability incident.
+
+> **Anti-pattern.** The documented degraded mode. A degradation ladder that exists in a document and has never been executed. It will be executed for the first time during an incident, by someone who did not write it.
+
+### Organisational anti-patterns {#sec-anti-org}
+
+> **Anti-pattern.** The single ML generalist. One person owning serving, quantization, evaluation, safety and cost. Works in the pilot, becomes the bus factor in production, and evaluation is always the first thing dropped.
+
+> **Anti-pattern.** Self-selected evidence. Letting the team making a change choose which suites establish that the change is safe. Not a question of honesty: the team best placed to know the change is worst placed to know its non-local effects.
+
+> **Anti-pattern.** Premature federation. Building the control plane before there are enough teams to justify it. The platform team then costs more than the coordination it removes, and Section {sec:worse-when-not} lists the conditions under which this is the likely outcome.
+
+> **Anti-pattern.** The platform that owns correctness. A central team accepting accountability for whether domain answers are right. It cannot adjudicate them, so it becomes a queue, and domains lose both autonomy and accountability at the same time.
+
+## The Design Review Question Bank {#ch-questions}
+
+### How to run the review {#sec-questions-how}
+
+The questions below are written so that a satisfactory answer is an artefact or a measurement rather than an intention. When the answer is "yes, we plan to", the correct record is that the property is absent, which is a legitimate state for a system to be in as long as it is recorded rather than assumed.
+
+### Boundaries and ownership {#sec-questions-boundaries}
+
+Which team can change each capability without asking anyone? For a specific recent change, how long did it take from merge to production, and what fraction of that was waiting for another team? What is the computed set of components that must be re-verified after that change, and was it computed or estimated? Where does a business rule live, and can you show it to me in one place? If a domain team disagrees with an answer the platform gave, whose change fixes it?
+
+### Authority and safety {#sec-questions-authority}
+
+For a write that happened yesterday, can you show me the authority decision, its inputs and the policy that produced it? Is there any path by which a model's output determines whether an action is permitted? What is the closed set of actions the system can currently take, and what verifies that set? Which rails are fail-open and which are fail-closed, and where is that written down? When did you last measure the false positive rate of your injection rail on benign traffic for your busiest journey?
+
+### Latency and capacity {#sec-questions-latency}
+
+What is the end-to-end latency budget, who owns it, and how is it divided by stage? Is the deadline propagated to each dependency, and what happens when the remaining budget is insufficient? What is the knee concurrency for each serving pool, and on which measurement? What utilisation are the fast-tier pools targeting, and what is the p99 queue wait at that utilisation? Which rungs of the degradation ladder have been executed in production in the last quarter?
+
+### Models and cost {#sec-questions-models}
+
+What share of turns is answered at each tier, measured rather than intended? What is the cost per turn by journey class? When a model or quantization format last changed, which suites ran and which thresholds were recalibrated? Which control-path model calls leave your estate, and what is in the prompt when they do? If your frontier provider is unavailable for an hour, what does a customer experience?
+
+### Evidence and assurance {#sec-questions-evidence}
+
+Who selected the evaluation suites for the last release, and by what rule? Is the evaluation verdict bound to the artefact that shipped, by hash? When was the judge last calibrated against human labels, and what was the agreement? What fraction of your golden set came from production incidents rather than from imagination? For a random production request from last week, can you reconstruct every decision and its cost?
+
+## Conclusion {#ch-conclusion}
+
+The argument of this document is narrower than it may appear. It is not that agents should be federated, that models should be small, or that frontier providers should be avoided. It is that a small number of properties are worth paying for, that each has a specific mechanism, and that the mechanisms compose into a shape.
+
+The properties are these. The blast radius of a change should be a computable set rather than an estimate, which requires a published manifest and an independent closed-world reachability check. Authority should be a deterministic decision with a receipt, which requires that a model never decides what is permitted. The end-to-end deadline should have an owner, which requires a centre. Attribution should be a query rather than an investigation, which requires trace semantics that record decisions as well as durations. And the fast path should be cheap enough that most turns cost almost nothing, which requires tiering and, past a volume the arithmetic of Chapter 15 makes explicit, hardware inside the estate.
+
+Everything else in this document follows from those five, including the parts that are inconvenient. Chapter 11 lists what they cost: extra hops on every request, harder debugging, a platform team floor of four to eight engineers, a new correlated failure mode in the control plane, and a real tax on small changes. Section {sec:worse-when-not} names the conditions under which those costs exceed the benefit, and they are common conditions: fewer than three teams, unstable boundaries, a latency budget under 300 milliseconds, or an organisation not yet able to operate a distributed system. For those cases the recommendation in this document is a modular monolith or a single agent with skills, and that recommendation is meant.
+
+The reference implementation is offered in the same spirit. It demonstrates that the control surfaces exist and that the seams fall in defensible places. It performs no inference, exercises two domains rather than twenty, and implements none of the guardrail cascade designed in Chapters 16 and 17. Those limits are stated in Section {sec:prototype-gaps} rather than left for a reader to discover, because a prototype whose limits are hidden is a demonstration of nothing.
+
+What remains is measurement. Almost every number here is either modelled from stated assumptions or published by a third party under conditions that will not match yours. Chapter 23 gives the commands to replace the performance figures, Chapter 18 gives the chain to replace the load figures, and Chapter 5 gives the observations that would settle each architectural disagreement. If this document is useful, it will be because it made a reader's disagreement specific enough to test.
+
+## References {-}
+
+All performance and hardware figures cited here are third-party published values retrieved in August 2026. They are starting points for capacity planning, not guarantees, and every one of them is workload-dependent.
+
+::: refs
+vLLM Project. vLLM documentation, benchmarking and serving guides. https://docs.vllm.ai/en/latest/
+NVIDIA Corporation. NVIDIA L40S GPU datasheet. https://www.nvidia.com/en-us/data-center/l40s/
+NVIDIA Corporation. NVIDIA H100 Tensor Core GPU datasheet. https://www.nvidia.com/en-us/data-center/h100/
+NVIDIA Corporation. NVIDIA H200 Tensor Core GPU datasheet. https://www.nvidia.com/en-us/data-center/h200/
+NVIDIA Corporation. NVIDIA Blackwell architecture and B200 platform overview. https://www.nvidia.com/en-us/data-center/technologies/blackwell-architecture/
+NVIDIA Corporation. NVIDIA GB200 NVL72 rack-scale platform overview. https://www.nvidia.com/en-us/data-center/gb200-nvl72/
+NVIDIA Corporation. NVIDIA RTX PRO 6000 Blackwell Server Edition product page. https://www.nvidia.com/en-us/products/workstations/professional-desktop-gpus/
+Meta. Llama Prompt Guard 2 86M model card, prompt injection and jailbreak detection. https://huggingface.co/meta-llama/Llama-Prompt-Guard-2-86M
+Meta. Llama Guard 4 12B model card, hazard taxonomy classification. https://huggingface.co/meta-llama/Llama-Guard-4-12B
+IBM. Granite Guardian HAP 38M model card, hate, abuse and profanity detection. https://huggingface.co/ibm-granite/granite-guardian-hap-38m
+IBM. Granite Guardian model family documentation, harm and groundedness checks with a no-think mode. https://www.ibm.com/granite
+NVIDIA Corporation. NeMo Guardrails, programmable rails for LLM applications. https://github.com/NVIDIA/NeMo-Guardrails
+Qwen Team, Alibaba Cloud. Qwen3 model family technical report and model cards. https://huggingface.co/Qwen
+GPUStack. Quantization comparison on Qwen3-8B: BF16, FP8, INT8 and INT4 accuracy and throughput under vLLM on H100. Third-party benchmark write-up, 2025.
+Spheron and SemiAnalysis InferenceX. Llama 3.3 70B FP4 throughput and cost per million tokens on B200 against H200. Third-party benchmark write-up, 2025.
+OpenTelemetry Authors. OpenTelemetry specification, semantic conventions and trace context propagation. https://opentelemetry.io/docs/
+OWASP Foundation. OWASP Top 10 for Large Language Model Applications. https://owasp.org/www-project-top-10-for-large-language-model-applications/
+Little, J. D. C. A proof for the queuing formula L equals lambda W. Operations Research, volume 9, number 3, 1961.
+Zheng, L. and others. Judging LLM-as-a-Judge with MT-Bench and Chatbot Arena. Conference on Neural Information Processing Systems, 2023.
+Nygard, M. T. Release It! Design and Deploy Production-Ready Software, second edition. Pragmatic Bookshelf, 2018. Source for the circuit breaker and bulkhead patterns used in Chapter 29.
+Beyer, B., Jones, C., Petoff, J. and Murphy, N. R., editors. Site Reliability Engineering. O'Reilly Media, 2016. Source for deadline propagation, retry budgets and overload handling practice.
+:::
+
+## Appendix A: Sizing Worksheet {-}
+
+Copy this table and fill the right-hand column from measurement. Every row that is estimated rather than measured should be marked, because the number of estimated rows is the confidence interval on the result.
+
+Table. Sizing worksheet. Rows 1 to 9 reproduce the conversion chain of Chapter 18; rows 10 to 15 convert token demand into hardware using the knee curve from Chapter 23. {#tbl-appendix-sizing}
+
+| # | Input | Source | Your value |
+|---:|---|---|---|
+| 1 | Registered users | Business case | |
+| 2 | Monthly active fraction | Product analytics | |
+| 3 | Daily active fraction of monthly | Product analytics | |
+| 4 | Fraction using the assisted channel | Pilot measurement, not estimate | |
+| 5 | Peak hour share of daily sessions | Existing channel traffic | |
+| 6 | Mean session duration, seconds | Measured | |
+| 7 | Mean turn service time, seconds | Measured time to first token plus streaming | |
+| 8 | Turn cycle, seconds | Service time plus think time, measured | |
+| 9 | Control-path model calls per turn | Measured, by tier | |
+| 10 | Output tokens per control-path call | Measured | |
+| 11 | Fan-out multiplier to domains and retrieval | Measured | |
+| 12 | Retry amplification factor | Measured under partial failure | |
+| 13 | Assurance multiplier, judges plus shadow | Policy decision | |
+| 14 | Knee concurrency per GPU for this model and format | Chapter 23 recipe | |
+| 15 | Tokens per second per GPU at the knee | Chapter 23 recipe | |
+| 16 | Utilisation target for this pool | Chapter 22 guidance | |
+| 17 | Resulting GPU count, per pool | Computed from 9 to 16 | |
+| 18 | Spare capacity for one node failure | Redundancy policy | |
+
+## Appendix B: Latency Budget Worksheet {-}
+
+Table. Latency budget worksheet. Fill the target column from the product requirement and the measured column from production, then examine every row where the two differ by more than 20 percent. The final row is the only one a user experiences. {#tbl-appendix-latency}
+
+| Stage | Owner | Target p50 | Measured p50 | Measured p99 |
+|---|---|---:|---|---|
+| Edge, identity, session | Platform | 40 ms | | |
+| Input rails, deterministic | Platform | 8 ms | | |
+| Input rails, classifier | Platform | 25 ms | | |
+| Task and risk classification | Platform | 18 ms | | |
+| Discovery and shortlist | Platform | 12 ms | | |
+| Plan | Platform | 55 ms | | |
+| Escalation gate | Platform | 2 ms | | |
+| Domain execution | Domain, named | 180 ms | | |
+| Authorization and validation | Platform | 35 ms | | |
+| Compose | Platform | 45 ms | | |
+| Output rails | Platform | 40 ms | | |
+| Time to first token | Platform, end to end | 460 ms | | |
+
+## Appendix C: Release Gate Checklist {-}
+
+A change is releasable when every line is true. Any line that is not true is either a blocker or a recorded, time-limited exception with a named owner.
+
+The change type has been classified by rule, and the suites required by {tbl:eval-matrix} for that type have been selected without the changing team's involvement. Every selected suite has run against this artefact, and the verdict is bound to the manifest hash. The auditor's four checks pass: the manifest was published, the reachable surface is identical to the published bundle, the required suites were selected, and they executed with a passing verdict. Latency at p50 and p99 is within budget for every affected journey class. Rail false positive rate on benign traffic for affected journeys has not regressed. If a model or quantization format changed, escalation thresholds have been recalibrated and tool-argument correctness has been measured directly. The previous artefact remains loadable and rollback has been exercised within the last quarter. And the trace attributes of {tbl:trace-attrs} are present on the new path, because a change that ships without observability is a change that cannot be evaluated in production.
