@@ -1,0 +1,7 @@
+# Build dependencies for the white paper PDF.
+# Install into a local virtualenv:
+#   python3 -m venv .venv && ./.venv/bin/pip install -r requirements.txt
+reportlab>=4.1
+svglib>=1.5
+lxml>=5.0
+pyphen>=0.15

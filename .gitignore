@@ -19,6 +19,9 @@ frontend/.next/
 frontend/out/
 frontend/coverage/
 
+# White paper build scratch (the PDF in docs/whitepaper/out/ is committed)
+docs/whitepaper/tmp/
+
 # IDE
 .idea/
 .vscode/
