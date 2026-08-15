@@ -1582,39 +1582,39 @@ def demo_steps() -> Canvas:
            size=7.4, fill=C["ink"], weight="bold")
 
     steps = [
-        (1, "Domain discovery", "two domains register and are discovered",
-         "capability is declared, not hard-coded", C["accent"]),
-        (2, "Agent cards", "A2A v1.0 over JSON-RPC, versioned",
-         "a contract exists that can be validated", C["accent"]),
-        (3, "Central prompt change", "prompt hash 8ab1 to 91fd",
-         "central behaviour is versioned and auditable", C["accent"]),
-        (4, "Tool added to a domain", "domain bundle m-rew-10 to m-rew-11",
-         "the domain changes without a platform release", C["teal"]),
-        (5, "Skill added to a domain", "bundle m-rew-11 to m-rew-12",
-         "capability grows without touching the centre", C["teal"]),
-        (6, "Targeted evaluation", "suite selected from the change type",
-         "evidence is chosen by rule, not by the author", C["violet"]),
-        (7, "Regression caught", "restaurant 3x read as grocery 2x; 300 points seen as 200",
-         "a real semantic bug is caught before release", C["danger"]),
-        (8, "Auditor verdict", "closed world reachability recomputed",
-         "governance is independent of the changing team", C["violet"]),
-        (9, "Delegation trace", "one correlation id across every hop",
-         "attribution survives federation", C["warn"]),
-        (10, "Model call accounting", "tier, tokens and latency per span",
-         "cost and latency are attributable per journey", C["warn"]),
-        (11, "Domain isolation", "Rewards fails in 12 ms; Transactions stays healthy",
-         "failure is contained, not systemic", C["danger"]),
-        (12, "Governed release", "gate passes with a named owner",
-         "release is a decision with evidence attached", C["teal"]),
+        (1, "Central platform only", "no domain connected, 48 ms degraded trace",
+         "the centre holds no domain capability", C["muted"]),
+        (2, "Rewards discovered", "m-rew-10, prompt 8ab1, A2A v1.0", 
+         "capability is discovered, not shipped", C["accent"]),
+        (3, "Same question, new answer", "routes to get_points_balance",
+         "capability grows with no central release", C["accent"]),
+        (4, "Transactions discovered", "m-txn-10, same onboarding gate",
+         "the gate is a rule, not a favour", C["accent"]),
+        (5, "Cross domain journey", "T1001, $100, restaurant 3x, 300 points",
+         "the centre composes, domains stay decoupled", C["teal"]),
+        (6, "Prompt change detected", "8ab1 to 91fd by snapshot diff",
+         "the platform detects change, not the author", C["violet"]),
+        (7, "Regression caught", "case c13 expected 300, observed 200",
+         "targeted evidence catches a real defect", C["danger"]),
+        (8, "Repair certified", "91fd to c3e4, 18 of 18 pass",
+         "the same loop certifies the repair", C["teal"]),
+        (9, "Tool added", "get_expiring_points, schema t2e9",
+         "the registry expands without central edits", C["teal"]),
+        (10, "Skill added", "expiring_points skill, m-rew-12",
+         "one domain ships new customer capability", C["teal"]),
+        (11, "Domain failure", "Rewards span errors at 12 ms",
+         "failure is contained and named", C["danger"]),
+        (12, "Attested summary", "reachability-closed, verdict ATTESTED",
+         "reachable surface equals published bundle", C["violet"]),
     ]
 
     y = 28
     c.rect(8, y, W - 16, 17, fill=C["wash2"], rx=2)
     c.text(15, y + 11.6, "Step", size=6.4, fill=C["faint"], weight="bold")
     c.text(46, y + 11.6, "What the demo shows", size=6.4, fill=C["faint"], weight="bold")
-    c.text(162, y + 11.6, "Concrete artefact in the prototype", size=6.4, fill=C["faint"],
+    c.text(160, y + 11.6, "Artefact in the prototype", size=6.4, fill=C["faint"],
            weight="bold")
-    c.text(322, y + 11.6, "The claim it makes testable", size=6.4, fill=C["faint"],
+    c.text(304, y + 11.6, "The claim it makes testable", size=6.4, fill=C["faint"],
            weight="bold")
     y += 17
 
@@ -1626,8 +1626,8 @@ def demo_steps() -> Canvas:
         c.text(24, y + 13, str(number), size=6.4, fill=C["paper"], anchor="middle",
                weight="bold")
         c.text(38, y + 13, title, size=6.5, fill=C["ink"], weight="bold")
-        c.text(162, y + 13, artefact, size=6.2, fill=C["muted"])
-        c.text(322, y + 13, claim, size=6.2, fill=C["body"])
+        c.text(160, y + 13, artefact, size=6.2, fill=C["muted"])
+        c.text(304, y + 13, claim, size=6.2, fill=C["body"])
         y += h
 
     y += 10
