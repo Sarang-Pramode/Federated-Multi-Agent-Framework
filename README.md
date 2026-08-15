@@ -16,6 +16,17 @@ npm run dev
 
 Open [http://localhost:3000](http://localhost:3000). Use **Next** / **Back**, arrow keys, or `?step=7` to jump to a guided step.
 
+## White paper
+
+The architecture behind the prototype is documented in full in
+[`docs/whitepaper/whitepaper.md`](docs/whitepaper/whitepaper.md), with a typeset
+PDF at
+[`docs/whitepaper/out/Federated_Enterprise_Agent_Platform_v1.0.pdf`](docs/whitepaper/out/Federated_Enterprise_Agent_Platform_v1.0.pdf).
+It covers the adversarial design rationale, the guardrail cascade, the on-prem
+quantized versus frontier-API trade, and hardware sizing across three load
+tiers. Both artifacts are generated from the same source; see
+[`docs/whitepaper/README.md`](docs/whitepaper/README.md) to rebuild.
+
 ## Modes
 
 - **Guided Demo Mode** — deterministic mocked events, presentation-ready.

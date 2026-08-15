@@ -537,7 +537,7 @@ Table. The stage budget for a read-path journey, expressed as p50 targets summin
 
 Three observations about this table matter more than the individual figures.
 
-**The centre's own model usage is small and deliberately capped.** Stages 3, 4, 6, 10 and 11 may involve a model, but stages 3, 4, 10 and 11 are Tier 1 work of tens of milliseconds, and stage 6 is the only stage permitted to reach Tier 2 on an ordinary turn. The sum of central model time on a typical read is well under 150 ms. This is what makes a conversational budget achievable at all, and it is the direct consequence of the tiering discipline in Chapter 14.
+**The centre's own model usage is small and deliberately capped.** Stages 3, 4, 6, 10 and 11 may involve a model, but stages 3, 4, 10 and 11 are Tier 1 work of tens of milliseconds, and stage 6 is the only stage permitted to reach Tier 2 on an ordinary turn. On a typical read, where composition is templated rather than generated, central model time is the 138 ms of stages 3, 4, 6 and 11. This is what makes a conversational budget achievable at all, and it is the direct consequence of the tiering discipline in Chapter 14.
 
 **Domain execution is the largest single line and the platform team does not own it.** At 180 ms it is 39 percent of the budget, and it is spent inside systems the platform team cannot optimise. The only levers the centre holds are parallel fan-out where the plan permits it, per-dependency budgets that bound the damage when a domain is slow, and a named partial result when a budget is exceeded. This is why Section {sec:worse-latency} concedes network hops as a permanent cost: the hops are the price of the boundary that makes the 180 ms someone else's accountable number rather than an unowned one.
 
@@ -578,9 +578,6 @@ The default architecture in most agent implementations is one capable model used
 
 In a mature deployment the majority of turns are lookups with clear intent, unambiguous capability selection and a response that is mostly a template with values substituted in. Sending those turns through a large model buys nothing measurable and costs latency on the critical path, GPU capacity that could serve the hard turns, and money. Meanwhile the small minority of genuinely hard turns, which need cross-domain decomposition or contested policy interpretation, are exactly the turns that a small model answers confidently and wrongly. One model cannot be correctly sized for both populations. Tiering is the recognition that the correct model is a function of the turn.
 
-::: figure src=model-tiers.svg id=fig-tiers width=full
-The four tiers, with the work each is appropriate for, its per-call latency and the share of production turns it should absorb. The lower panel is the part that is usually missing from tiering discussions: an escalation policy that says when not to escalate is what keeps the ladder from collapsing into "always use the biggest model".
-:::
 
 ### The four tiers {#sec-tier-four}
 
@@ -598,6 +595,10 @@ The shares are targets, and treating them as such is the point: they are a desig
 Tier 0 deserves a defence because it is the tier most often skipped. A deterministic tier feels primitive next to a model that can handle phrasing variation, and it is the highest-leverage component in the system: it is free, it is instant, it never hallucinates, and it is trivially testable. "How many points do I have" is not a reasoning problem. The engineering task is to recognise it as such cheaply, which is a matching problem over a bounded set of intents plus a cache, and to escalate the moment matching is uncertain.
 
 > **Design rule.** Escalation is a decision with a cost, not a default. A turn moves up a tier only when the tier below can name why it could not decide, and that reason is recorded on the trace. "The model was available" is not a reason.
+
+::: figure src=model-tiers.svg id=fig-tiers width=full
+The four tiers, with the work each is appropriate for, its per-call latency and the share of production turns it should absorb. The lower panel is the part that is usually missing from tiering discussions: an escalation policy that says when not to escalate is what keeps the ladder from collapsing into "always use the biggest model".
+:::
 
 ### The escalation policy {#sec-tier-escalation}
 
@@ -623,14 +624,14 @@ Track the two error rates separately and price them differently. Escalating a tu
 
 The following is **modelled** from the tier shares and latencies above, for one million turns, to show where the saving actually comes from. It uses relative cost units rather than currency, taking a Tier 1 call as one unit, Tier 2 as eight, and Tier 3 as ninety, which is the right order of magnitude for on-prem GPU seconds versus frontier API pricing but should be replaced with local figures.
 
-Table. Modelled control-path cost and mean added latency per million turns, comparing a tiered ladder against a single-model deployment at each tier. The single-model rows are what the same traffic costs when every turn is priced at the cost of the hardest turn. **Modelled** from the shares in {tbl:tiers}. {#tbl-tier-cost}
+Table. Modelled control-path cost and mean added latency per turn, comparing a tiered ladder against a single-model deployment at each tier. Computed from a share distribution of 68% Tier 0, 25% Tier 1, 6% Tier 2 and 1% Tier 3, and per-call latencies of 2, 28, 260 and 2,000 ms. The tiered row therefore costs 0.25 plus 0.48 plus 0.90, which is 1.63 units, and every ratio below is relative to that. **Modelled** from the shares in {tbl:tiers}. {#tbl-tier-cost}
 
 | Configuration | Relative control-path cost | Mean added latency per turn | Note |
 |---|---:|---:|---|
-| Tiered ladder as specified | 1.0x baseline | about 55 ms | 68% of turns cost nothing at all |
-| Everything at Tier 1 | 0.7x | about 30 ms | Cheaper and faster, and wrong on the 6 to 16% of turns that need synthesis or reasoning |
-| Everything at Tier 2 | 5.6x | about 260 ms | Conversational budget consumed by the control path alone |
-| Everything at Tier 3 | 63x | about 1,900 ms | Not a viable interactive system at any price |
+| Tiered ladder as specified | 1.0x baseline, 1.63 units | 44 ms | 68% of turns cost nothing at all |
+| Everything at Tier 1 | 0.6x | 28 ms | Cheaper and faster, and wrong on the 7% of turns that need synthesis or reasoning |
+| Everything at Tier 2 | 4.9x | 260 ms | Conversational budget consumed by the control path alone |
+| Everything at Tier 3 | 55x | 2,000 ms | Not a viable interactive system at any price |
 
 The second row is the important one, because it is the honest counter-argument to tiering: a single small model is cheaper and faster than a ladder. It is also unable to do the hard turns, and the failure is silent. The ladder's value is not that it minimises cost; it is that it minimises cost subject to keeping a capable model available for the turns that need one.
 
@@ -654,13 +655,10 @@ Those stages have a specific character. They classify, shortlist, extract parame
 
 ### The same journey, twice {#sec-frontier-waterfall}
 
-The waterfall below holds the domain work constant at 180 ms and changes only the model serving the control path. It is **modelled** from the stage budget of Chapter 13, using 30 to 55 ms per on-prem Tier 1 or Tier 2 call in the same rack, and 210 to 900 ms per frontier API call inclusive of network round trip, provider queueing and generation. Those API figures are representative of a well-behaved commercial endpoint reached from a private network with connection reuse; they are not worst cases, and they do not include the retry that a p99 excursion often triggers.
+The comparison below, tabulated in {tbl:waterfall} and drawn as a waterfall in {fig:waterfall}, holds the domain work constant at 180 ms and changes only the model serving the control path. It is **modelled** from the stage budget of Chapter 13, using 30 to 55 ms per on-prem Tier 1 or Tier 2 call in the same rack, and 210 to 900 ms per frontier API call inclusive of network round trip, provider queueing and generation. Those API figures are representative of a well-behaved commercial endpoint reached from a private network with connection reuse; they are not worst cases, and they do not include the retry that a p99 excursion often triggers.
 
-::: figure src=latency-waterfall.svg id=fig-waterfall width=full
-The same journey with the control path on-prem and on a frontier API. Identical domain work of 180 ms appears in both bars, so the entire difference is architectural. The lower panels are the part of the comparison that latency alone does not show, and the closing note states the converse discipline: this is an argument about placement, not about model quality.
-:::
 
-Table. Stage-by-stage comparison of the same read-path journey with an on-prem quantized control path against a frontier-API control path. Domain execution and deterministic authority are identical in both columns by construction. **Modelled** from the assumptions stated above. {#tbl-waterfall}
+Table. Stage-by-stage comparison of the same read-path journey with an on-prem quantized control path against a frontier-API control path. Domain execution and deterministic authority are identical in both columns by construction, and the 2 ms escalation gate of {tbl:stage-budget} is folded into the plan row. **Modelled** from the assumptions stated above. {#tbl-waterfall}
 
 | Stage | On-prem fast tier | Frontier API centre | Delta |
 |---|---:|---:|---:|
@@ -676,6 +674,10 @@ Table. Stage-by-stage comparison of the same read-path journey with an on-prem q
 | Of which control path | 278 ms | 1,935 ms | 7.0x |
 
 The end-to-end regression is a factor of 4.6, and the control-path regression is a factor of 7.0. The second figure is the honest one, because it isolates the part of the system the choice actually affects. A reader who believes the API figures are pessimistic should note that even at a uniform 120 ms per frontier call, four control-path calls plus rails still put the journey above 1.1 s, which is outside a conversational budget before any domain has been slow.
+
+::: figure src=latency-waterfall.svg id=fig-waterfall width=full
+The same journey with the control path on-prem and on a frontier API. Identical domain work of 180 ms appears in both bars, so the entire difference is architectural. The lower panels are the part of the comparison that latency alone does not show, and the closing note states the converse discipline: this is an argument about placement, not about model quality.
+:::
 
 ### Why the API penalty is structural rather than incidental {#sec-frontier-structural}
 
@@ -1114,9 +1116,6 @@ The single most important line in each is the utilisation target, and it is the 
 
 ### Tier S: fewer than 10 customers {#sec-tier-s}
 
-::: figure src=topology-tier-s.svg id=fig-tier-s width=full
-The single-node pilot topology. One GPU holds the router, the guard classifier and a small synthesis model with isolated caches; frontier work and judges are rented rather than hosted. The notes are the operational commitments that make this tier honest: a written degraded mode, no premature hardware, and telemetry from the first day.
-:::
 
 One GPU, chosen for capacity and format flexibility rather than for bandwidth, is enough. A 96 GB Blackwell-generation workstation card holds a 4B FP8 router, an 86M guard classifier and an 8B FP8 synthesis model simultaneously with isolated KV caches, which is exactly the co-residency case that makes it the pragmatic choice at this tier. The host needs enough CPU and memory to run the serving stack, the registry, the session store and a local trace collector without competing with the GPU for attention.
 
@@ -1132,6 +1131,10 @@ Table. Tier S sizing, derived from the chain in {tbl:load-chain} at under 40 pea
 | Control-path tokens per second | 800 to 1,600 |
 | GPU count, steady state | 1 |
 | Utilisation target | 20 to 35% |
+
+::: figure src=topology-tier-s.svg id=fig-tier-s width=full
+The single-node pilot topology. One GPU holds the router, the guard classifier and a small synthesis model with isolated caches; frontier work and judges are rented rather than hosted. The notes are the operational commitments that make this tier honest: a written degraded mode, no premature hardware, and telemetry from the first day.
+:::
 
 #### The three commitments that make Tier S worth building {#sec-tier-s-notes}
 
@@ -1813,7 +1816,7 @@ Beyer, B., Jones, C., Petoff, J. and Murphy, N. R., editors. Site Reliability En
 
 Copy this table and fill the right-hand column from measurement. Every row that is estimated rather than measured should be marked, because the number of estimated rows is the confidence interval on the result.
 
-Table. Sizing worksheet. Rows 1 to 9 reproduce the conversion chain of Chapter 18; rows 10 to 15 convert token demand into hardware using the knee curve from Chapter 23. {#tbl-appendix-sizing}
+Table. Sizing worksheet. Rows 1 to 9 reproduce the conversion chain of Chapter 18; rows 10 to 18 convert token demand into a hardware count using the knee curve from Chapter 23. {#tbl-appendix-sizing}
 
 | # | Input | Source | Your value |
 |---:|---|---|---|

@@ -12,6 +12,10 @@ from .theme import PALETTE
 CELL_PAD_H = 4.6
 CELL_PAD_V = 3.4
 MIN_COL_WIDTH = 30.0
+# A column measured to exactly its text width still wraps, because the wrap
+# test is not strictly greater-than. Numbers splitting across lines is the
+# visible symptom, so every measurement carries a little slack.
+SLACK = 1.8
 
 
 def _text_width(text: str, font: str, size: float) -> float:
@@ -39,8 +43,8 @@ def compute_widths(rows: list[list[str]], avail: float, font: str, bold_font: st
         face = bold_font if row_idx == 0 else font
         for col, cell in enumerate(row):
             text = plain(cell)
-            natural[col] = max(natural[col], _text_width(text, face, size) + pad)
-            floor[col] = max(floor[col], _longest_word_width(text, face, size) + pad)
+            natural[col] = max(natural[col], _text_width(text, face, size) + pad + SLACK)
+            floor[col] = max(floor[col], _longest_word_width(text, face, size) + pad + SLACK)
     floor = [max(MIN_COL_WIDTH, f) for f in floor]
     # A single very wide cell should not be able to pin a column open.
     floor = [min(f, avail / max(2, ncols) * 1.9) for f in floor]
@@ -50,13 +54,18 @@ def compute_widths(rows: list[list[str]], avail: float, font: str, bold_font: st
     narrow_cap = avail * 0.12
     floor = [max(floor[i], min(natural[i], narrow_cap)) for i in range(ncols)]
 
-    total_natural = sum(natural)
-    if total_natural <= avail:
-        # Grow proportionally so the table always spans the text block.
-        scale = avail / total_natural if total_natural else 1.0
-        return [w * scale for w in natural]
+    # No column may end up below its floor, including on the growth path, or a
+    # narrow header such as "Step" wraps while the table as a whole has room.
+    base = [max(natural[i], floor[i]) for i in range(ncols)]
+    total_base = sum(base)
+    if total_base <= avail:
+        # Grow so the table always spans the text block, giving the surplus to
+        # the columns with the most text rather than spreading it evenly.
+        surplus = avail - total_base
+        weight_total = sum(natural) or 1.0
+        return [base[i] + surplus * natural[i] / weight_total for i in range(ncols)]
 
-    widths = list(natural)
+    widths = list(base)
     for _ in range(60):
         excess = sum(widths) - avail
         if excess <= 0.05:
