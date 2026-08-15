@@ -1,0 +1,45 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="384.664" viewBox="0 0 488 384.664">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">Pick the GPU from the constraint that actually binds, not from the top of the price list</text>
+  <rect x="8" y="32" width="472" height="40" fill="#E4F1EF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <rect x="8" y="33" width="2.6" height="38" fill="#0F7267" rx="1.3"/>
+  <text x="16" y="46" font-family="WPSans" font-size="7" fill="#16202B">Does the model fit in 48 GB at FP8, and is the pool latency critical?</text>
+  <text x="16" y="58" font-family="WPSans" font-size="7.4" fill="#0F7267" font-weight="bold">L40S, 48 GB, 0.86 TB/s</text>
+  <text x="16" y="67" font-family="WPSans" font-size="6.2" fill="#5D6C7B">cheapest per served token for small routers and guard models; no NVLink, no FP4</text>
+  <rect x="8" y="76" width="472" height="40" fill="#E4F1EF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <rect x="8" y="77" width="2.6" height="38" fill="#0F7267" rx="1.3"/>
+  <text x="16" y="90" font-family="WPSans" font-size="7" fill="#16202B">Do you need one card to hold several models with isolated KV caches?</text>
+  <text x="16" y="102" font-family="WPSans" font-size="7.4" fill="#0F7267" font-weight="bold">RTX PRO 6000 Blackwell, 96 GB, 1.79 TB/s</text>
+  <text x="16" y="111" font-family="WPSans" font-size="6.2" fill="#5D6C7B">air cooled PCIe, NVFP4 capable; the pragmatic single node choice</text>
+  <rect x="8" y="120" width="472" height="40" fill="#E8F0F8" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <rect x="8" y="121" width="2.6" height="38" fill="#1C5A9E" rx="1.3"/>
+  <text x="16" y="134" font-family="WPSans" font-size="7" fill="#16202B">Is decode throughput on an 8 to 70B model the binding constraint?</text>
+  <text x="16" y="146" font-family="WPSans" font-size="7.4" fill="#1C5A9E" font-weight="bold">H100, 80 GB, 3.35 TB/s</text>
+  <text x="16" y="155" font-family="WPSans" font-size="6.2" fill="#5D6C7B">proven FP8 path and mature kernels; no FP4</text>
+  <rect x="8" y="164" width="472" height="40" fill="#E8F0F8" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <rect x="8" y="165" width="2.6" height="38" fill="#1C5A9E" rx="1.3"/>
+  <text x="16" y="178" font-family="WPSans" font-size="7" fill="#16202B">Is the constraint KV cache capacity from long context or high concurrency?</text>
+  <text x="16" y="190" font-family="WPSans" font-size="7.4" fill="#1C5A9E" font-weight="bold">H200, 141 GB, 4.8 TB/s</text>
+  <text x="16" y="199" font-family="WPSans" font-size="6.2" fill="#5D6C7B">you are buying memory and bandwidth, not compute; same compute as H100</text>
+  <rect x="8" y="208" width="472" height="40" fill="#EDEAF7" rx="3" stroke="#5B4B9E" stroke-width="1"/>
+  <rect x="8" y="209" width="2.6" height="38" fill="#5B4B9E" rx="1.3"/>
+  <text x="16" y="222" font-family="WPSans" font-size="7" fill="#16202B">Is cost per million tokens at very high volume the deciding factor?</text>
+  <text x="16" y="234" font-family="WPSans" font-size="7.4" fill="#5B4B9E" font-weight="bold">B200, about 180 GB, about 7.7 TB/s</text>
+  <text x="16" y="243" font-family="WPSans" font-size="6.2" fill="#5D6C7B">native FP4 changes the economics on 70B class models; power and cooling are real constraints</text>
+  <rect x="8" y="252" width="472" height="40" fill="#EDEAF7" rx="3" stroke="#5B4B9E" stroke-width="1"/>
+  <rect x="8" y="253" width="2.6" height="38" fill="#5B4B9E" rx="1.3"/>
+  <text x="16" y="266" font-family="WPSans" font-size="7" fill="#16202B">Is a single model larger than one node, needing one NVLink domain?</text>
+  <text x="16" y="278" font-family="WPSans" font-size="7.4" fill="#5B4B9E" font-weight="bold">GB200 NVL72 class, rack scale</text>
+  <text x="16" y="287" font-family="WPSans" font-size="6.2" fill="#5D6C7B">liquid cooled, long lead time; justify with a workload you have already measured</text>
+  <rect x="8" y="300" width="472" height="58" fill="#F9EAEA" rx="3" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="16" y="314" font-family="WPSans" font-size="7.2" fill="#9C2B2B" font-weight="bold">The three sizing errors that actually cost money</text>
+  <text x="16" y="326" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="23" y="326" font-family="WPSans" font-size="6.4" fill="#26333F">Sizing decode capacity from FLOPS. Decode reads the whole model per token, so bandwidth sets the ceiling; an A100</text>
+  <text x="23" y="335.4" font-family="WPSans" font-size="6.4" fill="#26333F">loses roughly half its modern throughput because it has no FP8 path at all.</text>
+  <text x="16" y="344.8" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="23" y="344.8" font-family="WPSans" font-size="6.4" fill="#26333F">Forgetting the KV cache. Weights are the easy part of the budget; concurrency times context length decides whether the</text>
+  <text x="23" y="354.2" font-family="WPSans" font-size="6.4" fill="#26333F">card is usable at your batch size.</text>
+  <text x="16" y="363.6" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="23" y="363.6" font-family="WPSans" font-size="6.4" fill="#26333F">Buying the frontier card for a router. A 4B classifier on a B200 wastes the asset that only a 70B decode pool can</text>
+  <text x="23" y="373" font-family="WPSans" font-size="6.4" fill="#26333F">monetise.</text>
+  <rect x="0.5" y="0.5" width="487" height="383.664" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

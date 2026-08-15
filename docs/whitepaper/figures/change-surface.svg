@@ -1,0 +1,106 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="315.716" viewBox="0 0 488 315.716">
+  <text x="8" y="18" font-family="WPSans" font-size="7.6" fill="#16202B" font-weight="bold">One domain team ships one prompt change. What must be re-verified?</text>
+  <rect x="8" y="30" width="152" height="214" fill="#FFFFFF" rx="4" stroke="#D2DAE2" stroke-width="1"/>
+  <rect x="8" y="30" width="152" height="20" fill="#FBF0E4" rx="4"/>
+  <rect x="8" y="44" width="152" height="6" fill="#FBF0E4"/>
+  <text x="84" y="43.5" font-family="WPSans" font-size="7.2" fill="#A8551A" text-anchor="middle" font-weight="bold">Single agent with skills</text>
+  <rect x="32" y="60" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="43" cy="69.5" r="3.1" fill="#A8551A"/>
+  <rect x="58" y="60" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="69" cy="69.5" r="3.1" fill="#A8551A"/>
+  <rect x="84" y="60" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="95" cy="69.5" r="3.1" fill="#A8551A"/>
+  <rect x="110" y="60" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="121" cy="69.5" r="3.1" fill="#A8551A"/>
+  <rect x="32" y="84" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="43" cy="93.5" r="3.1" fill="#A8551A"/>
+  <rect x="58" y="84" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="69" cy="93.5" r="3.1" fill="#A8551A"/>
+  <rect x="84" y="84" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="95" cy="93.5" r="3.1" fill="#A8551A"/>
+  <rect x="110" y="84" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="121" cy="93.5" r="3.1" fill="#A8551A"/>
+  <rect x="32" y="108" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="43" cy="117.5" r="3.1" fill="#A8551A"/>
+  <rect x="58" y="108" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="69" cy="117.5" r="3.1" fill="#A8551A"/>
+  <rect x="84" y="108" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="95" cy="117.5" r="3.1" fill="#A8551A"/>
+  <rect x="110" y="108" width="22" height="19" fill="#FBF0E4" rx="2" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="121" cy="117.5" r="3.1" fill="#A8551A"/>
+  <text x="84" y="148" font-family="WPSans" font-size="7" fill="#A8551A" text-anchor="middle" font-weight="bold">12 of 12 components re-verified</text>
+  <text x="18" y="162" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="24" y="162" font-family="WPSans" font-size="6.3" fill="#5D6C7B">central prompt edited</text>
+  <text x="18" y="172.7" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="24" y="172.7" font-family="WPSans" font-size="6.3" fill="#5D6C7B">all 12 skills share context</text>
+  <text x="18" y="183.4" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="24" y="183.4" font-family="WPSans" font-size="6.3" fill="#5D6C7B">full regression suite</text>
+  <text x="18" y="194.1" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="24" y="194.1" font-family="WPSans" font-size="6.3" fill="#5D6C7B">release train couples teams</text>
+  <rect x="168" y="30" width="152" height="214" fill="#FFFFFF" rx="4" stroke="#D2DAE2" stroke-width="1"/>
+  <rect x="168" y="30" width="152" height="20" fill="#F9EAEA" rx="4"/>
+  <rect x="168" y="44" width="152" height="6" fill="#F9EAEA"/>
+  <text x="244" y="43.5" font-family="WPSans" font-size="7.2" fill="#9C2B2B" text-anchor="middle" font-weight="bold">Peer to peer mesh</text>
+  <rect x="192" y="60" width="22" height="19" fill="#F9EAEA" rx="2" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="203" cy="69.5" r="3.1" fill="#9C2B2B"/>
+  <rect x="218" y="60" width="22" height="19" fill="#F9EAEA" rx="2" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="229" cy="69.5" r="3.1" fill="#9C2B2B"/>
+  <rect x="244" y="60" width="22" height="19" fill="#F9EAEA" rx="2" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="255" cy="69.5" r="3.1" fill="#9C2B2B"/>
+  <rect x="270" y="60" width="22" height="19" fill="#F9EAEA" rx="2" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="281" cy="69.5" r="3.1" fill="#9C2B2B"/>
+  <rect x="192" y="84" width="22" height="19" fill="#F9EAEA" rx="2" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="203" cy="93.5" r="3.1" fill="#9C2B2B"/>
+  <rect x="218" y="84" width="22" height="19" fill="#F9EAEA" rx="2" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="229" cy="93.5" r="3.1" fill="#9C2B2B"/>
+  <rect x="244" y="84" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="270" y="84" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="192" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="218" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="244" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="270" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <text x="244" y="148" font-family="WPSans" font-size="7" fill="#9C2B2B" text-anchor="middle" font-weight="bold">6 of 12 components re-verified</text>
+  <text x="178" y="162" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="184" y="162" font-family="WPSans" font-size="6.3" fill="#5D6C7B">peers hold private</text>
+  <text x="184" y="171.2" font-family="WPSans" font-size="6.3" fill="#5D6C7B">expectations</text>
+  <text x="178" y="181.9" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="184" y="181.9" font-family="WPSans" font-size="6.3" fill="#5D6C7B">no shared contract to test</text>
+  <text x="178" y="192.6" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="184" y="192.6" font-family="WPSans" font-size="6.3" fill="#5D6C7B">pairwise compatibility matrix</text>
+  <text x="178" y="203.3" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="184" y="203.3" font-family="WPSans" font-size="6.3" fill="#5D6C7B">attribution is a group</text>
+  <text x="184" y="212.5" font-family="WPSans" font-size="6.3" fill="#5D6C7B">exercise</text>
+  <rect x="328" y="30" width="152" height="214" fill="#FFFFFF" rx="4" stroke="#D2DAE2" stroke-width="1"/>
+  <rect x="328" y="30" width="152" height="20" fill="#E4F1EF" rx="4"/>
+  <rect x="328" y="44" width="152" height="6" fill="#E4F1EF"/>
+  <text x="404" y="43.5" font-family="WPSans" font-size="7.2" fill="#0F7267" text-anchor="middle" font-weight="bold">Federated, thin centre</text>
+  <rect x="352" y="60" width="22" height="19" fill="#E4F1EF" rx="2" stroke="#0F7267" stroke-width="1"/>
+  <circle cx="363" cy="69.5" r="3.1" fill="#0F7267"/>
+  <rect x="378" y="60" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="404" y="60" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="430" y="60" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="352" y="84" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="378" y="84" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="404" y="84" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="430" y="84" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="352" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="378" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="404" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <rect x="430" y="108" width="22" height="19" fill="#F7F9FB" rx="2" stroke="#E7ECF1" stroke-width="0.7"/>
+  <text x="404" y="148" font-family="WPSans" font-size="7" fill="#0F7267" text-anchor="middle" font-weight="bold">1 of 12 components re-verified</text>
+  <text x="338" y="162" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="344" y="162" font-family="WPSans" font-size="6.3" fill="#5D6C7B">one manifest changes</text>
+  <text x="338" y="172.7" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="344" y="172.7" font-family="WPSans" font-size="6.3" fill="#5D6C7B">auditor recomputes</text>
+  <text x="344" y="181.9" font-family="WPSans" font-size="6.3" fill="#5D6C7B">reachability</text>
+  <text x="338" y="192.6" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="344" y="192.6" font-family="WPSans" font-size="6.3" fill="#5D6C7B">targeted suite by change type</text>
+  <text x="338" y="203.3" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="344" y="203.3" font-family="WPSans" font-size="6.3" fill="#5D6C7B">domain deploys alone</text>
+  <line x1="8" y1="258" x2="480" y2="258" stroke="#E7ECF1" stroke-width="0.8"/>
+  <text x="8" y="272" font-family="WPSans" font-size="7" fill="#16202B" font-weight="bold">Why the difference is structural, not a matter of discipline</text>
+  <text x="8" y="284" font-family="WPSans" font-size="6.6" fill="#5D6C7B">A shared prompt is a shared mutable global. A mesh has no artefact that states what the system may do. A manifest plus</text>
+  <text x="8" y="294" font-family="WPSans" font-size="6.6" fill="#5D6C7B">an independent reachability check turns "what changed" into a computable set, which is what makes targeted evaluation</text>
+  <text x="8" y="304" font-family="WPSans" font-size="6.6" fill="#5D6C7B">sound rather than merely cheaper.</text>
+  <rect x="0.5" y="0.5" width="487" height="314.716" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

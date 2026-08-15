@@ -1,0 +1,79 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="365" viewBox="0 0 488 365">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">One domain fails. The question is whether the platform notices or the user does.</text>
+  <rect x="8" y="28" width="233" height="196" fill="#FFFFFF" rx="3.5" stroke="#0F7267" stroke-width="1.1"/>
+  <rect x="8" y="28" width="233" height="20" fill="#E4F1EF" rx="3.5"/>
+  <rect x="8" y="42" width="233" height="6" fill="#E4F1EF"/>
+  <text x="124.5" y="42" font-family="WPSans" font-size="7.2" fill="#0F7267" text-anchor="middle" font-weight="bold">Federated with fault containment</text>
+  <rect x="70.5" y="58" width="108" height="26" fill="#E8F0F8" rx="3.5" stroke="#1C5A9E" stroke-width="1.1"/>
+  <text x="124.5" y="69" font-family="WPSans" font-size="7" fill="#16202B" text-anchor="middle" font-weight="bold">Central agent</text>
+  <text x="124.5" y="78.24" font-family="WPSans" font-size="6" fill="#5D6C7B" text-anchor="middle">deadline owner</text>
+  <rect x="21" y="108" width="64" height="34" fill="#F9EAEA" rx="2.5" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="53" y="121" font-family="WPSans" font-size="6.6" fill="#16202B" text-anchor="middle" font-weight="bold">Rewards</text>
+  <text x="53" y="131" font-family="WPSans" font-size="5.8" fill="#9C2B2B" text-anchor="middle">open, 12 ms</text>
+  <line x1="124.5" y1="84" x2="56.8839" y2="103.859" stroke="#9C2B2B" stroke-width="0.9" stroke-dasharray="2,2"/>
+  <polygon points="53,105 56.6513,101.818 57.792,105.702" fill="#9C2B2B"/>
+  <text x="53" y="152" font-family="WPSans" font-size="5.8" fill="#9C2B2B" text-anchor="middle" font-weight="bold">breaker open</text>
+  <rect x="90" y="108" width="64" height="34" fill="#E4F1EF" rx="2.5" stroke="#0F7267" stroke-width="1"/>
+  <text x="122" y="121" font-family="WPSans" font-size="6.6" fill="#16202B" text-anchor="middle" font-weight="bold">Transactions</text>
+  <text x="122" y="131" font-family="WPSans" font-size="5.8" fill="#0F7267" text-anchor="middle">healthy</text>
+  <line x1="124.5" y1="84" x2="122.479" y2="100.98" stroke="#0F7267" stroke-width="0.9"/>
+  <polygon points="122,105 120.51,100.392 124.53,100.87" fill="#0F7267"/>
+  <rect x="159" y="108" width="64" height="34" fill="#E4F1EF" rx="2.5" stroke="#0F7267" stroke-width="1"/>
+  <text x="191" y="121" font-family="WPSans" font-size="6.6" fill="#16202B" text-anchor="middle" font-weight="bold">Cards</text>
+  <text x="191" y="131" font-family="WPSans" font-size="5.8" fill="#0F7267" text-anchor="middle">healthy</text>
+  <line x1="124.5" y1="84" x2="187.14" y2="103.781" stroke="#0F7267" stroke-width="0.9"/>
+  <polygon points="191,105 186.195,105.605 187.414,101.745" fill="#0F7267"/>
+  <rect x="21" y="162" width="207" height="50" fill="#F7F9FB" rx="2.5" stroke="#E7ECF1" stroke-width="0.9"/>
+  <text x="28" y="175" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">What the user gets</text>
+  <text x="28" y="186" font-family="WPSans" font-size="6.2" fill="#0F7267">•</text>
+  <text x="34" y="186" font-family="WPSans" font-size="6.2" fill="#26333F">the two healthy domains answer normally</text>
+  <text x="28" y="195.4" font-family="WPSans" font-size="6.2" fill="#0F7267">•</text>
+  <text x="34" y="195.4" font-family="WPSans" font-size="6.2" fill="#26333F">the failed domain returns a named partial</text>
+  <text x="28" y="204.8" font-family="WPSans" font-size="6.2" fill="#0F7267">•</text>
+  <text x="34" y="204.8" font-family="WPSans" font-size="6.2" fill="#26333F">the trace shows one red span, not a mystery</text>
+  <rect x="247" y="28" width="233" height="196" fill="#FFFFFF" rx="3.5" stroke="#9C2B2B" stroke-width="1.1"/>
+  <rect x="247" y="28" width="233" height="20" fill="#F9EAEA" rx="3.5"/>
+  <rect x="247" y="42" width="233" height="6" fill="#F9EAEA"/>
+  <text x="363.5" y="42" font-family="WPSans" font-size="7.2" fill="#9C2B2B" text-anchor="middle" font-weight="bold">Monolith or in-process orchestration</text>
+  <rect x="263" y="58" width="201" height="84" fill="#F9EAEA" rx="3" stroke="#9C2B2B" stroke-width="1.1"/>
+  <text x="363.5" y="72" font-family="WPSans" font-size="7" fill="#9C2B2B" text-anchor="middle" font-weight="bold">One process, one deployable</text>
+  <rect x="271" y="82" width="57.6667" height="26" fill="#FFFFFF" rx="2" stroke="#EFC9C9" stroke-width="0.9"/>
+  <text x="299.833" y="94" font-family="WPSans" font-size="6.2" fill="#16202B" text-anchor="middle">Rewards</text>
+  <text x="299.833" y="103" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">module</text>
+  <rect x="332.667" y="82" width="57.6667" height="26" fill="#FFFFFF" rx="2" stroke="#EFC9C9" stroke-width="0.9"/>
+  <text x="361.5" y="94" font-family="WPSans" font-size="6.2" fill="#16202B" text-anchor="middle">Transactions</text>
+  <text x="361.5" y="103" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">module</text>
+  <rect x="394.333" y="82" width="57.6667" height="26" fill="#FFFFFF" rx="2" stroke="#EFC9C9" stroke-width="0.9"/>
+  <text x="423.167" y="94" font-family="WPSans" font-size="6.2" fill="#16202B" text-anchor="middle">Cards</text>
+  <text x="423.167" y="103" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">module</text>
+  <text x="363.5" y="122" font-family="WPSans" font-size="6" fill="#9C2B2B" text-anchor="middle">shared heap, shared thread pool, shared GC pause</text>
+  <text x="363.5" y="133" font-family="WPSans" font-size="6" fill="#9C2B2B" text-anchor="middle">shared release train, shared blast radius</text>
+  <rect x="263" y="162" width="201" height="50" fill="#F9EAEA" rx="2.5" stroke="#EFC9C9" stroke-width="0.9"/>
+  <text x="270" y="175" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">What the user gets</text>
+  <text x="270" y="186" font-family="WPSans" font-size="6.2" fill="#9C2B2B">•</text>
+  <text x="276" y="186" font-family="WPSans" font-size="6.2" fill="#26333F">one leaking module degrades every journey</text>
+  <text x="270" y="195.4" font-family="WPSans" font-size="6.2" fill="#9C2B2B">•</text>
+  <text x="276" y="195.4" font-family="WPSans" font-size="6.2" fill="#26333F">no per domain breaker to open</text>
+  <text x="270" y="204.8" font-family="WPSans" font-size="6.2" fill="#9C2B2B">•</text>
+  <text x="276" y="204.8" font-family="WPSans" font-size="6.2" fill="#26333F">rollback reverts unrelated teams' work</text>
+  <text x="8" y="238" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Containment is a set of mechanisms, not a diagram property</text>
+  <rect x="8" y="248" width="472" height="17" fill="#F7F9FB" rx="2"/>
+  <text x="15" y="259.5" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">Per dependency budget</text>
+  <text x="154" y="259.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">a timeout shorter than the caller's remaining deadline, not a global default</text>
+  <rect x="8" y="266" width="472" height="17" fill="#FFFFFF" rx="2"/>
+  <text x="15" y="277.5" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">Circuit breaker per domain</text>
+  <text x="154" y="277.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">opened on error rate and latency, with a defined half-open probe</text>
+  <rect x="8" y="284" width="472" height="17" fill="#F7F9FB" rx="2"/>
+  <text x="15" y="295.5" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">Bulkheaded pools</text>
+  <text x="154" y="295.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">a saturated domain cannot consume the connections another domain needs</text>
+  <rect x="8" y="302" width="472" height="17" fill="#FFFFFF" rx="2"/>
+  <text x="15" y="313.5" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">Named partial results</text>
+  <text x="154" y="313.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">the response states what is missing, so the user is not silently misinformed</text>
+  <rect x="8" y="320" width="472" height="17" fill="#F7F9FB" rx="2"/>
+  <text x="15" y="331.5" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">Idempotency on writes</text>
+  <text x="154" y="331.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">a retry after an ambiguous timeout must not double-post</text>
+  <rect x="8" y="338" width="472" height="17" fill="#FFFFFF" rx="2"/>
+  <text x="15" y="349.5" font-family="WPSans" font-size="6.6" fill="#16202B" font-weight="bold">Degraded mode, pre-agreed</text>
+  <text x="154" y="349.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">deterministic routing and templated answers when the model tier is unavailable</text>
+  <rect x="0.5" y="0.5" width="487" height="364" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

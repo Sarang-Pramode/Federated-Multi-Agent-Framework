@@ -1,0 +1,127 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="422" viewBox="0 0 488 422">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">Guardrails are placed where the trust boundary is, not where they are convenient to add</text>
+  <rect x="8" y="40" width="62" height="30" fill="#EFF3F7" rx="3" stroke="#D2DAE2" stroke-width="1"/>
+  <text x="39" y="52.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">User</text>
+  <text x="39" y="62.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">utterance</text>
+  <rect x="90" y="40" width="62" height="30" fill="#E8F0F8" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <text x="121" y="52.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">Central</text>
+  <text x="121" y="62.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">agent</text>
+  <line x1="71" y1="55" x2="82.4" y2="55" stroke="#5D6C7B" stroke-width="1"/>
+  <polygon points="87,55 82,57.3 82,52.7" fill="#5D6C7B"/>
+  <rect x="172" y="40" width="62" height="30" fill="#E4F1EF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <text x="203" y="52.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">Domain</text>
+  <text x="203" y="62.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">capability</text>
+  <line x1="153" y1="55" x2="164.4" y2="55" stroke="#5D6C7B" stroke-width="1"/>
+  <polygon points="169,55 164,57.3 164,52.7" fill="#5D6C7B"/>
+  <rect x="254" y="40" width="62" height="30" fill="#E4F1EF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <text x="285" y="52.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">Tool and</text>
+  <text x="285" y="62.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">retrieval</text>
+  <line x1="235" y1="55" x2="246.4" y2="55" stroke="#5D6C7B" stroke-width="1"/>
+  <polygon points="251,55 246,57.3 246,52.7" fill="#5D6C7B"/>
+  <rect x="336" y="40" width="62" height="30" fill="#E8F0F8" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <text x="367" y="58.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">Compose</text>
+  <line x1="317" y1="55" x2="328.4" y2="55" stroke="#5D6C7B" stroke-width="1"/>
+  <polygon points="333,55 328,57.3 328,52.7" fill="#5D6C7B"/>
+  <rect x="418" y="40" width="62" height="30" fill="#EFF3F7" rx="3" stroke="#D2DAE2" stroke-width="1"/>
+  <text x="449" y="52.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">User</text>
+  <text x="449" y="62.5" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">response</text>
+  <line x1="399" y1="55" x2="410.4" y2="55" stroke="#5D6C7B" stroke-width="1"/>
+  <polygon points="415,55 410,57.3 410,52.7" fill="#5D6C7B"/>
+  <line x1="39" y1="72" x2="80.4196" y2="89.233" stroke="#A8551A" stroke-width="1.1"/>
+  <polygon points="84.6667,91 79.1668,91.2029 80.9338,86.9558" fill="#A8551A"/>
+  <rect x="8" y="94" width="153.333" height="92" fill="#FBF0E4" rx="3.5" stroke="#A8551A" stroke-width="1.1"/>
+  <text x="16" y="108" font-family="WPSans" font-size="7.4" fill="#A8551A" font-weight="bold">Input rails</text>
+  <text x="16" y="121" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="22" y="121" font-family="WPSans" font-size="6.3" fill="#26333F">prompt injection and jailbreak</text>
+  <text x="16" y="130" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="22" y="130" font-family="WPSans" font-size="6.3" fill="#26333F">PII and secret detection</text>
+  <text x="16" y="139" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="22" y="139" font-family="WPSans" font-size="6.3" fill="#26333F">topic and scope allow list</text>
+  <text x="16" y="148" font-family="WPSans" font-size="6.3" fill="#A8551A">•</text>
+  <text x="22" y="148" font-family="WPSans" font-size="6.3" fill="#26333F">length, encoding, rate abuse</text>
+  <text x="16" y="179" font-family="WPSans" font-size="6.2" fill="#A8551A" font-style="italic">blocking, fail closed</text>
+  <line x1="203" y1="72" x2="239.826" y2="89.0659" stroke="#9C2B2B" stroke-width="1.1"/>
+  <polygon points="244,91 238.496,90.9845 240.431,86.8109" fill="#9C2B2B"/>
+  <rect x="167.333" y="94" width="153.333" height="92" fill="#F9EAEA" rx="3.5" stroke="#9C2B2B" stroke-width="1.1"/>
+  <text x="175.333" y="108" font-family="WPSans" font-size="7.4" fill="#9C2B2B" font-weight="bold">Tool and retrieval rails</text>
+  <text x="175.333" y="121" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="181.333" y="121" font-family="WPSans" font-size="6.3" fill="#26333F">treat retrieved text as hostile</text>
+  <text x="175.333" y="130" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="181.333" y="130" font-family="WPSans" font-size="6.3" fill="#26333F">tool argument schema and range</text>
+  <text x="175.333" y="139" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="181.333" y="139" font-family="WPSans" font-size="6.3" fill="#26333F">entitlement scope per call</text>
+  <text x="175.333" y="148" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="181.333" y="148" font-family="WPSans" font-size="6.3" fill="#26333F">no instruction lifting from data</text>
+  <text x="175.333" y="179" font-family="WPSans" font-size="6.2" fill="#9C2B2B" font-style="italic">blocking, fail closed</text>
+  <line x1="367" y1="72" x2="399.257" y2="88.8684" stroke="#5B4B9E" stroke-width="1.1"/>
+  <polygon points="403.333,91 397.837,90.7211 399.968,86.6449" fill="#5B4B9E"/>
+  <rect x="326.667" y="94" width="153.333" height="92" fill="#EDEAF7" rx="3.5" stroke="#5B4B9E" stroke-width="1.1"/>
+  <text x="334.667" y="108" font-family="WPSans" font-size="7.4" fill="#5B4B9E" font-weight="bold">Output rails</text>
+  <text x="334.667" y="121" font-family="WPSans" font-size="6.3" fill="#5B4B9E">•</text>
+  <text x="340.667" y="121" font-family="WPSans" font-size="6.3" fill="#26333F">groundedness against sources</text>
+  <text x="334.667" y="130" font-family="WPSans" font-size="6.3" fill="#5B4B9E">•</text>
+  <text x="340.667" y="130" font-family="WPSans" font-size="6.3" fill="#26333F">PII and data class egress</text>
+  <text x="334.667" y="139" font-family="WPSans" font-size="6.3" fill="#5B4B9E">•</text>
+  <text x="340.667" y="139" font-family="WPSans" font-size="6.3" fill="#26333F">action assertion matches receipt</text>
+  <text x="334.667" y="148" font-family="WPSans" font-size="6.3" fill="#5B4B9E">•</text>
+  <text x="340.667" y="148" font-family="WPSans" font-size="6.3" fill="#26333F">schema and refusal correctness</text>
+  <text x="334.667" y="179" font-family="WPSans" font-size="6.2" fill="#5B4B9E" font-style="italic">blocking, fail closed</text>
+  <rect x="8" y="206" width="472" height="62" fill="#F7F9FB" rx="4" stroke="#E7ECF1" stroke-width="1"/>
+  <text x="16" y="218.4" font-family="WPSans" font-size="7.6" fill="#8494A3" font-weight="bold">ASYNCHRONOUS ASSURANCE - never blocks the user</text>
+  <text x="16" y="236" font-family="WPSans" font-size="6.9" fill="#16202B" font-weight="bold">Quality judges</text>
+  <text x="16" y="246" font-family="WPSans" font-size="6.2" fill="#5D6C7B">LLM as judge on a sample,</text>
+  <text x="16" y="254.6" font-family="WPSans" font-size="6.2" fill="#5D6C7B">own quota and queue</text>
+  <text x="130" y="236" font-family="WPSans" font-size="6.9" fill="#16202B" font-weight="bold">Groundedness audit</text>
+  <text x="130" y="246" font-family="WPSans" font-size="6.2" fill="#5D6C7B">deeper citation checking</text>
+  <text x="130" y="254.6" font-family="WPSans" font-size="6.2" fill="#5D6C7B">than the inline rail</text>
+  <text x="130" y="263.2" font-family="WPSans" font-size="6.2" fill="#5D6C7B">affords</text>
+  <text x="244" y="236" font-family="WPSans" font-size="6.9" fill="#16202B" font-weight="bold">Drift and slice watch</text>
+  <text x="244" y="246" font-family="WPSans" font-size="6.2" fill="#5D6C7B">per domain, per journey,</text>
+  <text x="244" y="254.6" font-family="WPSans" font-size="6.2" fill="#5D6C7B">per release cohort</text>
+  <text x="358" y="236" font-family="WPSans" font-size="6.9" fill="#16202B" font-weight="bold">Red team replay</text>
+  <text x="358" y="246" font-family="WPSans" font-size="6.2" fill="#5D6C7B">adversarial corpus against</text>
+  <text x="358" y="254.6" font-family="WPSans" font-size="6.2" fill="#5D6C7B">the current manifest</text>
+  <line x1="39" y1="190" x2="39" y2="204" stroke="#D2DAE2" stroke-width="0.7" stroke-dasharray="2,2"/>
+  <line x1="121" y1="190" x2="121" y2="204" stroke="#D2DAE2" stroke-width="0.7" stroke-dasharray="2,2"/>
+  <line x1="203" y1="190" x2="203" y2="204" stroke="#D2DAE2" stroke-width="0.7" stroke-dasharray="2,2"/>
+  <line x1="285" y1="190" x2="285" y2="204" stroke="#D2DAE2" stroke-width="0.7" stroke-dasharray="2,2"/>
+  <line x1="367" y1="190" x2="367" y2="204" stroke="#D2DAE2" stroke-width="0.7" stroke-dasharray="2,2"/>
+  <line x1="449" y1="190" x2="449" y2="204" stroke="#D2DAE2" stroke-width="0.7" stroke-dasharray="2,2"/>
+  <text x="8" y="282" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Fail open or fail closed is a per control decision, and it must be written down</text>
+  <rect x="8" y="294" width="472" height="16" fill="#EFF3F7" rx="2"/>
+  <text x="16" y="305" font-family="WPSans" font-size="6.6" fill="#8494A3" font-weight="bold">Control</text>
+  <text x="210" y="305" font-family="WPSans" font-size="6.6" fill="#8494A3" font-weight="bold">Posture</text>
+  <text x="286" y="305" font-family="WPSans" font-size="6.6" fill="#8494A3" font-weight="bold">Why</text>
+  <line x1="8" y1="310" x2="480" y2="310" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="16" y="322" font-family="WPSans" font-size="6.5" fill="#26333F">Authentication and entitlement</text>
+  <rect x="206" y="313" width="45.96" height="11.5" fill="#F9EAEA" rx="5.75"/>
+  <text x="228.98" y="320.91" font-family="WPSans" font-size="6" fill="#9C2B2B" text-anchor="middle">fail closed</text>
+  <text x="286" y="322" font-family="WPSans" font-size="6.4" fill="#5D6C7B">no identity, no answer</text>
+  <line x1="8" y1="327" x2="480" y2="327" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="16" y="339" font-family="WPSans" font-size="6.5" fill="#26333F">Write authorization</text>
+  <rect x="206" y="330" width="45.96" height="11.5" fill="#F9EAEA" rx="5.75"/>
+  <text x="228.98" y="337.91" font-family="WPSans" font-size="6" fill="#9C2B2B" text-anchor="middle">fail closed</text>
+  <text x="286" y="339" font-family="WPSans" font-size="6.4" fill="#5D6C7B">never infer authority from text</text>
+  <line x1="8" y1="344" x2="480" y2="344" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="16" y="356" font-family="WPSans" font-size="6.5" fill="#26333F">Injection classifier</text>
+  <rect x="206" y="347" width="45.96" height="11.5" fill="#F9EAEA" rx="5.75"/>
+  <text x="228.98" y="354.91" font-family="WPSans" font-size="6" fill="#9C2B2B" text-anchor="middle">fail closed</text>
+  <text x="286" y="356" font-family="WPSans" font-size="6.4" fill="#5D6C7B">on a read path, degrade to templates</text>
+  <line x1="8" y1="361" x2="480" y2="361" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="16" y="373" font-family="WPSans" font-size="6.5" fill="#26333F">Groundedness judge, inline</text>
+  <rect x="206" y="364" width="39.24" height="11.5" fill="#E4F1EF" rx="5.75"/>
+  <text x="225.62" y="371.91" font-family="WPSans" font-size="6" fill="#0F7267" text-anchor="middle">fail open</text>
+  <text x="286" y="373" font-family="WPSans" font-size="6.4" fill="#5D6C7B">log, sample, do not block the read</text>
+  <line x1="8" y1="378" x2="480" y2="378" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="16" y="390" font-family="WPSans" font-size="6.5" fill="#26333F">Async quality judge</text>
+  <rect x="206" y="381" width="39.24" height="11.5" fill="#E4F1EF" rx="5.75"/>
+  <text x="225.62" y="388.91" font-family="WPSans" font-size="6" fill="#0F7267" text-anchor="middle">fail open</text>
+  <text x="286" y="390" font-family="WPSans" font-size="6.4" fill="#5D6C7B">assurance is not availability</text>
+  <line x1="8" y1="395" x2="480" y2="395" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="16" y="407" font-family="WPSans" font-size="6.5" fill="#26333F">Telemetry export</text>
+  <rect x="206" y="398" width="39.24" height="11.5" fill="#E4F1EF" rx="5.75"/>
+  <text x="225.62" y="405.91" font-family="WPSans" font-size="6" fill="#0F7267" text-anchor="middle">fail open</text>
+  <text x="286" y="407" font-family="WPSans" font-size="6.4" fill="#5D6C7B">observability must not gate service</text>
+  <line x1="8" y1="412" x2="480" y2="412" stroke="#D2DAE2" stroke-width="0.7"/>
+  <rect x="0.5" y="0.5" width="487" height="421" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

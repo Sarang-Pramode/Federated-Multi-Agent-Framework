@@ -1,0 +1,218 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="491" viewBox="0 0 488 491">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">The capabilities you must be able to hire, keep, or knowingly outsource</text>
+  <text x="8" y="28" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Intensity is the depth of skill needed at that scale, not headcount.</text>
+  <rect x="8" y="38" width="472" height="20" fill="#EFF3F7" rx="2"/>
+  <text x="15" y="51.5" font-family="WPSans" font-size="6.5" fill="#8494A3" font-weight="bold">Capability</text>
+  <text x="208" y="51.5" font-family="WPSans" font-size="6.5" fill="#8494A3" text-anchor="middle" font-weight="bold">Tier S</text>
+  <text x="252" y="51.5" font-family="WPSans" font-size="6.5" fill="#8494A3" text-anchor="middle" font-weight="bold">Tier M</text>
+  <text x="296" y="51.5" font-family="WPSans" font-size="6.5" fill="#8494A3" text-anchor="middle" font-weight="bold">Tier L</text>
+  <text x="330" y="51.5" font-family="WPSans" font-size="6.5" fill="#8494A3" font-weight="bold">Where it usually sits</text>
+  <rect x="8" y="58" width="472" height="15" fill="#E8F0F8" rx="1.6"/>
+  <text x="15" y="68.6" font-family="WPSans" font-size="6.4" fill="#123F72" font-weight="bold">Serving and operations</text>
+  <line x1="8" y1="73" x2="480" y2="73" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="85" font-family="WPSans" font-size="6.4" fill="#26333F">Inference serving: vLLM or SGLang operation</text>
+  <rect x="195" y="78.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="204" y="78.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="213" y="78.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="78.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="78.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="78.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="78.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="78.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="78.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="85" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Platform or ML infra</text>
+  <line x1="8" y1="90" x2="480" y2="90" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="102" font-family="WPSans" font-size="6.4" fill="#26333F">Capacity modelling and load testing</text>
+  <rect x="195" y="95.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="95.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="95.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="95.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="95.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="95.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="95.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="95.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="95.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="102" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Platform</text>
+  <line x1="8" y1="107" x2="480" y2="107" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="119" font-family="WPSans" font-size="6.4" fill="#26333F">GPU scheduling, MIG and multi-tenancy</text>
+  <rect x="195" y="112.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="112.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="112.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="112.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="112.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="112.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="112.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="112.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="112.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="119" font-family="WPSans" font-size="6.2" fill="#5D6C7B">ML infra</text>
+  <line x1="8" y1="124" x2="480" y2="124" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="136" font-family="WPSans" font-size="6.4" fill="#26333F">Rollout, canary and rollback of weights</text>
+  <rect x="195" y="129.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="129.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="129.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="129.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="129.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="129.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="129.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="129.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="129.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="136" font-family="WPSans" font-size="6.2" fill="#5D6C7B">ML infra</text>
+  <rect x="8" y="141" width="472" height="15" fill="#E8F0F8" rx="1.6"/>
+  <text x="15" y="151.6" font-family="WPSans" font-size="6.4" fill="#123F72" font-weight="bold">Model work</text>
+  <line x1="8" y1="156" x2="480" y2="156" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="168" font-family="WPSans" font-size="6.4" fill="#26333F">Quantization and calibration set design</text>
+  <rect x="195" y="161.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="204" y="161.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="213" y="161.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="161.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="161.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="161.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="161.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="161.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="161.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="168" font-family="WPSans" font-size="6.2" fill="#5D6C7B">ML engineer</text>
+  <line x1="8" y1="173" x2="480" y2="173" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="185" font-family="WPSans" font-size="6.4" fill="#26333F">Distillation of routers and classifiers</text>
+  <rect x="195" y="178.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="178.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="178.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="178.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="178.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="178.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="178.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="178.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="178.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="185" font-family="WPSans" font-size="6.2" fill="#5D6C7B">ML engineer</text>
+  <line x1="8" y1="190" x2="480" y2="190" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="202" font-family="WPSans" font-size="6.4" fill="#26333F">Task fine-tuning, LoRA and adapters</text>
+  <rect x="195" y="195.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="195.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="195.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="195.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="195.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="195.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="195.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="195.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="195.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="202" font-family="WPSans" font-size="6.2" fill="#5D6C7B">ML engineer</text>
+  <line x1="8" y1="207" x2="480" y2="207" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="219" font-family="WPSans" font-size="6.4" fill="#26333F">Tokenizer, context and prompt budgeting</text>
+  <rect x="195" y="212.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="204" y="212.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="213" y="212.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="212.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="212.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="212.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="212.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="292" y="212.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="301" y="212.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <text x="330" y="219" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Shared</text>
+  <rect x="8" y="224" width="472" height="15" fill="#E8F0F8" rx="1.6"/>
+  <text x="15" y="234.6" font-family="WPSans" font-size="6.4" fill="#123F72" font-weight="bold">Assurance</text>
+  <line x1="8" y1="239" x2="480" y2="239" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="251" font-family="WPSans" font-size="6.4" fill="#26333F">Eval engineering and golden set curation</text>
+  <rect x="195" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="204" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="213" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="239" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="244.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="251" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Domain plus platform</text>
+  <line x1="8" y1="256" x2="480" y2="256" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="268" font-family="WPSans" font-size="6.4" fill="#26333F">LLM-as-judge calibration against humans</text>
+  <rect x="195" y="261.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="261.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="261.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="261.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="261.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="261.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="261.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="261.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="261.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="268" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Eval owner</text>
+  <line x1="8" y1="273" x2="480" y2="273" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="285" font-family="WPSans" font-size="6.4" fill="#26333F">Safety, red teaming and rail tuning</text>
+  <rect x="195" y="278.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="204" y="278.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="213" y="278.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="278.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="278.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="278.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="278.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="278.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="278.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="285" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Security plus ML</text>
+  <line x1="8" y1="290" x2="480" y2="290" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="302" font-family="WPSans" font-size="6.4" fill="#26333F">Regression corpus and drift monitoring</text>
+  <rect x="195" y="295.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="295.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="295.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="295.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="295.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="295.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="295.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="295.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="295.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="302" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Platform</text>
+  <rect x="8" y="307" width="472" height="15" fill="#E8F0F8" rx="1.6"/>
+  <text x="15" y="317.6" font-family="WPSans" font-size="6.4" fill="#123F72" font-weight="bold">Runtime engineering</text>
+  <line x1="8" y1="322" x2="480" y2="322" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="334" font-family="WPSans" font-size="6.4" fill="#26333F">Distributed tracing and AgentOps</text>
+  <rect x="195" y="327.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="204" y="327.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="213" y="327.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="327.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="248" y="327.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="257" y="327.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="283" y="327.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="327.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="327.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="334" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Platform</text>
+  <line x1="8" y1="339" x2="480" y2="339" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="351" font-family="WPSans" font-size="6.4" fill="#26333F">Contract and manifest tooling</text>
+  <rect x="195" y="344.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="204" y="344.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="213" y="344.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="344.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="344.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="344.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="344.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="344.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="344.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="351" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Platform</text>
+  <line x1="8" y1="356" x2="480" y2="356" stroke="#E7ECF1" stroke-width="0.55"/>
+  <text x="15" y="368" font-family="WPSans" font-size="6.4" fill="#26333F">Cost attribution per journey</text>
+  <rect x="195" y="361.4" width="7" height="7" fill="#C7DBEE" rx="1.2"/>
+  <rect x="204" y="361.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="213" y="361.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="239" y="361.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="248" y="361.4" width="7" height="7" fill="#1C5A9E" rx="1.2"/>
+  <rect x="257" y="361.4" width="7" height="7" fill="#E7ECF1" rx="1.2"/>
+  <rect x="283" y="361.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="292" y="361.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <rect x="301" y="361.4" width="7" height="7" fill="#123F72" rx="1.2"/>
+  <text x="330" y="368" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Platform plus finance</text>
+  <line x1="8" y1="373" x2="480" y2="373" stroke="#D2DAE2" stroke-width="0.7"/>
+  <rect x="8" y="385" width="8" height="8" fill="#C7DBEE" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="22" y="391.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">aware: can follow a runbook</text>
+  <rect x="160" y="385" width="8" height="8" fill="#1C5A9E" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="174" y="391.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">capable: can operate and tune</text>
+  <rect x="312" y="385" width="8" height="8" fill="#123F72" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="326" y="391.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">deep: can diagnose and extend</text>
+  <rect x="8" y="411" width="233" height="70" fill="#F9EAEA" rx="3" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="16" y="425" font-family="WPSans" font-size="7" fill="#9C2B2B" font-weight="bold">The staffing anti-pattern</text>
+  <text x="16" y="438" font-family="WPSans" font-size="6.4" fill="#26333F">One ML generalist owning serving, quantization, evals, safety</text>
+  <text x="16" y="447.4" font-family="WPSans" font-size="6.4" fill="#26333F">and cost. It works in the pilot, becomes the bus factor in</text>
+  <text x="16" y="456.8" font-family="WPSans" font-size="6.4" fill="#26333F">production, and the first thing dropped is always evaluation.</text>
+  <rect x="247" y="411" width="233" height="70" fill="#E4F1EF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <text x="255" y="425" font-family="WPSans" font-size="7" fill="#0F7267" font-weight="bold">A defensible build order</text>
+  <text x="255" y="438" font-family="WPSans" font-size="6.3" fill="#26333F">1. eval engineering, before any model choice</text>
+  <text x="255" y="446.6" font-family="WPSans" font-size="6.3" fill="#26333F">2. serving and observability, then quantization</text>
+  <text x="255" y="455.2" font-family="WPSans" font-size="6.3" fill="#26333F">3. safety and rail tuning as traffic grows</text>
+  <text x="255" y="463.8" font-family="WPSans" font-size="6.3" fill="#26333F">4. distillation and fine-tuning last, when the</text>
+  <text x="255" y="472.4" font-family="WPSans" font-size="6.3" fill="#26333F">    workload is stable enough to be worth it</text>
+  <rect x="0.5" y="0.5" width="487" height="490" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

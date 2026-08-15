@@ -1,0 +1,98 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="363" viewBox="0 0 488 363">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">The twelve demonstration steps, and the architectural claim each one makes falsifiable</text>
+  <rect x="8" y="28" width="472" height="17" fill="#EFF3F7" rx="2"/>
+  <text x="15" y="39.6" font-family="WPSans" font-size="6.4" fill="#8494A3" font-weight="bold">Step</text>
+  <text x="46" y="39.6" font-family="WPSans" font-size="6.4" fill="#8494A3" font-weight="bold">What the demo shows</text>
+  <text x="162" y="39.6" font-family="WPSans" font-size="6.4" fill="#8494A3" font-weight="bold">Concrete artefact in the prototype</text>
+  <text x="322" y="39.6" font-family="WPSans" font-size="6.4" fill="#8494A3" font-weight="bold">The claim it makes testable</text>
+  <rect x="8" y="45" width="472" height="21" fill="#FFFFFF" rx="1.6"/>
+  <rect x="8" y="46" width="2.4" height="19" fill="#1C5A9E" rx="1.2"/>
+  <circle cx="24" cy="55.5" r="6.2" fill="#1C5A9E"/>
+  <text x="24" y="58" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">1</text>
+  <text x="38" y="58" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Domain discovery</text>
+  <text x="162" y="58" font-family="WPSans" font-size="6.2" fill="#5D6C7B">two domains register and are discovered</text>
+  <text x="322" y="58" font-family="WPSans" font-size="6.2" fill="#26333F">capability is declared, not hard-coded</text>
+  <rect x="8" y="66" width="472" height="21" fill="#F7F9FB" rx="1.6"/>
+  <rect x="8" y="67" width="2.4" height="19" fill="#1C5A9E" rx="1.2"/>
+  <circle cx="24" cy="76.5" r="6.2" fill="#1C5A9E"/>
+  <text x="24" y="79" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">2</text>
+  <text x="38" y="79" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Agent cards</text>
+  <text x="162" y="79" font-family="WPSans" font-size="6.2" fill="#5D6C7B">A2A v1.0 over JSON-RPC, versioned</text>
+  <text x="322" y="79" font-family="WPSans" font-size="6.2" fill="#26333F">a contract exists that can be validated</text>
+  <rect x="8" y="87" width="472" height="21" fill="#FFFFFF" rx="1.6"/>
+  <rect x="8" y="88" width="2.4" height="19" fill="#1C5A9E" rx="1.2"/>
+  <circle cx="24" cy="97.5" r="6.2" fill="#1C5A9E"/>
+  <text x="24" y="100" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">3</text>
+  <text x="38" y="100" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Central prompt change</text>
+  <text x="162" y="100" font-family="WPSans" font-size="6.2" fill="#5D6C7B">prompt hash 8ab1 to 91fd</text>
+  <text x="322" y="100" font-family="WPSans" font-size="6.2" fill="#26333F">central behaviour is versioned and auditable</text>
+  <rect x="8" y="108" width="472" height="21" fill="#F7F9FB" rx="1.6"/>
+  <rect x="8" y="109" width="2.4" height="19" fill="#0F7267" rx="1.2"/>
+  <circle cx="24" cy="118.5" r="6.2" fill="#0F7267"/>
+  <text x="24" y="121" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">4</text>
+  <text x="38" y="121" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Tool added to a domain</text>
+  <text x="162" y="121" font-family="WPSans" font-size="6.2" fill="#5D6C7B">domain bundle m-rew-10 to m-rew-11</text>
+  <text x="322" y="121" font-family="WPSans" font-size="6.2" fill="#26333F">the domain changes without a platform release</text>
+  <rect x="8" y="129" width="472" height="21" fill="#FFFFFF" rx="1.6"/>
+  <rect x="8" y="130" width="2.4" height="19" fill="#0F7267" rx="1.2"/>
+  <circle cx="24" cy="139.5" r="6.2" fill="#0F7267"/>
+  <text x="24" y="142" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">5</text>
+  <text x="38" y="142" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Skill added to a domain</text>
+  <text x="162" y="142" font-family="WPSans" font-size="6.2" fill="#5D6C7B">bundle m-rew-11 to m-rew-12</text>
+  <text x="322" y="142" font-family="WPSans" font-size="6.2" fill="#26333F">capability grows without touching the centre</text>
+  <rect x="8" y="150" width="472" height="21" fill="#F7F9FB" rx="1.6"/>
+  <rect x="8" y="151" width="2.4" height="19" fill="#5B4B9E" rx="1.2"/>
+  <circle cx="24" cy="160.5" r="6.2" fill="#5B4B9E"/>
+  <text x="24" y="163" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">6</text>
+  <text x="38" y="163" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Targeted evaluation</text>
+  <text x="162" y="163" font-family="WPSans" font-size="6.2" fill="#5D6C7B">suite selected from the change type</text>
+  <text x="322" y="163" font-family="WPSans" font-size="6.2" fill="#26333F">evidence is chosen by rule, not by the author</text>
+  <rect x="8" y="171" width="472" height="21" fill="#FFFFFF" rx="1.6"/>
+  <rect x="8" y="172" width="2.4" height="19" fill="#9C2B2B" rx="1.2"/>
+  <circle cx="24" cy="181.5" r="6.2" fill="#9C2B2B"/>
+  <text x="24" y="184" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">7</text>
+  <text x="38" y="184" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Regression caught</text>
+  <text x="162" y="184" font-family="WPSans" font-size="6.2" fill="#5D6C7B">restaurant 3x read as grocery 2x; 300 points seen as 200</text>
+  <text x="322" y="184" font-family="WPSans" font-size="6.2" fill="#26333F">a real semantic bug is caught before release</text>
+  <rect x="8" y="192" width="472" height="21" fill="#F7F9FB" rx="1.6"/>
+  <rect x="8" y="193" width="2.4" height="19" fill="#5B4B9E" rx="1.2"/>
+  <circle cx="24" cy="202.5" r="6.2" fill="#5B4B9E"/>
+  <text x="24" y="205" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">8</text>
+  <text x="38" y="205" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Auditor verdict</text>
+  <text x="162" y="205" font-family="WPSans" font-size="6.2" fill="#5D6C7B">closed world reachability recomputed</text>
+  <text x="322" y="205" font-family="WPSans" font-size="6.2" fill="#26333F">governance is independent of the changing team</text>
+  <rect x="8" y="213" width="472" height="21" fill="#FFFFFF" rx="1.6"/>
+  <rect x="8" y="214" width="2.4" height="19" fill="#A8551A" rx="1.2"/>
+  <circle cx="24" cy="223.5" r="6.2" fill="#A8551A"/>
+  <text x="24" y="226" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">9</text>
+  <text x="38" y="226" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Delegation trace</text>
+  <text x="162" y="226" font-family="WPSans" font-size="6.2" fill="#5D6C7B">one correlation id across every hop</text>
+  <text x="322" y="226" font-family="WPSans" font-size="6.2" fill="#26333F">attribution survives federation</text>
+  <rect x="8" y="234" width="472" height="21" fill="#F7F9FB" rx="1.6"/>
+  <rect x="8" y="235" width="2.4" height="19" fill="#A8551A" rx="1.2"/>
+  <circle cx="24" cy="244.5" r="6.2" fill="#A8551A"/>
+  <text x="24" y="247" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">10</text>
+  <text x="38" y="247" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Model call accounting</text>
+  <text x="162" y="247" font-family="WPSans" font-size="6.2" fill="#5D6C7B">tier, tokens and latency per span</text>
+  <text x="322" y="247" font-family="WPSans" font-size="6.2" fill="#26333F">cost and latency are attributable per journey</text>
+  <rect x="8" y="255" width="472" height="21" fill="#FFFFFF" rx="1.6"/>
+  <rect x="8" y="256" width="2.4" height="19" fill="#9C2B2B" rx="1.2"/>
+  <circle cx="24" cy="265.5" r="6.2" fill="#9C2B2B"/>
+  <text x="24" y="268" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">11</text>
+  <text x="38" y="268" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Domain isolation</text>
+  <text x="162" y="268" font-family="WPSans" font-size="6.2" fill="#5D6C7B">Rewards fails in 12 ms; Transactions stays healthy</text>
+  <text x="322" y="268" font-family="WPSans" font-size="6.2" fill="#26333F">failure is contained, not systemic</text>
+  <rect x="8" y="276" width="472" height="21" fill="#F7F9FB" rx="1.6"/>
+  <rect x="8" y="277" width="2.4" height="19" fill="#0F7267" rx="1.2"/>
+  <circle cx="24" cy="286.5" r="6.2" fill="#0F7267"/>
+  <text x="24" y="289" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle" font-weight="bold">12</text>
+  <text x="38" y="289" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Governed release</text>
+  <text x="162" y="289" font-family="WPSans" font-size="6.2" fill="#5D6C7B">gate passes with a named owner</text>
+  <text x="322" y="289" font-family="WPSans" font-size="6.2" fill="#26333F">release is a decision with evidence attached</text>
+  <rect x="8" y="307" width="472" height="46" fill="#E8F0F8" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <text x="16" y="321" font-family="WPSans" font-size="7" fill="#123F72" font-weight="bold">What the prototype does not prove</text>
+  <text x="16" y="333" font-family="WPSans" font-size="6.4" fill="#26333F">The demonstration is a deterministic replay of recorded events, not a load test. It establishes that the control surfaces exist</text>
+  <text x="16" y="342" font-family="WPSans" font-size="6.4" fill="#26333F">and that the seams are in the right places. Every latency and throughput figure in Part IV is third-party or modelled, and</text>
+  <text x="16" y="351" font-family="WPSans" font-size="6.4" fill="#26333F">must be re-measured against your own workload before it is used to buy hardware.</text>
+  <rect x="0.5" y="0.5" width="487" height="362" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

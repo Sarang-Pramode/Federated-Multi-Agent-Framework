@@ -1,0 +1,72 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="468" viewBox="0 0 488 468">
+  <text x="8" y="17" font-family="WPSans" font-size="6.6" fill="#8494A3" font-weight="bold">TIER</text>
+  <text x="150" y="17" font-family="WPSans" font-size="6.6" fill="#8494A3" font-weight="bold">WHAT IT IS FOR</text>
+  <text x="376" y="17" font-family="WPSans" font-size="6.6" fill="#8494A3" font-weight="bold">LATENCY</text>
+  <text x="478" y="17" font-family="WPSans" font-size="6.6" fill="#8494A3" text-anchor="end" font-weight="bold">SHARE</text>
+  <rect x="8" y="26" width="472" height="74" fill="#EFF3F7" rx="4" stroke="#5D6C7B" stroke-width="1.1"/>
+  <rect x="8" y="27.2" width="3.2" height="71.6" fill="#5D6C7B" rx="1.6"/>
+  <text x="20" y="43" font-family="WPSans" font-size="8.6" fill="#5D6C7B" font-weight="bold">Tier 0</text>
+  <text x="20" y="56" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">Deterministic</text>
+  <text x="20" y="67" font-family="WPSans" font-size="6.6" fill="#5D6C7B">no model at all</text>
+  <text x="20" y="84" font-family="WPSans" font-size="6.2" fill="#8494A3" font-style="italic">escalate only when the tier above cannot decide</text>
+  <text x="150" y="43" font-family="WPSans" font-size="6.8" fill="#26333F">• exact and pattern intent match</text>
+  <text x="150" y="54.5" font-family="WPSans" font-size="6.8" fill="#26333F">• cached and templated answers</text>
+  <text x="150" y="66" font-family="WPSans" font-size="6.8" fill="#26333F">• rules, arithmetic, schema checks</text>
+  <text x="376" y="46" font-family="WPSans" font-size="8.2" fill="#5D6C7B" font-weight="bold">0-5 ms</text>
+  <text x="376" y="57" font-family="WPSans" font-size="6.2" fill="#8494A3">per call</text>
+  <text x="478" y="46" font-family="WPSans" font-size="7.4" fill="#16202B" text-anchor="end" font-weight="bold">60-75% of turns</text>
+  <text x="478" y="57" font-family="WPSans" font-size="6.2" fill="#8494A3" text-anchor="end">of production turns</text>
+  <rect x="8" y="108" width="472" height="74" fill="#E4F1EF" rx="4" stroke="#0F7267" stroke-width="1.1"/>
+  <rect x="8" y="109.2" width="3.2" height="71.6" fill="#0F7267" rx="1.6"/>
+  <text x="20" y="125" font-family="WPSans" font-size="8.6" fill="#0F7267" font-weight="bold">Tier 1</text>
+  <text x="20" y="138" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">On prem, quantized, small</text>
+  <text x="20" y="149" font-family="WPSans" font-size="6.6" fill="#5D6C7B">1-4B, FP8 or INT4, on prem</text>
+  <text x="20" y="166" font-family="WPSans" font-size="6.2" fill="#8494A3" font-style="italic">escalate only when the tier above cannot decide</text>
+  <text x="150" y="125" font-family="WPSans" font-size="6.8" fill="#26333F">• task and risk classification</text>
+  <text x="150" y="136.5" font-family="WPSans" font-size="6.8" fill="#26333F">• capability shortlisting</text>
+  <text x="150" y="148" font-family="WPSans" font-size="6.8" fill="#26333F">• parameter extraction, rail scoring</text>
+  <text x="376" y="128" font-family="WPSans" font-size="8.2" fill="#0F7267" font-weight="bold">15-40 ms</text>
+  <text x="376" y="139" font-family="WPSans" font-size="6.2" fill="#8494A3">per call</text>
+  <text x="478" y="128" font-family="WPSans" font-size="7.4" fill="#16202B" text-anchor="end" font-weight="bold">20-30% of turns</text>
+  <text x="478" y="139" font-family="WPSans" font-size="6.2" fill="#8494A3" text-anchor="end">of production turns</text>
+  <rect x="8" y="190" width="472" height="74" fill="#E8F0F8" rx="4" stroke="#1C5A9E" stroke-width="1.1"/>
+  <rect x="8" y="191.2" width="3.2" height="71.6" fill="#1C5A9E" rx="1.6"/>
+  <text x="20" y="207" font-family="WPSans" font-size="8.6" fill="#1C5A9E" font-weight="bold">Tier 2</text>
+  <text x="20" y="220" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">On prem, quantized, mid</text>
+  <text x="20" y="231" font-family="WPSans" font-size="6.6" fill="#5D6C7B">8-32B, FP8, on prem</text>
+  <text x="20" y="248" font-family="WPSans" font-size="6.2" fill="#8494A3" font-style="italic">escalate only when the tier above cannot decide</text>
+  <text x="150" y="207" font-family="WPSans" font-size="6.8" fill="#26333F">• multi-fact synthesis with citations</text>
+  <text x="150" y="218.5" font-family="WPSans" font-size="6.8" fill="#26333F">• ambiguous single domain routing</text>
+  <text x="150" y="230" font-family="WPSans" font-size="6.8" fill="#26333F">• output groundedness adjudication</text>
+  <text x="376" y="210" font-family="WPSans" font-size="8.2" fill="#1C5A9E" font-weight="bold">120-400 ms</text>
+  <text x="376" y="221" font-family="WPSans" font-size="6.2" fill="#8494A3">per call</text>
+  <text x="478" y="210" font-family="WPSans" font-size="7.4" fill="#16202B" text-anchor="end" font-weight="bold">5-12% of turns</text>
+  <text x="478" y="221" font-family="WPSans" font-size="6.2" fill="#8494A3" text-anchor="end">of production turns</text>
+  <rect x="8" y="272" width="472" height="74" fill="#EDEAF7" rx="4" stroke="#5B4B9E" stroke-width="1.1"/>
+  <rect x="8" y="273.2" width="3.2" height="71.6" fill="#5B4B9E" rx="1.6"/>
+  <text x="20" y="289" font-family="WPSans" font-size="8.6" fill="#5B4B9E" font-weight="bold">Tier 3</text>
+  <text x="20" y="302" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">Frontier reasoning</text>
+  <text x="20" y="313" font-family="WPSans" font-size="6.6" fill="#5D6C7B">API or large on prem MoE</text>
+  <text x="20" y="330" font-family="WPSans" font-size="6.2" fill="#8494A3" font-style="italic">escalate only when the tier above cannot decide</text>
+  <text x="150" y="289" font-family="WPSans" font-size="6.8" fill="#26333F">• cross domain decomposition</text>
+  <text x="150" y="300.5" font-family="WPSans" font-size="6.8" fill="#26333F">• novel or contested policy reasoning</text>
+  <text x="150" y="312" font-family="WPSans" font-size="6.8" fill="#26333F">• plan repair after failed attempts</text>
+  <text x="376" y="292" font-family="WPSans" font-size="8.2" fill="#5B4B9E" font-weight="bold">0.8-4 s</text>
+  <text x="376" y="303" font-family="WPSans" font-size="6.2" fill="#8494A3">per call</text>
+  <text x="478" y="292" font-family="WPSans" font-size="7.4" fill="#16202B" text-anchor="end" font-weight="bold">1-4% of turns</text>
+  <text x="478" y="303" font-family="WPSans" font-size="6.2" fill="#8494A3" text-anchor="end">of production turns</text>
+  <text x="8" y="366" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Escalation is a decision with a cost, not a default</text>
+  <rect x="8" y="374" width="233" height="84" fill="#E4F1EF" rx="3.5" stroke="#0F7267" stroke-width="1"/>
+  <text x="17" y="388" font-family="WPSans" font-size="7.2" fill="#0F7267" font-weight="bold">Escalate when</text>
+  <text x="17" y="400" font-family="WPSans" font-size="6.4" fill="#26333F">• classifier margin below threshold</text>
+  <text x="17" y="410.4" font-family="WPSans" font-size="6.4" fill="#26333F">• two or more domains required</text>
+  <text x="17" y="420.8" font-family="WPSans" font-size="6.4" fill="#26333F">• no capability matched the goal</text>
+  <text x="17" y="431.2" font-family="WPSans" font-size="6.4" fill="#26333F">• previous attempt failed validation</text>
+  <rect x="247" y="374" width="233" height="84" fill="#F9EAEA" rx="3.5" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="256" y="388" font-family="WPSans" font-size="7.2" fill="#9C2B2B" font-weight="bold">Do not escalate when</text>
+  <text x="256" y="400" font-family="WPSans" font-size="6.4" fill="#26333F">• the answer is a lookup</text>
+  <text x="256" y="410.4" font-family="WPSans" font-size="6.4" fill="#26333F">• the tier below already agreed</text>
+  <text x="256" y="420.8" font-family="WPSans" font-size="6.4" fill="#26333F">• only phrasing is uncertain</text>
+  <text x="256" y="431.2" font-family="WPSans" font-size="6.4" fill="#26333F">• the budget is already spent</text>
+  <rect x="0.5" y="0.5" width="487" height="467" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

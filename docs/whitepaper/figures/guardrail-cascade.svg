@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="406" viewBox="0 0 488 406">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">A cascade buys coverage without paying for the deepest check on every turn</text>
+  <rect x="8" y="42" width="148" height="46" fill="#EFF3F7" rx="2.5" stroke="#5D6C7B" stroke-width="1"/>
+  <text x="15" y="60" font-family="WPSans" font-size="10.5" fill="#5D6C7B" font-weight="bold">100%</text>
+  <text x="15" y="72" font-family="WPSans" font-size="6" fill="#5D6C7B">of turns reach here</text>
+  <text x="15" y="83" font-family="WPSans" font-size="6" fill="#8494A3">62% escalate further</text>
+  <text x="172" y="52" font-family="WPSans" font-size="6.6" fill="#5D6C7B" font-weight="bold">Stage 0</text>
+  <text x="206" y="52" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">Deterministic</text>
+  <text x="172" y="64" font-family="WPSans" font-size="6.4" fill="#5D6C7B">regex, deny lists, length, encoding,</text>
+  <text x="172" y="73.2" font-family="WPSans" font-size="6.4" fill="#5D6C7B">schema, rate and entitlement checks</text>
+  <text x="410" y="52" font-family="WPSans" font-size="7.8" fill="#5D6C7B" font-weight="bold">0.2-2 ms</text>
+  <text x="410" y="64" font-family="WPSans" font-size="6.2" fill="#8494A3">no GPU</text>
+  <rect x="8" y="108" width="56.24" height="46" fill="#E4F1EF" rx="2.5" stroke="#0F7267" stroke-width="1"/>
+  <text x="15" y="126" font-family="WPSans" font-size="10.5" fill="#0F7267" font-weight="bold">38%</text>
+  <text x="15" y="138" font-family="WPSans" font-size="6" fill="#5D6C7B">of turns reach here</text>
+  <text x="15" y="149" font-family="WPSans" font-size="6" fill="#8494A3">26% escalate further</text>
+  <text x="172" y="118" font-family="WPSans" font-size="6.6" fill="#0F7267" font-weight="bold">Stage 1</text>
+  <text x="206" y="118" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">Tiny classifier</text>
+  <text x="172" y="130" font-family="WPSans" font-size="6.4" fill="#5D6C7B">86M-class injection and harm scorer,</text>
+  <text x="172" y="139.2" font-family="WPSans" font-size="6.4" fill="#5D6C7B">quantized, batched, co-resident</text>
+  <text x="410" y="118" font-family="WPSans" font-size="7.8" fill="#0F7267" font-weight="bold">20-50 ms</text>
+  <text x="410" y="130" font-family="WPSans" font-size="6.2" fill="#8494A3">shared GPU slice</text>
+  <line x1="8" y1="102" x2="480" y2="102" stroke="#E7ECF1" stroke-width="0.6"/>
+  <rect x="8" y="174" width="17.76" height="46" fill="#FBF0E4" rx="2.5" stroke="#A8551A" stroke-width="1"/>
+  <text x="15" y="192" font-family="WPSans" font-size="10.5" fill="#A8551A" font-weight="bold">12%</text>
+  <text x="15" y="204" font-family="WPSans" font-size="6" fill="#5D6C7B">of turns reach here</text>
+  <text x="15" y="215" font-family="WPSans" font-size="6" fill="#8494A3">3% escalate further</text>
+  <text x="172" y="184" font-family="WPSans" font-size="6.6" fill="#A8551A" font-weight="bold">Stage 2</text>
+  <text x="206" y="184" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">Guard model</text>
+  <text x="172" y="196" font-family="WPSans" font-size="6.4" fill="#5D6C7B">8-12B guard model in no-think mode</text>
+  <text x="172" y="205.2" font-family="WPSans" font-size="6.4" fill="#5D6C7B">for hazard category and adjudication</text>
+  <text x="410" y="184" font-family="WPSans" font-size="7.8" fill="#A8551A" font-weight="bold">40-90 ms</text>
+  <text x="410" y="196" font-family="WPSans" font-size="6.2" fill="#8494A3">dedicated pool</text>
+  <line x1="8" y1="168" x2="480" y2="168" stroke="#E7ECF1" stroke-width="0.6"/>
+  <rect x="8" y="240" width="10" height="46" fill="#F9EAEA" rx="2.5" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="15" y="258" font-family="WPSans" font-size="10.5" fill="#9C2B2B" font-weight="bold">3%</text>
+  <text x="15" y="270" font-family="WPSans" font-size="6" fill="#5D6C7B">of turns reach here</text>
+  <text x="172" y="250" font-family="WPSans" font-size="6.6" fill="#9C2B2B" font-weight="bold">Stage 3</text>
+  <text x="206" y="250" font-family="WPSans" font-size="8" fill="#16202B" font-weight="bold">Human or hard block</text>
+  <text x="172" y="262" font-family="WPSans" font-size="6.4" fill="#5D6C7B">queue for review, or refuse with an</text>
+  <text x="172" y="271.2" font-family="WPSans" font-size="6.4" fill="#5D6C7B">explicit reason code and audit record</text>
+  <text x="410" y="250" font-family="WPSans" font-size="7.8" fill="#9C2B2B" font-weight="bold">seconds+</text>
+  <text x="410" y="262" font-family="WPSans" font-size="6.2" fill="#8494A3">no GPU</text>
+  <line x1="8" y1="234" x2="480" y2="234" stroke="#E7ECF1" stroke-width="0.6"/>
+  <rect x="8" y="304" width="472" height="44" fill="#E8F0F8" rx="3.5" stroke="#1C5A9E" stroke-width="1"/>
+  <text x="16" y="319" font-family="WPSans" font-size="7.2" fill="#123F72" font-weight="bold">Expected added latency per turn</text>
+  <text x="16" y="332" font-family="WPSans" font-size="6.7" fill="#26333F">0.98 x 1 ms + 0.38 x 35 ms + 0.12 x 65 ms = about 22 ms mean, with a p99 near 120 ms on the escalating tail.</text>
+  <text x="16" y="342" font-family="WPSans" font-size="6.7" fill="#5D6C7B">Running Stage 2 unconditionally would cost about 65 ms on every turn for the same coverage, a 3x rail tax.</text>
+  <text x="8" y="358" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Guardrails need their own evaluation, or they silently become a refusal machine</text>
+  <rect x="8" y="366" width="113.5" height="30" fill="#FFFFFF" rx="2.5" stroke="#D2DAE2" stroke-width="0.8"/>
+  <text x="15" y="379" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">False negative rate</text>
+  <text x="15" y="389" font-family="WPSans" font-size="6" fill="#5D6C7B">by attack family, not in aggregate</text>
+  <rect x="127.5" y="366" width="113.5" height="30" fill="#FFFFFF" rx="2.5" stroke="#D2DAE2" stroke-width="0.8"/>
+  <text x="134.5" y="379" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">False positive rate</text>
+  <text x="134.5" y="389" font-family="WPSans" font-size="6" fill="#5D6C7B">per journey, on benign golden traffic</text>
+  <rect x="247" y="366" width="113.5" height="30" fill="#FFFFFF" rx="2.5" stroke="#D2DAE2" stroke-width="0.8"/>
+  <text x="254" y="379" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Refusal correctness</text>
+  <text x="254" y="389" font-family="WPSans" font-size="6" fill="#5D6C7B">did it refuse for the stated reason</text>
+  <rect x="366.5" y="366" width="113.5" height="30" fill="#FFFFFF" rx="2.5" stroke="#D2DAE2" stroke-width="0.8"/>
+  <text x="373.5" y="379" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Rail latency p99</text>
+  <text x="373.5" y="389" font-family="WPSans" font-size="6" fill="#5D6C7B">budgeted like any other dependency</text>
+  <rect x="0.5" y="0.5" width="487" height="405" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

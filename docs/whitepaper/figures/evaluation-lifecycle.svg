@@ -1,0 +1,121 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="369" viewBox="0 0 488 369">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">Evaluation is a release gate computed from the change, not a suite someone remembers to run</text>
+  <rect x="8" y="30" width="74.5" height="74" fill="#EFF3F7" rx="3" stroke="#5D6C7B" stroke-width="1"/>
+  <circle cx="20" cy="43" r="6.6" fill="#5D6C7B"/>
+  <text x="20" y="45.4" font-family="WPSans" font-size="6.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">1</text>
+  <text x="15" y="64" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Change lands</text>
+  <text x="15" y="77" font-family="WPSans" font-size="5.8" fill="#5D6C7B">prompt, tool, skill,</text>
+  <text x="15" y="85.4" font-family="WPSans" font-size="5.8" fill="#5D6C7B">model, or manifest</text>
+  <rect x="87.5" y="30" width="74.5" height="74" fill="#E8F0F8" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <circle cx="99.5" cy="43" r="6.6" fill="#1C5A9E"/>
+  <text x="99.5" y="45.4" font-family="WPSans" font-size="6.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">2</text>
+  <text x="94.5" y="64" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Classify change</text>
+  <text x="94.5" y="77" font-family="WPSans" font-size="5.8" fill="#5D6C7B">the change type picks</text>
+  <text x="94.5" y="85.4" font-family="WPSans" font-size="5.8" fill="#5D6C7B">the suite, by rule</text>
+  <line x1="82.5" y1="43" x2="82.636" y2="43" stroke="#D2DAE2" stroke-width="1"/>
+  <polygon points="86.5,43 82.3,44.932 82.3,41.068" fill="#D2DAE2"/>
+  <rect x="167" y="30" width="74.5" height="74" fill="#EDEAF7" rx="3" stroke="#5B4B9E" stroke-width="1"/>
+  <circle cx="179" cy="43" r="6.6" fill="#5B4B9E"/>
+  <text x="179" y="45.4" font-family="WPSans" font-size="6.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">3</text>
+  <text x="174" y="64" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Auditor runs</text>
+  <text x="174" y="77" font-family="WPSans" font-size="5.8" fill="#5D6C7B">reachability, manifest</text>
+  <text x="174" y="85.4" font-family="WPSans" font-size="5.8" fill="#5D6C7B">and hash integrity</text>
+  <line x1="162" y1="43" x2="162.136" y2="43" stroke="#D2DAE2" stroke-width="1"/>
+  <polygon points="166,43 161.8,44.932 161.8,41.068" fill="#D2DAE2"/>
+  <rect x="246.5" y="30" width="74.5" height="74" fill="#E4F1EF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <circle cx="258.5" cy="43" r="6.6" fill="#0F7267"/>
+  <text x="258.5" y="45.4" font-family="WPSans" font-size="6.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">4</text>
+  <text x="253.5" y="64" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Suites run</text>
+  <text x="253.5" y="77" font-family="WPSans" font-size="5.8" fill="#5D6C7B">golden set, safety,</text>
+  <text x="253.5" y="85.4" font-family="WPSans" font-size="5.8" fill="#5D6C7B">contract, latency</text>
+  <line x1="241.5" y1="43" x2="241.636" y2="43" stroke="#D2DAE2" stroke-width="1"/>
+  <polygon points="245.5,43 241.3,44.932 241.3,41.068" fill="#D2DAE2"/>
+  <rect x="326" y="30" width="74.5" height="74" fill="#F9EAEA" rx="3" stroke="#9C2B2B" stroke-width="1"/>
+  <circle cx="338" cy="43" r="6.6" fill="#9C2B2B"/>
+  <text x="338" y="45.4" font-family="WPSans" font-size="6.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">5</text>
+  <text x="333" y="64" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Gate decides</text>
+  <text x="333" y="77" font-family="WPSans" font-size="5.8" fill="#5D6C7B">block, allow, or a</text>
+  <text x="333" y="85.4" font-family="WPSans" font-size="5.8" fill="#5D6C7B">named exception</text>
+  <line x1="321" y1="43" x2="321.136" y2="43" stroke="#D2DAE2" stroke-width="1"/>
+  <polygon points="325,43 320.8,44.932 320.8,41.068" fill="#D2DAE2"/>
+  <rect x="405.5" y="30" width="74.5" height="74" fill="#FBF0E4" rx="3" stroke="#A8551A" stroke-width="1"/>
+  <circle cx="417.5" cy="43" r="6.6" fill="#A8551A"/>
+  <text x="417.5" y="45.4" font-family="WPSans" font-size="6.8" fill="#FFFFFF" text-anchor="middle" font-weight="bold">6</text>
+  <text x="412.5" y="64" font-family="WPSans" font-size="6.5" fill="#16202B" font-weight="bold">Prod sampling</text>
+  <text x="412.5" y="77" font-family="WPSans" font-size="5.8" fill="#5D6C7B">async judges and</text>
+  <text x="412.5" y="85.4" font-family="WPSans" font-size="5.8" fill="#5D6C7B">drift by slice</text>
+  <line x1="400.5" y1="43" x2="400.636" y2="43" stroke="#D2DAE2" stroke-width="1"/>
+  <polygon points="404.5,43 400.3,44.932 400.3,41.068" fill="#D2DAE2"/>
+  <polyline points="442.75,104 442.75,117 45.25,117 45.25,108" fill="none" stroke="#A8551A" stroke-width="1" stroke-dasharray="3,2"/>
+  <polygon points="45.25,104 42.05,110 48.45,110" fill="#A8551A"/>
+  <text x="244" y="128" font-family="WPSans" font-size="6.3" fill="#A8551A" text-anchor="middle" font-style="italic">failures become regression cases; the corpus grows from production, not from imagination</text>
+  <text x="8" y="138" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Which suites a change type triggers</text>
+  <rect x="8" y="148" width="472" height="18" fill="#EFF3F7" rx="2"/>
+  <text x="15" y="160" font-family="WPSans" font-size="6.4" fill="#8494A3" font-weight="bold">Change type</text>
+  <text x="199.2" y="160" font-family="WPSans" font-size="6.1" fill="#8494A3" text-anchor="middle" font-weight="bold">Domain golden</text>
+  <text x="261.6" y="160" font-family="WPSans" font-size="6.1" fill="#8494A3" text-anchor="middle" font-weight="bold">Contract</text>
+  <text x="324" y="160" font-family="WPSans" font-size="6.1" fill="#8494A3" text-anchor="middle" font-weight="bold">Safety rails</text>
+  <text x="386.4" y="160" font-family="WPSans" font-size="6.1" fill="#8494A3" text-anchor="middle" font-weight="bold">Latency budget</text>
+  <text x="448.8" y="160" font-family="WPSans" font-size="6.1" fill="#8494A3" text-anchor="middle" font-weight="bold">Cross domain</text>
+  <line x1="8" y1="166" x2="480" y2="166" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="178" font-family="WPSans" font-size="6.4" fill="#26333F">Domain prompt edit</text>
+  <circle cx="199.2" cy="174.6" r="4" fill="#1C5A9E"/>
+  <circle cx="261.6" cy="174.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="324" cy="174.6" r="4" fill="#1C5A9E"/>
+  <line x1="383.4" y1="174.6" x2="389.4" y2="174.6" stroke="#D2DAE2" stroke-width="1"/>
+  <line x1="445.8" y1="174.6" x2="451.8" y2="174.6" stroke="#D2DAE2" stroke-width="1"/>
+  <line x1="8" y1="183" x2="480" y2="183" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="195" font-family="WPSans" font-size="6.4" fill="#26333F">New tool added</text>
+  <circle cx="199.2" cy="191.6" r="4" fill="#1C5A9E"/>
+  <circle cx="261.6" cy="191.6" r="4" fill="#1C5A9E"/>
+  <circle cx="324" cy="191.6" r="4" fill="#1C5A9E"/>
+  <circle cx="386.4" cy="191.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <line x1="445.8" y1="191.6" x2="451.8" y2="191.6" stroke="#D2DAE2" stroke-width="1"/>
+  <line x1="8" y1="200" x2="480" y2="200" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="212" font-family="WPSans" font-size="6.4" fill="#26333F">New skill added</text>
+  <circle cx="199.2" cy="208.6" r="4" fill="#1C5A9E"/>
+  <circle cx="261.6" cy="208.6" r="4" fill="#1C5A9E"/>
+  <circle cx="324" cy="208.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="386.4" cy="208.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="448.8" cy="208.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <line x1="8" y1="217" x2="480" y2="217" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="229" font-family="WPSans" font-size="6.4" fill="#26333F">Model or quantization swap</text>
+  <circle cx="199.2" cy="225.6" r="4" fill="#1C5A9E"/>
+  <circle cx="261.6" cy="225.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="324" cy="225.6" r="4" fill="#1C5A9E"/>
+  <circle cx="386.4" cy="225.6" r="4" fill="#1C5A9E"/>
+  <circle cx="448.8" cy="225.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <line x1="8" y1="234" x2="480" y2="234" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="246" font-family="WPSans" font-size="6.4" fill="#26333F">Central routing policy change</text>
+  <circle cx="199.2" cy="242.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="261.6" cy="242.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="324" cy="242.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="386.4" cy="242.6" r="4" fill="#1C5A9E"/>
+  <circle cx="448.8" cy="242.6" r="4" fill="#1C5A9E"/>
+  <line x1="8" y1="251" x2="480" y2="251" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="263" font-family="WPSans" font-size="6.4" fill="#26333F">Guardrail threshold change</text>
+  <circle cx="199.2" cy="259.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <line x1="258.6" y1="259.6" x2="264.6" y2="259.6" stroke="#D2DAE2" stroke-width="1"/>
+  <circle cx="324" cy="259.6" r="4" fill="#1C5A9E"/>
+  <circle cx="386.4" cy="259.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <line x1="445.8" y1="259.6" x2="451.8" y2="259.6" stroke="#D2DAE2" stroke-width="1"/>
+  <line x1="8" y1="268" x2="480" y2="268" stroke="#E7ECF1" stroke-width="0.6"/>
+  <text x="15" y="280" font-family="WPSans" font-size="6.4" fill="#26333F">Manifest version bump</text>
+  <circle cx="199.2" cy="276.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="261.6" cy="276.6" r="4" fill="#1C5A9E"/>
+  <circle cx="324" cy="276.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <line x1="383.4" y1="276.6" x2="389.4" y2="276.6" stroke="#D2DAE2" stroke-width="1"/>
+  <circle cx="448.8" cy="276.6" r="4" fill="#1C5A9E"/>
+  <line x1="8" y1="285" x2="480" y2="285" stroke="#D2DAE2" stroke-width="0.7"/>
+  <circle cx="14" cy="299" r="4" fill="#1C5A9E"/>
+  <text x="23" y="301.2" font-family="WPSans" font-size="6.2" fill="#5D6C7B">required to pass</text>
+  <circle cx="138" cy="299" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <text x="147" y="301.2" font-family="WPSans" font-size="6.2" fill="#5D6C7B">run and review</text>
+  <line x1="259" y1="299" x2="265" y2="299" stroke="#D2DAE2" stroke-width="1"/>
+  <text x="271" y="301.2" font-family="WPSans" font-size="6.2" fill="#5D6C7B">not triggered</text>
+  <rect x="8" y="319" width="472" height="40" fill="#F9EAEA" rx="3" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="16" y="333" font-family="WPSans" font-size="7" fill="#9C2B2B" font-weight="bold">Why the auditor must not be the team that changed the code</text>
+  <text x="16" y="345" font-family="WPSans" font-size="6.4" fill="#26333F">A team that selects its own evidence will select evidence that passes. The auditor is deliberately rule-based rather than</text>
+  <text x="16" y="354" font-family="WPSans" font-size="6.4" fill="#26333F">model-based so its verdict is reproducible, cheap to run on every change, and impossible to argue with after the fact.</text>
+  <rect x="0.5" y="0.5" width="487" height="368" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

@@ -1,0 +1,68 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="330" viewBox="0 0 488 330">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">Quantization format is a workload decision, and the honest cost is accuracy</text>
+  <text x="8" y="28" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Published Qwen3-8B figures on a single H100 with vLLM. Re-measure on your own prompt and output mix before committing.</text>
+  <rect x="8" y="38" width="233" height="148" fill="#FFFFFF" rx="3" stroke="#D2DAE2" stroke-width="1"/>
+  <text x="18" y="53" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Accuracy, MMLU</text>
+  <text x="18" y="63" font-family="WPSans" font-size="6.2" fill="#5D6C7B">lower is a real capability loss, not a rounding error</text>
+  <text x="18" y="84" font-family="WPSans" font-size="6.6" fill="#26333F">BF16</text>
+  <rect x="84" y="76" width="94.875" height="11" fill="#5D6C7B" rx="1.4"/>
+  <text x="203" y="84" font-family="WPSans" font-size="6.6" fill="#5D6C7B" font-weight="bold">74.78</text>
+  <text x="18" y="101" font-family="WPSans" font-size="6.6" fill="#26333F">FP8 static</text>
+  <rect x="84" y="93" width="95.3542" height="11" fill="#0F7267" rx="1.4"/>
+  <text x="203" y="101" font-family="WPSans" font-size="6.6" fill="#0F7267" font-weight="bold">74.79</text>
+  <text x="18" y="118" font-family="WPSans" font-size="6.6" fill="#26333F">FP8 dynamic</text>
+  <rect x="84" y="110" width="93.4375" height="11" fill="#0F7267" rx="1.4"/>
+  <text x="203" y="118" font-family="WPSans" font-size="6.6" fill="#0F7267" font-weight="bold">74.75</text>
+  <text x="18" y="135" font-family="WPSans" font-size="6.6" fill="#26333F">INT8 dynamic</text>
+  <rect x="84" y="127" width="97.75" height="11" fill="#1C5A9E" rx="1.4"/>
+  <text x="203" y="135" font-family="WPSans" font-size="6.6" fill="#1C5A9E" font-weight="bold">74.84</text>
+  <text x="18" y="152" font-family="WPSans" font-size="6.6" fill="#26333F">INT4 AWQ</text>
+  <rect x="84" y="144" width="37.8542" height="11" fill="#A8551A" rx="1.4"/>
+  <text x="203" y="152" font-family="WPSans" font-size="6.6" fill="#A8551A" font-weight="bold">73.59</text>
+  <text x="18" y="169" font-family="WPSans" font-size="6.6" fill="#26333F">INT4 GPTQ</text>
+  <rect x="84" y="161" width="22.0417" height="11" fill="#9C2B2B" rx="1.4"/>
+  <text x="203" y="169" font-family="WPSans" font-size="6.6" fill="#9C2B2B" font-weight="bold">73.26</text>
+  <text x="18" y="184" font-family="WPSans" font-size="6" fill="#8494A3" font-style="italic">Axis starts at 72.8 to make the INT4 gap visible.</text>
+  <rect x="247" y="38" width="233" height="148" fill="#FFFFFF" rx="3" stroke="#D2DAE2" stroke-width="1"/>
+  <text x="257" y="53" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Saturated throughput, tokens per second</text>
+  <text x="257" y="63" font-family="WPSans" font-size="6.2" fill="#5D6C7B">aggregate under load, H100, ShareGPT-shaped traffic</text>
+  <text x="257" y="86" font-family="WPSans" font-size="6.6" fill="#26333F">FP8 static</text>
+  <rect x="323" y="78" width="109.357" height="11" fill="#0F7267" rx="1.4"/>
+  <text x="470" y="86" font-family="WPSans" font-size="6.6" fill="#0F7267" text-anchor="end" font-weight="bold">16,452</text>
+  <text x="257" y="103" font-family="WPSans" font-size="6.6" fill="#26333F">FP8 dynamic</text>
+  <rect x="323" y="95" width="101.54" height="11" fill="#0F7267" rx="1.4"/>
+  <text x="470" y="103" font-family="WPSans" font-size="6.6" fill="#0F7267" text-anchor="end" font-weight="bold">15,276</text>
+  <text x="257" y="120" font-family="WPSans" font-size="6.6" fill="#26333F">INT4 W4A16</text>
+  <rect x="323" y="112" width="90.4332" height="11" fill="#A8551A" rx="1.4"/>
+  <text x="470" y="120" font-family="WPSans" font-size="6.6" fill="#A8551A" text-anchor="end" font-weight="bold">13,605</text>
+  <text x="257" y="137" font-family="WPSans" font-size="6.6" fill="#26333F">BF16</text>
+  <rect x="323" y="129" width="88.4391" height="11" fill="#5D6C7B" rx="1.4"/>
+  <text x="470" y="137" font-family="WPSans" font-size="6.6" fill="#5D6C7B" text-anchor="end" font-weight="bold">13,305</text>
+  <text x="257" y="154" font-family="WPSans" font-size="6.6" fill="#26333F">INT4 AWQ</text>
+  <rect x="323" y="146" width="64.8487" height="11" fill="#9C2B2B" rx="1.4"/>
+  <text x="470" y="154" font-family="WPSans" font-size="6.6" fill="#9C2B2B" text-anchor="end" font-weight="bold">9,756</text>
+  <text x="257" y="169" font-family="WPSans" font-size="6" fill="#8494A3" font-style="italic">FP8 wins here because Hopper has native FP8 tensor cores.</text>
+  <text x="8" y="196" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">The rule that reconciles the two panels</text>
+  <rect x="8" y="206" width="233" height="58" fill="#FFFFFF" rx="3" stroke="#0F7267" stroke-width="1"/>
+  <text x="18" y="220" font-family="WPSans" font-size="7" fill="#0F7267" font-weight="bold">Batch size 1, latency critical</text>
+  <text x="18" y="233" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="24" y="233" font-family="WPSans" font-size="6.3" fill="#26333F">the limiter is weight traffic through memory</text>
+  <text x="18" y="242.6" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="24" y="242.6" font-family="WPSans" font-size="6.3" fill="#26333F">4-bit moves less, so it wins single stream</text>
+  <text x="18" y="252.2" font-family="WPSans" font-size="6.3" fill="#0F7267">•</text>
+  <text x="24" y="252.2" font-family="WPSans" font-size="6.3" fill="#26333F">use for interactive routers and classifiers</text>
+  <rect x="247" y="206" width="233" height="58" fill="#FFFFFF" rx="3" stroke="#1C5A9E" stroke-width="1"/>
+  <text x="257" y="220" font-family="WPSans" font-size="7" fill="#1C5A9E" font-weight="bold">Saturated, throughput critical</text>
+  <text x="257" y="233" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="263" y="233" font-family="WPSans" font-size="6.3" fill="#26333F">the limiter is tensor core occupancy</text>
+  <text x="257" y="242.6" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="263" y="242.6" font-family="WPSans" font-size="6.3" fill="#26333F">FP8 W8A8 wins on Hopper and newer</text>
+  <text x="257" y="252.2" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="263" y="252.2" font-family="WPSans" font-size="6.3" fill="#26333F">use for synthesis pools and batch work</text>
+  <rect x="8" y="274" width="472" height="46" fill="#FBF0E4" rx="3" stroke="#A8551A" stroke-width="1"/>
+  <text x="16" y="288" font-family="WPSans" font-size="7" fill="#A8551A" font-weight="bold">Where quantization loss actually shows up in an agent</text>
+  <text x="16" y="300" font-family="WPSans" font-size="6.4" fill="#26333F">Aggregate benchmarks hide the failures that matter. A 1.2 point MMLU drop can appear as a 6 point drop in strict</text>
+  <text x="16" y="309" font-family="WPSans" font-size="6.4" fill="#26333F">tool-argument correctness or a measurable rise in over-refusal. Evaluate the quantized model on your own routing,</text>
+  <text x="16" y="318" font-family="WPSans" font-size="6.4" fill="#26333F">parameter extraction and refusal suites before it goes anywhere near the fast path.</text>
+  <rect x="0.5" y="0.5" width="487" height="329" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

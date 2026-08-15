@@ -1,0 +1,93 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="456" viewBox="0 0 488 456">
+  <text x="8" y="17" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">From the number you have to the number that sizes the fleet</text>
+  <text x="8" y="28" font-family="WPSans" font-size="6.6" fill="#5D6C7B">Worked for the mid tier. Every arrow is an assumption you must replace with your own measurement.</text>
+  <rect x="8" y="40" width="210" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="40" width="2.6" height="24" fill="#5D6C7B" rx="1.3"/>
+  <text x="16" y="55.5" font-family="WPSans" font-size="7" fill="#16202B">Registered users</text>
+  <text x="232" y="56" font-family="WPSans" font-size="9" fill="#5D6C7B" text-anchor="end" font-weight="bold">1,000,000</text>
+  <text x="244" y="55.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">the number in the business case</text>
+  <line x1="120" y1="64" x2="120" y2="67.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,71.5 117.976,67.1 122.024,67.1" fill="#D2DAE2"/>
+  <rect x="8" y="70" width="188.125" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="70" width="2.6" height="24" fill="#5D6C7B" rx="1.3"/>
+  <text x="16" y="85.5" font-family="WPSans" font-size="7" fill="#16202B">Monthly actives</text>
+  <text x="232" y="86" font-family="WPSans" font-size="9" fill="#5D6C7B" text-anchor="end" font-weight="bold">400,000</text>
+  <text x="244" y="85.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 0.40 engagement</text>
+  <line x1="120" y1="94" x2="120" y2="97.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,101.5 117.976,97.1 122.024,97.1" fill="#D2DAE2"/>
+  <rect x="8" y="100" width="166.25" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="100" width="2.6" height="24" fill="#1C5A9E" rx="1.3"/>
+  <text x="16" y="115.5" font-family="WPSans" font-size="7" fill="#16202B">Daily actives</text>
+  <text x="232" y="116" font-family="WPSans" font-size="9" fill="#1C5A9E" text-anchor="end" font-weight="bold">80,000</text>
+  <text x="244" y="115.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 0.20 of monthly</text>
+  <line x1="120" y1="124" x2="120" y2="127.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,131.5 117.976,127.1 122.024,127.1" fill="#D2DAE2"/>
+  <rect x="8" y="130" width="144.375" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="130" width="2.6" height="24" fill="#1C5A9E" rx="1.3"/>
+  <text x="16" y="145.5" font-family="WPSans" font-size="7" fill="#16202B">Assisted sessions per day</text>
+  <text x="232" y="146" font-family="WPSans" font-size="9" fill="#1C5A9E" text-anchor="end" font-weight="bold">24,000</text>
+  <text x="244" y="145.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 0.30 use the agent</text>
+  <line x1="120" y1="154" x2="120" y2="157.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,161.5 117.976,157.1 122.024,157.1" fill="#D2DAE2"/>
+  <rect x="8" y="160" width="122.5" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="160" width="2.6" height="24" fill="#1C5A9E" rx="1.3"/>
+  <text x="16" y="175.5" font-family="WPSans" font-size="7" fill="#16202B">Peak hour sessions</text>
+  <text x="232" y="176" font-family="WPSans" font-size="9" fill="#1C5A9E" text-anchor="end" font-weight="bold">4,800</text>
+  <text x="244" y="175.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 0.20 in the busiest hour</text>
+  <line x1="120" y1="184" x2="120" y2="187.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,191.5 117.976,187.1 122.024,187.1" fill="#D2DAE2"/>
+  <rect x="8" y="190" width="100.625" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="190" width="2.6" height="24" fill="#0F7267" rx="1.3"/>
+  <text x="16" y="205.5" font-family="WPSans" font-size="7" fill="#16202B">Concurrent sessions</text>
+  <text x="232" y="206" font-family="WPSans" font-size="9" fill="#0F7267" text-anchor="end" font-weight="bold">3,000</text>
+  <text x="244" y="205.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">Little's law, 225 s mean session</text>
+  <line x1="120" y1="214" x2="120" y2="217.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,221.5 117.976,217.1 122.024,217.1" fill="#D2DAE2"/>
+  <rect x="8" y="220" width="78.75" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="220" width="2.6" height="24" fill="#0F7267" rx="1.3"/>
+  <text x="16" y="235.5" font-family="WPSans" font-size="7" fill="#16202B">In flight requests</text>
+  <text x="232" y="236" font-family="WPSans" font-size="9" fill="#0F7267" text-anchor="end" font-weight="bold">260</text>
+  <text x="244" y="235.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 4.5 s per turn, 20 s think time</text>
+  <line x1="120" y1="244" x2="120" y2="247.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,251.5 117.976,247.1 122.024,247.1" fill="#D2DAE2"/>
+  <rect x="8" y="250" width="56.875" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="250" width="2.6" height="24" fill="#5B4B9E" rx="1.3"/>
+  <text x="16" y="265.5" font-family="WPSans" font-size="7" fill="#16202B">Control path model calls per second</text>
+  <text x="232" y="266" font-family="WPSans" font-size="9" fill="#5B4B9E" text-anchor="end" font-weight="bold">310</text>
+  <text x="244" y="265.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 2.6 calls per turn, fast tier</text>
+  <line x1="120" y1="274" x2="120" y2="277.452" stroke="#D2DAE2" stroke-width="0.9"/>
+  <polygon points="120,281.5 117.976,277.1 122.024,277.1" fill="#D2DAE2"/>
+  <rect x="8" y="280" width="35" height="24" fill="#EFF3F7" rx="2"/>
+  <rect x="8" y="280" width="2.6" height="24" fill="#5B4B9E" rx="1.3"/>
+  <text x="16" y="295.5" font-family="WPSans" font-size="7" fill="#16202B">Control path tokens per second</text>
+  <text x="232" y="296" font-family="WPSans" font-size="9" fill="#5B4B9E" text-anchor="end" font-weight="bold">62,000</text>
+  <text x="244" y="295.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">x 200 output tokens per call</text>
+  <line x1="8" y1="316" x2="480" y2="316" stroke="#D2DAE2" stroke-width="0.8"/>
+  <text x="8" y="330" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">The two multipliers that are always underestimated</text>
+  <rect x="8" y="342" width="233" height="68" fill="#FFFFFF" rx="3" stroke="#D2DAE2" stroke-width="0.9"/>
+  <rect x="8" y="343" width="2.6" height="66" fill="#1C5A9E" rx="1.3"/>
+  <text x="18" y="356" font-family="WPSans" font-size="7" fill="#1C5A9E" font-weight="bold">Fan out per turn</text>
+  <text x="18" y="369" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="24" y="369" font-family="WPSans" font-size="6.4" fill="#26333F">control path model calls: 2-4</text>
+  <text x="18" y="379" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="24" y="379" font-family="WPSans" font-size="6.4" fill="#26333F">domain API calls: 1-6</text>
+  <text x="18" y="389" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="24" y="389" font-family="WPSans" font-size="6.4" fill="#26333F">database queries: 2-12</text>
+  <text x="18" y="399" font-family="WPSans" font-size="6.3" fill="#1C5A9E">•</text>
+  <text x="24" y="399" font-family="WPSans" font-size="6.4" fill="#26333F">retrieval requests: 0-3</text>
+  <rect x="247" y="342" width="233" height="68" fill="#FFFFFF" rx="3" stroke="#D2DAE2" stroke-width="0.9"/>
+  <rect x="247" y="343" width="2.6" height="66" fill="#9C2B2B" rx="1.3"/>
+  <text x="257" y="356" font-family="WPSans" font-size="7" fill="#9C2B2B" font-weight="bold">Amplification on top</text>
+  <text x="257" y="369" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="263" y="369" font-family="WPSans" font-size="6.4" fill="#26333F">retries under partial failure: 1.1-3x</text>
+  <text x="257" y="379" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="263" y="379" font-family="WPSans" font-size="6.4" fill="#26333F">guardrail calls per turn: 1-3</text>
+  <text x="257" y="389" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="263" y="389" font-family="WPSans" font-size="6.4" fill="#26333F">judge sampling: 0.02-0.2x</text>
+  <text x="257" y="399" font-family="WPSans" font-size="6.3" fill="#9C2B2B">•</text>
+  <text x="263" y="399" font-family="WPSans" font-size="6.4" fill="#26333F">shadow and canary traffic: 0-1x</text>
+  <rect x="8" y="420" width="472" height="26" fill="#FBF0E4" rx="3" stroke="#A8551A" stroke-width="1"/>
+  <text x="16" y="431" font-family="WPSans" font-size="6.9" fill="#A8551A" font-weight="bold">Capacity identity</text>
+  <text x="16" y="441" font-family="WPSans" font-size="6.5" fill="#26333F">effective load = ingress rate x fan out per request x retry amplification x assurance multiplier, then x tokens per call</text>
+  <rect x="0.5" y="0.5" width="487" height="455" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

@@ -1,0 +1,100 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="303.716" viewBox="0 0 488 303.716">
+  <rect x="8" y="10" width="152" height="234" fill="#FFFFFF" rx="4" stroke="#D2DAE2" stroke-width="1"/>
+  <rect x="8" y="10" width="152" height="22" fill="#FBF0E4" rx="4"/>
+  <rect x="8" y="26" width="152" height="6" fill="#FBF0E4"/>
+  <text x="84" y="24.5" font-family="WPSans" font-size="7.4" fill="#A8551A" text-anchor="middle" font-weight="bold">A. Single agent with skills</text>
+  <rect x="168" y="10" width="152" height="234" fill="#FFFFFF" rx="4" stroke="#D2DAE2" stroke-width="1"/>
+  <rect x="168" y="10" width="152" height="22" fill="#F9EAEA" rx="4"/>
+  <rect x="168" y="26" width="152" height="6" fill="#F9EAEA"/>
+  <text x="244" y="24.5" font-family="WPSans" font-size="7.4" fill="#9C2B2B" text-anchor="middle" font-weight="bold">B. Peer to peer, no centre</text>
+  <rect x="328" y="10" width="152" height="234" fill="#FFFFFF" rx="4" stroke="#D2DAE2" stroke-width="1"/>
+  <rect x="328" y="10" width="152" height="22" fill="#E4F1EF" rx="4"/>
+  <rect x="328" y="26" width="152" height="6" fill="#E4F1EF"/>
+  <text x="404" y="24.5" font-family="WPSans" font-size="7.4" fill="#0F7267" text-anchor="middle" font-weight="bold">C. Federated with a thin centre</text>
+  <rect x="32" y="44" width="104" height="46" fill="#FBF0E4" rx="3.5" stroke="#A8551A" stroke-width="1.1"/>
+  <text x="84" y="65.148" font-family="WPSans" font-size="8" fill="#16202B" text-anchor="middle" font-weight="bold">One agent</text>
+  <text x="84" y="75.708" font-family="WPSans" font-size="6.2" fill="#5D6C7B" text-anchor="middle">one prompt, one context</text>
+  <rect x="18" y="118" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="32.5" y="129.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 1</text>
+  <rect x="51" y="118" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="65.5" y="129.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 2</text>
+  <rect x="84" y="118" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="98.5" y="129.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 3</text>
+  <rect x="117" y="118" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="131.5" y="129.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 4</text>
+  <rect x="18" y="144" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="32.5" y="155.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 5</text>
+  <rect x="51" y="144" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="65.5" y="155.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 6</text>
+  <rect x="84" y="144" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="98.5" y="155.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 7</text>
+  <rect x="117" y="144" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="131.5" y="155.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 8</text>
+  <rect x="18" y="170" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="32.5" y="181.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 9</text>
+  <rect x="51" y="170" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="65.5" y="181.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 10</text>
+  <rect x="84" y="170" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="98.5" y="181.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 11</text>
+  <rect x="117" y="170" width="29" height="18" fill="#EFF3F7" rx="2" stroke="#D2DAE2" stroke-width="0.7"/>
+  <text x="131.5" y="181.6" font-family="WPSans" font-size="5.6" fill="#5D6C7B" text-anchor="middle">skill 12</text>
+  <line x1="84" y1="90" x2="32.5" y2="116" stroke="#F0D6B6" stroke-width="0.7"/>
+  <line x1="84" y1="90" x2="65.5" y2="116" stroke="#F0D6B6" stroke-width="0.7"/>
+  <line x1="84" y1="90" x2="98.5" y2="116" stroke="#F0D6B6" stroke-width="0.7"/>
+  <line x1="84" y1="90" x2="131.5" y2="116" stroke="#F0D6B6" stroke-width="0.7"/>
+  <text x="84" y="208" font-family="WPSans" font-size="6.4" fill="#16202B" text-anchor="middle" font-weight="bold">12 skills in one context</text>
+  <text x="84" y="218" font-family="WPSans" font-size="6.2" fill="#5D6C7B" text-anchor="middle">every change is a system change</text>
+  <text x="84" y="232" font-family="WPSans" font-size="6.2" fill="#A8551A" text-anchor="middle">prefill grows with the catalogue</text>
+  <line x1="244" y1="62" x2="290" y2="96" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="244" y1="62" x2="276" y2="148" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="244" y1="62" x2="212" y2="148" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="244" y1="62" x2="198" y2="96" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="290" y1="96" x2="276" y2="148" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="290" y1="96" x2="212" y2="148" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="290" y1="96" x2="198" y2="96" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="276" y1="148" x2="212" y2="148" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="276" y1="148" x2="198" y2="96" stroke="#EFC9C9" stroke-width="0.65"/>
+  <line x1="212" y1="148" x2="198" y2="96" stroke="#EFC9C9" stroke-width="0.65"/>
+  <circle cx="244" cy="62" r="13" fill="#F9EAEA" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="244" y="64.6" font-family="WPSans" font-size="7.4" fill="#9C2B2B" text-anchor="middle" font-weight="bold">A</text>
+  <circle cx="290" cy="96" r="13" fill="#F9EAEA" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="290" y="98.6" font-family="WPSans" font-size="7.4" fill="#9C2B2B" text-anchor="middle" font-weight="bold">B</text>
+  <circle cx="276" cy="148" r="13" fill="#F9EAEA" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="276" y="150.6" font-family="WPSans" font-size="7.4" fill="#9C2B2B" text-anchor="middle" font-weight="bold">C</text>
+  <circle cx="212" cy="148" r="13" fill="#F9EAEA" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="212" y="150.6" font-family="WPSans" font-size="7.4" fill="#9C2B2B" text-anchor="middle" font-weight="bold">D</text>
+  <circle cx="198" cy="96" r="13" fill="#F9EAEA" stroke="#9C2B2B" stroke-width="1"/>
+  <text x="198" y="98.6" font-family="WPSans" font-size="7.4" fill="#9C2B2B" text-anchor="middle" font-weight="bold">E</text>
+  <text x="244" y="186" font-family="WPSans" font-size="6.4" fill="#16202B" text-anchor="middle" font-weight="bold">10 trust and compatibility edges</text>
+  <text x="244" y="196.5" font-family="WPSans" font-size="6.2" fill="#5D6C7B" text-anchor="middle">no owner of the end to end deadline</text>
+  <text x="244" y="207" font-family="WPSans" font-size="6.2" fill="#5D6C7B" text-anchor="middle">no closed world reachability proof</text>
+  <text x="244" y="221" font-family="WPSans" font-size="6.2" fill="#9C2B2B" text-anchor="middle">loops are emergent, not designed</text>
+  <rect x="356" y="44" width="96" height="38" fill="#E8F0F8" rx="3.5" stroke="#1C5A9E" stroke-width="1.1"/>
+  <text x="404" y="61.092" font-family="WPSans" font-size="7.8" fill="#16202B" text-anchor="middle" font-weight="bold">Thin centre</text>
+  <text x="404" y="71.388" font-family="WPSans" font-size="6.2" fill="#5D6C7B" text-anchor="middle">route, gate, compose</text>
+  <rect x="340" y="122" width="40.6667" height="30" fill="#EFF3F7" rx="2.5" stroke="#BFDFDA" stroke-width="0.9"/>
+  <text x="360.333" y="135" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">tool</text>
+  <text x="360.333" y="145" font-family="WPSans" font-size="5.8" fill="#5D6C7B" text-anchor="middle">domain owned</text>
+  <line x1="404" y1="82" x2="363.562" y2="116.264" stroke="#0F7267" stroke-width="0.9"/>
+  <polygon points="360.333,119 362.475,114.412 365.211,117.641" fill="#0F7267"/>
+  <rect x="384.667" y="122" width="40.6667" height="30" fill="#E4F1EF" rx="2.5" stroke="#BFDFDA" stroke-width="0.9"/>
+  <text x="405" y="135" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">agent</text>
+  <text x="405" y="145" font-family="WPSans" font-size="5.8" fill="#5D6C7B" text-anchor="middle">domain owned</text>
+  <line x1="404" y1="82" x2="404.886" y2="114.77" stroke="#0F7267" stroke-width="0.9"/>
+  <polygon points="405,119 402.76,114.459 406.991,114.345" fill="#0F7267"/>
+  <rect x="429.333" y="122" width="40.6667" height="30" fill="#EDEAF7" rx="2.5" stroke="#BFDFDA" stroke-width="0.9"/>
+  <text x="449.667" y="135" font-family="WPSans" font-size="6.8" fill="#16202B" text-anchor="middle" font-weight="bold">workflow</text>
+  <text x="449.667" y="145" font-family="WPSans" font-size="5.8" fill="#5D6C7B" text-anchor="middle">domain owned</text>
+  <line x1="404" y1="82" x2="446.378" y2="116.336" stroke="#0F7267" stroke-width="0.9"/>
+  <polygon points="449.667,119 444.76,117.748 447.425,114.46" fill="#0F7267"/>
+  <rect x="340" y="162" width="128" height="20" fill="#FFFFFF" rx="2.5" stroke="#D2DAE2" stroke-width="0.8"/>
+  <text x="404" y="175" font-family="WPSans" font-size="6.2" fill="#123F72" text-anchor="middle">registry decides what is reachable</text>
+  <text x="404" y="196" font-family="WPSans" font-size="6.4" fill="#16202B" text-anchor="middle" font-weight="bold">simplest sufficient execution unit</text>
+  <text x="404" y="206.5" font-family="WPSans" font-size="6.2" fill="#5D6C7B" text-anchor="middle">one deadline owner, one trace root</text>
+  <text x="404" y="221" font-family="WPSans" font-size="6.2" fill="#0F7267" text-anchor="middle">cost: a real control plane to run</text>
+  <line x1="8" y1="256" x2="480" y2="256" stroke="#E7ECF1" stroke-width="0.8"/>
+  <text x="8" y="270" font-family="WPSans" font-size="7" fill="#16202B" font-weight="bold">Selection rule</text>
+  <text x="8" y="282" font-family="WPSans" font-size="6.6" fill="#5D6C7B">Prefer the fewest reasoning hops that still preserve domain autonomy, enforceable authority and independent</text>
+  <text x="8" y="292" font-family="WPSans" font-size="6.6" fill="#5D6C7B">deployability. Pattern C is a superset: it can host A for a bounded domain and B between two consenting peers.</text>
+  <rect x="0.5" y="0.5" width="487" height="302.716" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>

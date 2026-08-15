@@ -1,0 +1,67 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="488" height="376.492" viewBox="0 0 488 376.492">
+  <text x="8" y="59" font-family="WPSans" font-size="7.8" fill="#16202B" font-weight="bold">On prem fast tier</text>
+  <text x="8" y="69.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">Tier 1 quantized, same rack</text>
+  <rect x="118" y="46" width="5.90071" height="26" fill="#5D6C7B" rx="1.4"/>
+  <rect x="124.601" y="46" width="4.86809" height="26" fill="#A8551A" rx="1.4"/>
+  <rect x="130.169" y="46" width="4.42553" height="26" fill="#0F7267" rx="1.4"/>
+  <rect x="135.294" y="46" width="8.11348" height="26" fill="#0F7267" rx="1.4"/>
+  <rect x="144.108" y="46" width="26.5532" height="26" fill="#1C5A9E" rx="1.4"/>
+  <rect x="171.361" y="46" width="5.16312" height="26" fill="#9C2B2B" rx="1.4"/>
+  <rect x="177.224" y="46" width="6.6383" height="26" fill="#1C5A9E" rx="1.4"/>
+  <rect x="184.562" y="46" width="5.90071" height="26" fill="#A8551A" rx="1.4"/>
+  <text x="197.163" y="63" font-family="WPSans" font-size="8.4" fill="#0F7267" font-weight="bold">458 ms</text>
+  <text x="8" y="109" font-family="WPSans" font-size="7.8" fill="#16202B" font-weight="bold">Frontier API centre</text>
+  <text x="8" y="119.5" font-family="WPSans" font-size="6.4" fill="#5D6C7B">every stage a network round trip</text>
+  <rect x="118" y="96" width="5.90071" height="26" fill="#5D6C7B" rx="1.4"/>
+  <rect x="124.601" y="96" width="30.9787" height="26" fill="#A8551A" rx="1.4"/>
+  <text x="140.09" y="112.6" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle">210</text>
+  <rect x="156.279" y="96" width="35.4043" height="26" fill="#5B4B9E" rx="1.4"/>
+  <text x="173.982" y="112.6" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle">240</text>
+  <rect x="192.384" y="96" width="132.766" height="26" fill="#5B4B9E" rx="1.4"/>
+  <text x="258.767" y="112.6" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle">900</text>
+  <rect x="325.85" y="96" width="26.5532" height="26" fill="#1C5A9E" rx="1.4"/>
+  <rect x="353.103" y="96" width="5.16312" height="26" fill="#9C2B2B" rx="1.4"/>
+  <rect x="358.966" y="96" width="38.3546" height="26" fill="#5B4B9E" rx="1.4"/>
+  <text x="378.143" y="112.6" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle">260</text>
+  <rect x="398.021" y="96" width="36.8794" height="26" fill="#A8551A" rx="1.4"/>
+  <text x="416.46" y="112.6" font-family="WPSans" font-size="6.4" fill="#FFFFFF" text-anchor="middle">250</text>
+  <text x="441.6" y="113" font-family="WPSans" font-size="8.4" fill="#9C2B2B" font-weight="bold">2115 ms</text>
+  <text x="8" y="32" font-family="WPSans" font-size="7.4" fill="#16202B" font-weight="bold">Same journey, same domain work, two choices for the control-path model</text>
+  <rect x="8" y="140" width="472" height="34" fill="#F7F9FB" rx="3.5" stroke="#E7ECF1" stroke-width="1"/>
+  <text x="16" y="154" font-family="WPSans" font-size="6.9" fill="#26333F">Identical domain work: 180 ms in both bars. The control path costs 278 ms on prem and 1935 ms over the API.</text>
+  <text x="16" y="166" font-family="WPSans" font-size="6.9" fill="#9C2B2B">The architecture, not the domain, adds 1657 ms - a 4.6x end to end regression on the same backend.</text>
+  <line x1="8" y1="186" x2="480" y2="186" stroke="#E7ECF1" stroke-width="0.8"/>
+  <text x="8" y="200" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">Second order consequences that latency alone does not show</text>
+  <circle cx="13" cy="211.4" r="2.2" fill="#9C2B2B"/>
+  <text x="21" y="214" font-family="WPSans" font-size="6.8" fill="#16202B" font-weight="bold">Quota coupling</text>
+  <text x="126" y="214" font-family="WPSans" font-size="6.6" fill="#5D6C7B">user traffic, guard rails and judges draw on one provider limit; an eval burst throttles customers</text>
+  <circle cx="13" cy="224.4" r="2.2" fill="#9C2B2B"/>
+  <text x="21" y="227" font-family="WPSans" font-size="6.8" fill="#16202B" font-weight="bold">Availability inheritance</text>
+  <text x="126" y="227" font-family="WPSans" font-size="6.6" fill="#5D6C7B">the fast path is only as available as the vendor, and there is no local degraded mode</text>
+  <circle cx="13" cy="237.4" r="2.2" fill="#9C2B2B"/>
+  <text x="21" y="240" font-family="WPSans" font-size="6.8" fill="#16202B" font-weight="bold">Cost per turn</text>
+  <text x="126" y="240" font-family="WPSans" font-size="6.6" fill="#5D6C7B">four control-path calls per turn at frontier prices, on the 95% of turns that never needed reasoning</text>
+  <circle cx="13" cy="250.4" r="2.2" fill="#9C2B2B"/>
+  <text x="21" y="253" font-family="WPSans" font-size="6.8" fill="#16202B" font-weight="bold">Residency exposure</text>
+  <text x="126" y="253" font-family="WPSans" font-size="6.6" fill="#5D6C7B">raw utterances leave the estate on the classification hop, where capability was gained least</text>
+  <circle cx="13" cy="263.4" r="2.2" fill="#9C2B2B"/>
+  <text x="21" y="266" font-family="WPSans" font-size="6.8" fill="#16202B" font-weight="bold">Variance</text>
+  <text x="126" y="266" font-family="WPSans" font-size="6.6" fill="#5D6C7B">p99 is set by someone else's queue; retries land on the same saturated endpoint</text>
+  <line x1="8" y1="288" x2="480" y2="288" stroke="#E7ECF1" stroke-width="0.8"/>
+  <text x="8" y="302" font-family="WPSans" font-size="7.2" fill="#16202B" font-weight="bold">The converse discipline</text>
+  <text x="8" y="314" font-family="WPSans" font-size="6.7" fill="#5D6C7B">None of this argues against frontier models. It argues against putting them on the path every turn takes. Tier 3 earns</text>
+  <text x="8" y="325" font-family="WPSans" font-size="6.7" fill="#5D6C7B">its latency on the 1-4% of turns that genuinely need cross domain decomposition or contested policy reasoning, where a</text>
+  <text x="8" y="336" font-family="WPSans" font-size="6.7" fill="#5D6C7B">quantized 3B model would produce a confident wrong plan. The design goal is to make that call rare and deliberate,</text>
+  <text x="8" y="347" font-family="WPSans" font-size="6.7" fill="#5D6C7B">and to keep a local fallback for the day the provider is unavailable.</text>
+  <rect x="8" y="358" width="8" height="8" fill="#0F7267" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="22" y="364.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">on prem</text>
+  <rect x="104" y="358" width="8" height="8" fill="#5B4B9E" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="118" y="364.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">frontier API</text>
+  <rect x="200" y="358" width="8" height="8" fill="#1C5A9E" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="214" y="364.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">domain work</text>
+  <rect x="296" y="358" width="8" height="8" fill="#A8551A" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="310" y="364.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">guardrails</text>
+  <rect x="392" y="358" width="8" height="8" fill="#9C2B2B" rx="1.6" stroke="#D2DAE2" stroke-width="0.6"/>
+  <text x="406" y="364.88" font-family="WPSans" font-size="6.2" fill="#5D6C7B">deterministic authority</text>
+  <rect x="0.5" y="0.5" width="487" height="375.492" fill="none" rx="3" stroke="#E7ECF1" stroke-width="1"/>
+</svg>
