@@ -44,10 +44,10 @@
   <text x="474" y="238.5" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">3 to 6</text>
   <line x1="14" y1="241.7" x2="474" y2="241.7" stroke="#E7ECF1" stroke-width="0.5"/>
   <text x="14" y="251" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Control path calls per second</text>
-  <text x="474" y="251" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">8 to 15</text>
+  <text x="474" y="251" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">4 to 8</text>
   <line x1="14" y1="254.2" x2="474" y2="254.2" stroke="#E7ECF1" stroke-width="0.5"/>
   <text x="14" y="263.5" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Control path tokens per second</text>
-  <text x="474" y="263.5" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">1,500 to 3,000</text>
+  <text x="474" y="263.5" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">800 to 1,600</text>
   <line x1="14" y1="266.7" x2="474" y2="266.7" stroke="#E7ECF1" stroke-width="0.5"/>
   <text x="14" y="276" font-family="WPSans" font-size="6.5" fill="#5D6C7B">GPU count, steady state</text>
   <text x="474" y="276" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">1</text>

@@ -798,13 +798,13 @@ def load_funnel() -> Canvas:
            size=6.6, fill=C["muted"])
 
     steps = [
-        ("Registered users", "1,000,000", "the number in the business case", C["muted"]),
-        ("Monthly actives", "400,000", "x 0.40 engagement", C["muted"]),
-        ("Daily actives", "80,000", "x 0.20 of monthly", C["accent"]),
-        ("Assisted sessions per day", "24,000", "x 0.30 use the agent", C["accent"]),
-        ("Peak hour sessions", "4,800", "x 0.20 in the busiest hour", C["accent"]),
+        ("Registered users", "10,000,000", "the number in the business case", C["muted"]),
+        ("Monthly actives", "4,000,000", "x 0.40 engagement", C["muted"]),
+        ("Daily actives", "800,000", "x 0.20 of monthly", C["accent"]),
+        ("Assisted sessions per day", "240,000", "x 0.30 use the agent", C["accent"]),
+        ("Peak hour sessions", "48,000", "x 0.20 in the busiest hour", C["accent"]),
         ("Concurrent sessions", "3,000", "Little's law, 225 s mean session", C["teal"]),
-        ("In flight requests", "260", "x 4.5 s per turn, 20 s think time", C["teal"]),
+        ("In flight requests", "260", "x 2.2 s service, 25 s turn cycle", C["teal"]),
         ("Control path model calls per second", "310", "x 2.6 calls per turn, fast tier", C["violet"]),
         ("Control path tokens per second", "62,000", "x 200 output tokens per call", C["violet"]),
     ]
@@ -961,8 +961,8 @@ def topology_tier_s() -> Canvas:
         [
             ("Peak concurrent sessions", "under 40"),
             ("In flight requests at peak", "3 to 6"),
-            ("Control path calls per second", "8 to 15"),
-            ("Control path tokens per second", "1,500 to 3,000"),
+            ("Control path calls per second", "4 to 8"),
+            ("Control path tokens per second", "800 to 1,600"),
             ("GPU count, steady state", "1"),
             ("Utilisation target", "20 to 35% - headroom is the point"),
         ],

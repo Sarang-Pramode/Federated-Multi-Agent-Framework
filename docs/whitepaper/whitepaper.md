@@ -97,11 +97,11 @@ Table. How the informal tier labels map onto the quantity that actually determin
 
 | Tier label | Informal reading | The quantity that sizes hardware | Approximate registered base implied |
 |---|---|---|---|
-| Tier S | Fewer than 10 customers | Fewer than about 40 peak concurrent assisted sessions | A pilot, a design partner, or an internal beta group of a few thousand people |
-| Tier M | 1,000 to 5,000 concurrent | 1,000 to 5,000 peak concurrent assisted sessions | Roughly 0.3 to 2 million registered users, depending entirely on engagement |
-| Tier L | More than 50,000 customers | More than 50,000 peak concurrent assisted sessions | Tens of millions of registered users, or a smaller base with very high engagement |
+| Tier S | Fewer than 10 customers | Fewer than about 40 peak concurrent assisted sessions | A few thousand highly engaged pilot users, or about 130,000 at the engagement rates assumed in Chapter 18 |
+| Tier M | 1,000 to 5,000 concurrent | 1,000 to 5,000 peak concurrent assisted sessions | Roughly 3 to 17 million registered users at those same rates |
+| Tier L | More than 50,000 customers | More than 50,000 peak concurrent assisted sessions | Above 160 million at those rates, or tens of millions where engagement is far higher |
 
-The tier that matters is the middle column. Two organisations with identical registered user counts can differ by an order of magnitude in concurrent sessions, and the ratio between them is the single assumption most worth measuring early.
+The tier that matters is the middle column. Two organisations with identical registered user counts can differ by an order of magnitude in concurrent sessions, and the ratio between them is the single assumption most worth measuring early. The right-hand column is therefore the least reliable in the table, and it is included only to show how wide the range is: it is computed from one specific chain of engagement assumptions, stated and worked in Chapter 18, and an organisation whose users engage twice as often needs half the registered base for the same hardware.
 
 ### How to read this document {#sec-how-to-read}
 
@@ -897,3 +897,518 @@ Four measurements are the minimum, and they are properties of the rails rather t
 Thresholds are policy, and policy has an owner. The arrangement that works is that the platform team owns the mechanism, the cascade shape and the latency budget; risk or security owns the acceptable false negative rate by attack family; and the domain owns the journey-level false positive tolerance, because the domain is accountable for whether its customers can complete their task.
 
 The reason to name owners explicitly is that threshold changes are the highest-leverage and least-reviewed changes in the system. Moving one number can shift a tenth of production traffic from stage 1 to stage 2, change mean latency by tens of milliseconds, and alter the refusal rate of a journey, with no code change and often no evaluation. Threshold changes therefore belong in the change types of {fig:evals} that trigger a required evaluation suite, and the reference implementation's change-classification rule treats a guardrail threshold change as a first-class change type for exactly this reason.
+
+# Sizing {#part-sizing}
+
+Part IV converts a business number into a hardware decision through an explicit chain of assumptions, states the accuracy price of each quantization format rather than hiding it, sizes three deployment tiers, and gives the commands to replace every figure in it with a measurement.
+
+## From a Business Number to a GPU Count {#ch-load}
+
+### The question capacity planning is actually asked {#sec-load-question}
+
+Sizing conversations begin with the wrong number. Someone has a registered user count, or a licence count, or a headline about how many customers the organisation serves, and the question is how many GPUs that requires. The number is unanswerable as posed, because none of those quantities appears anywhere in the arithmetic that determines hardware. What determines hardware is peak concurrent demand, the fan-out per request, and the token volume that results.
+
+The purpose of this chapter is not to produce a GPU count for a hypothetical organisation. It is to make the chain of conversion explicit, so that when the answer turns out to be wrong, the specific assumption that was wrong can be identified and corrected. A capacity model that produces a number without exposing its assumptions cannot be debugged, and every capacity model is eventually wrong.
+
+::: figure src=load-funnel.svg id=fig-funnel width=full
+The conversion chain worked for the mid tier. Each row is an assumption, and the arrow between rows is where a local measurement must replace the value used here. The lower panels list the multipliers that are routinely underestimated: fan-out per turn and the amplification from retries, rails and assurance traffic, which together often exceed the base load they multiply.
+:::
+
+### The chain, stated as arithmetic {#sec-load-chain}
+
+The chain below is worked for Tier M and every step is exact, so that a reader can substitute their own figures and follow the same arithmetic. The engagement ratios are **modelled** illustrative values, not industry benchmarks.
+
+Table. The conversion chain from registered users to control-path tokens per second, worked for Tier M. Each row's value is the product of the row above and the stated multiplier, so any figure can be replaced and the chain recomputed. **Modelled** throughout. {#tbl-load-chain}
+
+| Step | Quantity | Value | Multiplier applied | Where the real number comes from |
+|---:|---|---:|---|---|
+| 1 | Registered users | 10,000,000 | starting point | The business case |
+| 2 | Monthly active users | 4,000,000 | 0.40 engagement | Product analytics, already measured |
+| 3 | Daily active users | 800,000 | 0.20 of monthly | Product analytics, already measured |
+| 4 | Assisted sessions per day | 240,000 | 0.30 use the agent | Unknown before launch; the largest uncertainty |
+| 5 | Sessions in the peak hour | 48,000 | 0.20 in the busiest hour | Existing channel traffic shape |
+| 6 | Concurrent sessions at peak | 3,000 | Little's Law at 225 s mean session | Measure session duration, do not guess it |
+| 7 | In-flight requests at peak | 260 | 2.2 s mean service in a 25 s turn cycle | Time to first token plus streaming duration |
+| 8 | Control-path model calls per second | 310 | 2.6 calls per turn | The tiering distribution of {tbl:tiers} |
+| 9 | Control-path tokens per second | 62,000 | 200 output tokens per call | Measured from real prompts, not estimated |
+
+Steps 6 and 7 are both applications of Little's Law, which in this setting says that the number of things in a system equals the rate at which they arrive multiplied by the time each spends there. At step 6 the things are sessions: 48,000 sessions arriving over 3,600 seconds, each lasting 225 seconds, gives 3,000 concurrent. At step 7 the things are requests: the 3,000 sessions produce a turn every 25 seconds, which is 120 turns per second, and each turn occupies the system for 2.2 seconds, giving about 260 requests in flight. The same law appears again in Chapter 24, where it explains why a saturated pool's queue wait dominates its service time.
+
+Two steps in this chain deserve more scepticism than the others.
+
+**Step 4 is the largest unknown and it is unknowable before launch.** What fraction of daily active users will choose the assisted channel is a product question, not an engineering one, and pre-launch estimates are routinely wrong by a factor of three in both directions. The correct response is architectural rather than analytical: make the fast tier horizontally scalable in units small enough to add quickly, run at a utilisation target that leaves genuine headroom, and reforecast from measurement within the first weeks of real traffic.
+
+**Step 9 is where an unmeasured assumption becomes an expensive one.** Output tokens per control-path call is the difference between a router that emits a capability name and a router that emits a paragraph of reasoning. At 200 output tokens the fleet in Chapter 22 is adequate; at 800 it is not, and the difference is a prompt design decision that nobody thinks of as a capacity decision. Instrument it before sizing.
+
+### Fan-out is the multiplier that ruins forecasts {#sec-load-fanout}
+
+Every user turn produces more than one call to more than one thing, and the total is consistently underestimated because each contributing team accounts only for its own share.
+
+A single turn typically issues two to four control-path model calls, one to six domain API calls, two to twelve database queries behind those APIs, and zero to three retrieval requests. On top of that base there is amplification: retries under partial failure at 1.1 to 3 times, guardrail calls at one to three per turn, judge sampling at 2 to 20 percent of turns, and shadow or canary traffic at up to 100 percent during a migration.
+
+The identity worth writing on a whiteboard is this: effective load equals ingress rate times fan-out per request times retry amplification times the assurance multiplier, and only then times tokens per call. Every term is greater than or equal to one, and the product of five terms each modestly underestimated is a forecast that is wrong by a large factor. The most common single omission is shadow traffic during a migration, which can double the load on a fleet that was sized for the steady state and was therefore correctly sized right up until the migration began.
+
+> **Design rule.** Size the fast tier for measured peak times fan-out times retry amplification, then add the assurance load as a separate line item with its own quota. Assurance traffic that shares a quota with user traffic is not headroom; it is a latent incident, as Section {sec:frontier-second-order} argues in the API case and Chapter 27 formalises for the on-prem case.
+
+### What to measure in the first month {#sec-load-measure}
+
+Because the chain above is a scaffold for local measurement rather than a result, the useful output of this chapter is a short list of instruments to install before sizing anything.
+
+Session duration and turns per session, from which steps 6 and 7 follow directly. Time to first token and total response duration at p50, p95 and p99, separated by journey class, because a mean over mixed journeys is uninformative. Control-path calls per turn and output tokens per call, broken down by tier, which together give steps 8 and 9 and also reveal whether the escalation policy is behaving. Fan-out per turn to domains and to retrieval. Retry counts, attributed to the dependency that caused them. And the peak-to-mean ratio over both the day and the week, which is the figure that decides how much headroom the utilisation target must leave.
+
+Every one of these is cheap to collect and expensive to reconstruct later, which is why Section {sec:tier-s-notes} names skipping telemetry as the expensive mistake at Tier S.
+
+## Why Decode Is Memory-Bandwidth-Bound {#ch-roofline}
+
+### The two phases have opposite bottlenecks {#sec-roofline-phases}
+
+Nearly every sizing error in language model serving comes from treating inference as one workload. It is two, with different bottlenecks, different scaling behaviour and different hardware preferences.
+
+**Prefill** processes the entire input prompt in parallel. Every token attends over every earlier token, the arithmetic is dense matrix multiplication, and the hardware's compute throughput is the limit. Prefill is compute-bound, it parallelises well across a batch, and it is why long prompts are expensive in a way that is proportional to their length.
+
+**Decode** generates one token at a time, and each token requires reading the model's weights from memory. For a batch of one, generating a single token means moving every weight the model has through the memory system to perform a small amount of arithmetic on each. Decode is memory-bandwidth-bound, and no amount of additional compute makes it faster.
+
+The consequence is the single most useful heuristic in GPU selection for this architecture: for interactive, latency-sensitive, short-output work, which is what the entire control path consists of, the specification that matters is memory bandwidth, not floating-point throughput.
+
+### The arithmetic that makes this concrete {#sec-roofline-arithmetic}
+
+A useful first-order bound on single-stream decode speed is that the time to generate one token is at least the time required to read the weights that must be read for it. For a dense model with all weights read per token, that is the model's size in bytes divided by the achievable memory bandwidth.
+
+Table. First-order single-stream decode ceiling, computed as achievable bandwidth divided by model bytes per token, at 70 percent bandwidth efficiency. These are ceilings, not measurements: real throughput is lower because of attention over the KV cache, kernel launch overhead and sampling. **Modelled** from published bandwidth specifications. {#tbl-roofline}
+
+| Model and format | Bytes read per token | On L40S at 0.86 TB/s | On H100 at 3.35 TB/s | On H200 at 4.8 TB/s |
+|---|---:|---:|---:|---:|
+| 4B at FP8 | about 4 GB | about 150 tok/s | about 586 tok/s | about 840 tok/s |
+| 8B at FP8 | about 8 GB | about 75 tok/s | about 293 tok/s | about 420 tok/s |
+| 8B at INT4 | about 4.3 GB | about 140 tok/s | about 545 tok/s | about 781 tok/s |
+| 32B at FP8 | about 32 GB | does not fit | about 73 tok/s | about 105 tok/s |
+| 70B at FP8 | about 70 GB | does not fit | does not fit on one card | about 48 tok/s |
+| 70B at FP4 | about 35 GB | does not fit | about 67 tok/s | about 96 tok/s |
+
+Three conclusions follow directly, and each one contradicts an intuition that costs money.
+
+The first is that a 4-bit model is roughly twice as fast as the same model at 8-bit in single-stream decode, because it moves half the bytes. This is why {sec:quant-regime} recommends 4-bit for latency-critical single-stream work despite its accuracy cost.
+
+The second is that the same card serves a 4B model roughly twice as fast as an 8B model, which is the quantitative case for using the smallest model that passes its evaluation suite on the fast path rather than the best model available.
+
+The third is that batching changes the regime entirely. With a large batch, the weights read once serve many sequences, so the per-token cost of weight traffic falls and the bottleneck moves toward compute and toward the KV cache. This is why FP8 wins on saturated throughput while 4-bit wins on single-stream latency, and why a pool serving interactive routers should be configured differently from a pool serving batch synthesis.
+
+### The KV cache is the constraint people forget {#sec-roofline-kv}
+
+Weights are the easy part of the memory budget because they are fixed. The KV cache is proportional to concurrency times context length, and it is what actually decides whether a card is usable at the batch size the load requires.
+
+For a transformer with grouped-query attention, the cache per token is approximately two, for keys and values, times the number of layers, times the number of key-value heads, times the head dimension, times the bytes per element. A useful shortcut: an 8B-class model with grouped-query attention at FP8 cache precision costs roughly 100 to 140 KB per token of context.
+
+Table. Modelled KV cache footprint at 120 KB per token of context, showing why concurrency and context length are a capacity decision rather than a configuration detail. Compare against the memory left after weights: about 40 GB on an 80 GB H100 serving an 8B model at FP8 with headroom. **Modelled**. {#tbl-kv}
+
+| Concurrent sequences | 2k context | 8k context | 32k context | 128k context |
+|---:|---:|---:|---:|---:|
+| 16 | 3.8 GB | 15 GB | 61 GB | 246 GB |
+| 64 | 15 GB | 61 GB | 246 GB | 983 GB |
+| 256 | 61 GB | 246 GB | 983 GB | 3.9 TB |
+
+The table is the argument for two design positions taken elsewhere in this document. It is why the control path keeps prompts short, preferring a shortlist of two or three eligible capabilities over a catalogue of forty, as Section {sec:single-agent-prefill} argues on latency grounds and this table reinforces on capacity grounds. And it is why H200 exists in the decision tree of Chapter 20 as a memory purchase rather than a compute purchase: it has the same compute as H100 and 76 percent more memory, which buys concurrency at long context and nothing else.
+
+The corollary is a diagnosis worth knowing. If a serving pool is rejecting or queueing requests while its GPU utilisation looks moderate, the constraint is almost always KV cache capacity rather than compute, and the fix is shorter contexts, cache quantization, fewer concurrent sequences per card, or more memory per card. Adding compute will not help.
+
+## Choosing the GPU {#ch-gpu}
+
+### Choose from the binding constraint {#sec-gpu-constraint}
+
+GPU selection goes wrong in a predictable way: a team picks the most capable card the budget allows, then discovers that the constraint that actually binds their workload was something the card does not address. The discipline is to name the binding constraint first, in the language of Chapter 19, and select from it.
+
+::: figure src=gpu-decision.svg id=fig-gpu width=full
+The decision tree, ordered so that the cheapest sufficient answer is reached first. The lower panel lists the three sizing errors that cost real money, all of which are versions of the same mistake: selecting hardware from a specification that is not the binding constraint for the work in question.
+:::
+
+### The catalogue {#sec-gpu-catalogue}
+
+The table below is **third-party published** vendor specification data at the time of writing, reduced to the three attributes that matter for this architecture: memory capacity, which decides what fits and how much concurrency is possible; memory bandwidth, which decides decode speed; and the lowest-precision format with hardware support, which decides whether the newest quantization work is available at all.
+
+Table. GPU specifications relevant to serving decisions, with the role each card plays in this architecture. All specifications **third-party published** vendor figures; achievable bandwidth in practice is typically 60 to 80 percent of the peak figure. {#tbl-gpu}
+
+| GPU | Memory | Bandwidth | Lowest native format | Role in this architecture |
+|---|---:|---:|---|---|
+| L40S | 48 GB GDDR6 | 0.86 TB/s | FP8 | Cheapest per served token for small routers, classifiers and guard models. No NVLink, no FP4 |
+| RTX PRO 6000 Blackwell | 96 GB GDDR7 | about 1.79 TB/s | NVFP4 | The pragmatic single-node choice: several models co-resident with isolated caches, air cooled, PCIe |
+| H100 SXM | 80 GB HBM3 | 3.35 TB/s | FP8 | Proven FP8 path with mature kernels for 8 to 32B decode pools. No FP4 |
+| H200 SXM | 141 GB HBM3e | 4.8 TB/s | FP8 | A memory and bandwidth purchase: same compute as H100, for long context and high concurrency |
+| B200 SXM | about 180 GB HBM3e | about 7.7 TB/s | FP4 | Changes the economics on 70B-class models through native FP4. Power and cooling are real constraints |
+| GB200 NVL72 | rack scale | rack scale | FP4 | One NVLink domain for models larger than a node. Liquid cooled, long lead time |
+
+### The three expensive mistakes {#sec-gpu-mistakes}
+
+**Sizing decode capacity from floating-point throughput.** This is the error Chapter 19 exists to prevent. Decode reads the whole model per token, so bandwidth sets the ceiling, and a card chosen for its FLOPS may deliver a fraction of the tokens per second its specification sheet implies. The clearest illustration is a previous-generation card with no FP8 path: it loses roughly half of its potential modern throughput not because its compute is inadequate but because it must run a format that moves twice the bytes.
+
+**Forgetting the KV cache.** Weights fit, the model loads, the demonstration works at batch one, and the pool then fails to reach the concurrency the load requires because the cache exhausted the remaining memory. {tbl:kv} is the arithmetic that prevents this, and it should be done before purchase rather than after.
+
+**Buying the frontier card for a router.** A 4B classifier on a B200 wastes the asset. A B200's value is that it can monetise very high decode throughput on large models under saturation; a router that answers in 20 ms at batch eight uses almost none of that. Put routers and guard models on the cheapest card with sufficient bandwidth, and reserve the expensive cards for the pools whose utilisation can justify them.
+
+> **Anti-pattern.** Homogeneous fleets. Buying one card type for every workload because it simplifies procurement. It also guarantees that either the routers are running on hardware three times more expensive than they need, or the synthesis pool is bandwidth-starved. A heterogeneous fleet of two or three card types, each matched to a pool, is the normal shape of an efficient deployment, and it is the shape the topologies in Chapter 22 use.
+
+### Fitting the model to the card {#sec-gpu-fit}
+
+A short procedure, which is worth following in this order because each step can eliminate the need for the next.
+
+First, compute the weight footprint at the intended quantization format and add 15 to 20 percent for activations, fragmentation and the runtime's own allocations. Second, compute the KV cache requirement at the target concurrency and context length using {tbl:kv}, and confirm the sum fits with headroom. Third, check the single-stream decode ceiling from {tbl:roofline} against the latency target, remembering that real throughput is meaningfully below the ceiling. Fourth, decide whether the pool is latency-critical or throughput-critical, because that determines the quantization format in Chapter 21 and may change the answer to the first step. Only then choose a card.
+
+If the model does not fit on one card, the next decision is not automatically a bigger card. Tensor parallelism across two cards adds communication on every token and is worth it when bandwidth per card is the constraint; a smaller or more aggressively quantized model that passes its evaluation suite is frequently the better engineering answer, and on the fast path it is almost always the better answer.
+
+## Quantization Selection {#ch-quant}
+
+### Quantization is a workload decision with a stated price {#sec-quant-decision}
+
+Quantization reduces the numerical precision of weights, and sometimes activations and the KV cache, to move fewer bytes and use faster hardware paths. The benefit is throughput and capacity. The cost is accuracy, and the professional obligation is to state the cost rather than let it be discovered later by users.
+
+::: figure src=quantization-tradeoff.svg id=fig-quant width=full
+Published Qwen3-8B figures on a single H100 with vLLM. The upper panel is accuracy on MMLU, with the axis starting at 72.8 so that the INT4 gap is visible rather than flattened. The lower panel is saturated aggregate throughput, where FP8 wins because Hopper has native FP8 tensor cores. The two panels rank the formats differently, which is the entire point of the chapter.
+:::
+
+Table. **Third-party published** quantization results for Qwen3-8B on a single H100 under vLLM: accuracy on MMLU and aggregate throughput under saturated ShareGPT-shaped load. Re-measure on your own prompt and output mix before committing; these figures are a starting point, not a guarantee. {#tbl-quant}
+
+| Format | MMLU | Delta from BF16 | Saturated throughput | Relative throughput |
+|---|---:|---:|---:|---:|
+| BF16 | 74.78 | baseline | 13,305 tok/s | 1.00x |
+| FP8 static | 74.79 | +0.01 | 16,452 tok/s | 1.24x |
+| FP8 dynamic | 74.75 | -0.03 | 15,276 tok/s | 1.15x |
+| INT8 dynamic | 74.84 | +0.06 | not reported here | not reported here |
+| INT4 W4A16 | not reported here | not reported here | 13,605 tok/s | 1.02x |
+| INT4 AWQ | 73.59 | -1.19 | 9,756 tok/s | 0.73x |
+| INT4 GPTQ | 73.26 | -1.52 | not reported here | not reported here |
+
+The headline result is that FP8 is close to free on this model: static FP8 matched BF16 on MMLU to within measurement noise while delivering 24 percent more saturated throughput. The 4-bit formats cost between 1.2 and 1.5 MMLU points, which is not rounding error, and under saturation they were slower than FP8 rather than faster, because their gain is in bytes moved and their loss is in dequantization overhead and less mature kernels.
+
+### The rule that reconciles the two panels {#sec-quant-regime}
+
+The apparent contradiction between "4-bit is faster" from Chapter 19 and "FP8 is faster" from the table above resolves cleanly once the regime is specified.
+
+**At batch size one, latency critical, 4-bit wins.** The limiter is weight traffic through the memory system, and 4-bit moves roughly half the bytes of 8-bit. Use it for interactive routers and classifiers where a single request must complete as fast as possible, and where the accuracy cost has been measured on the specific task rather than assumed from a general benchmark.
+
+**Under saturation, throughput critical, FP8 W8A8 wins on Hopper and newer.** The limiter is tensor core occupancy rather than memory traffic, and FP8 has a native hardware path while 4-bit requires dequantization work. Use it for synthesis pools, batch work and anything where many requests are in flight simultaneously.
+
+This is why the topologies in Chapter 22 specify formats per pool rather than for the deployment: a router pool at FP8 or INT4 depending on measured single-stream latency, a synthesis pool at FP8, and on Blackwell hardware an NVFP4 option for large-model decode where the format has native support.
+
+### Where quantization loss actually shows up {#sec-quant-loss}
+
+Aggregate benchmarks hide the failures that matter for an agent platform, and this is the most important paragraph in the chapter.
+
+A 1.2 point drop in MMLU is not evenly distributed across tasks. In practice it concentrates in behaviours that aggregate benchmarks barely sample: strict adherence to an output schema, correctness of extracted tool arguments, calibration of refusals, and stability of the margin between two similar capabilities. A quantized model that loses 1.2 MMLU points can lose 5 or 6 points of strict tool-argument correctness, and it can shift the routing margin distribution enough to invalidate a threshold calibrated on the previous format. Both failures are invisible on a general benchmark and immediately visible in production.
+
+The obligation that follows is specific. Before a quantized model reaches the fast path, evaluate it on your own routing set, your own parameter extraction set and your own refusal set, and compare against the unquantized model on the same sets. A quantization swap is a model change, and Chapter 26 treats it as a change type that triggers the full suite selection for exactly this reason.
+
+> **Warning.** Recalibrate escalation thresholds after any quantization change. Thresholds are properties of a model's score distribution, and quantization changes that distribution. A threshold carried across a format change is an unmeasured constant governing what fraction of traffic reaches your most expensive tier.
+
+### Calibration sets, and the work nobody schedules {#sec-quant-calibration}
+
+Post-training quantization methods that require a calibration set, which includes AWQ and GPTQ, are sensitive to what that set contains. A calibration set drawn from generic web text produces a model tuned for generic web text, and the control path's traffic is not generic web text: it is short, imperative, domain-specific and heavily templated.
+
+Building a calibration set from a few hundred to a few thousand real control-path prompts, with the tokenizer and context length the production system uses, is a few days of work that materially improves quantized accuracy on the task that matters. It is also the first thing dropped when a quantization exercise runs late, which is why Chapter 25 lists calibration set design as a distinct capability rather than as part of general model work.
+
+## Three Sizing Tiers {#ch-tiers-sizing}
+
+### How to use these tiers {#sec-tiers-use}
+
+The three topologies below are worked examples, not products. Each states a load point, the pools it implies, the GPU count, the utilisation target and the failure budget, so that a reader can locate their own load between two tiers and interpolate with the arithmetic of Chapter 18 rather than by analogy.
+
+The single most important line in each is the utilisation target, and it is the line most often overridden by a finance conversation. Utilisation targets in this architecture are low by the standards of stateless web services, for a reason developed in Chapter 24: an inference pool near saturation has queue wait that dominates its own service time, so a router with a 20 ms service time at 85 percent utilisation is not a 24 ms router, it is a router whose p99 has left the budget entirely.
+
+### Tier S: fewer than 10 customers {#sec-tier-s}
+
+::: figure src=topology-tier-s.svg id=fig-tier-s width=full
+The single-node pilot topology. One GPU holds the router, the guard classifier and a small synthesis model with isolated caches; frontier work and judges are rented rather than hosted. The notes are the operational commitments that make this tier honest: a written degraded mode, no premature hardware, and telemetry from the first day.
+:::
+
+One GPU, chosen for capacity and format flexibility rather than for bandwidth, is enough. A 96 GB Blackwell-generation workstation card holds a 4B FP8 router, an 86M guard classifier and an 8B FP8 synthesis model simultaneously with isolated KV caches, which is exactly the co-residency case that makes it the pragmatic choice at this tier. The host needs enough CPU and memory to run the serving stack, the registry, the session store and a local trace collector without competing with the GPU for attention.
+
+Frontier reasoning is an API with pay-as-you-go pricing, because Tier 3 volume at this scale does not justify reserved capacity. Judges run against the API in overnight batches rather than sampling live traffic, which costs nothing during the day and produces the evaluation history that Tier M will need.
+
+Table. Tier S sizing, derived from the chain in {tbl:load-chain} at under 40 peak concurrent sessions. **Modelled**. {#tbl-tier-s}
+
+| Quantity | Value |
+|---|---:|
+| Peak concurrent sessions | under 40 |
+| In-flight requests at peak | 3 to 6 |
+| Control-path model calls per second | 4 to 8 |
+| Control-path tokens per second | 800 to 1,600 |
+| GPU count, steady state | 1 |
+| Utilisation target | 20 to 35% |
+
+#### The three commitments that make Tier S worth building {#sec-tier-s-notes}
+
+**Write the degraded mode down before you need it.** One GPU is a single point of failure, and that is an acceptable trade at this tier only if the behaviour when it is gone has been decided in advance: deterministic routing plus templated answers for the journeys that can be served that way, and an explicit unavailability message for the rest.
+
+**Do not buy HBM-class hardware here.** The purpose of Tier S is to measure your own workload, not to serve throughput you cannot yet use. Hardware bought before measurement is hardware bought from a guess, and the guess is usually wrong in the direction of too much.
+
+**Instrument everything, immediately.** The expensive mistake at this tier is skipping telemetry, because Tier M must be sized from measured traffic and traffic that was not instrumented is gone. Every quantity in Section {sec:load-measure} should be collected from the first day of the pilot.
+
+### Tier M: 1,000 to 5,000 concurrent {#sec-tier-m}
+
+::: figure src=topology-tier-m.svg id=fig-tier-m width=full
+The regional production topology, with pools separated by function rather than merged for utilisation. The upper band is latency-critical and scaled for p99; the lower band is throughput work that must never be able to consume the fast path's capacity. The notes state the three failure modes this separation exists to prevent.
+:::
+
+At Tier M the deployment stops being a node and becomes a set of pools, and the pool boundaries are the architecturally significant decision. Merging pools raises average utilisation and looks efficient on a dashboard; it also re-couples the workloads that were separated on purpose, so that a judge burst or a guard-model retry storm consumes the capacity the fast path needs.
+
+Table. Tier M pools at 3,000 peak concurrent sessions, matching the chain worked in {tbl:load-chain}. Card choices are per-pool and follow the regime rule of Section {sec:quant-regime}. **Modelled**. {#tbl-tier-m}
+
+| Pool | Hardware | Serves | Why this card |
+|---|---|---|---|
+| Router pool | 3 x L40S or RTX PRO 6000 | Tier 1 4B FP8, pinned and never preempted | Latency critical, small model, cheapest sufficient bandwidth. Sized so one node may fail |
+| Guard pool | 2 x L40S | 86M classifier and 8B guard model | Isolated from user traffic so a rail retry storm cannot starve routing |
+| Synthesis pool | 4 x H100 or H200 | Tier 2 8 to 32B FP8, continuous batching | Throughput critical under saturation, where FP8 on Hopper wins |
+| Judge pool | 2 x L40S, own quota | Asynchronous sampling at 5 to 20% of turns | Assurance must have hard concurrency caps and its own budget |
+| Frontier tier | API with reserved capacity | Tier 3 on 1 to 4% of turns | Escalation volume is now predictable enough to reserve, and a local fallback is defined |
+| Durable workers | CPU only | Queue, workflow and retry execution | No GPU work; separated so long-running journeys cannot occupy request capacity |
+
+Table. Tier M sizing summary. **Modelled** from {tbl:load-chain}. {#tbl-tier-m-sizing}
+
+| Quantity | Value |
+|---|---:|
+| Peak concurrent sessions | 3,000 |
+| In-flight requests at peak | about 260 |
+| Control-path model calls per second | about 310 |
+| Control-path tokens per second | about 62,000 |
+| Guardrail calls per second | about 340 |
+| GPU count, steady state | 11 plus 2 spare |
+| Utilisation target, fast tier | 45 to 60% |
+
+Three notes carry the reasoning. Separate pools exist to stop assurance and rail traffic from consuming fast-path capacity, and one shared pool re-couples exactly what the architecture just separated. The fast tier is sized on p99 under burst rather than on mean throughput, which is why its utilisation target is well under saturation. And frontier capacity should be reserved once escalation volume is predictable, because pay-as-you-go quota becomes the binding constraint before the local GPUs do, and discovering that during a traffic peak is an avoidable incident.
+
+### Tier L: more than 50,000 concurrent {#sec-tier-l}
+
+::: figure src=topology-tier-l.svg id=fig-tier-l width=full
+The cell-based multi-region topology. The unit of capacity is a region cell that is replicated rather than a pool that is enlarged, prefill and decode are disaggregated so that long prompts cannot stall the decode queue, and each region is sized so that two of three can absorb the whole load. The notes name the availability risk at this scale, which is the control plane rather than the GPUs.
+:::
+
+Two structural changes distinguish Tier L from a larger Tier M.
+
+**Prefill and decode are disaggregated.** Because the two phases have opposite bottlenecks, as Chapter 19 establishes, running them on the same nodes means a long prompt's prefill work stalls the decode queue and inflates inter-token latency for every concurrent user. Separating them lets each pool be sized and scaled by its own driver: prefill scales with prompt length and decode scales with concurrency. The cost is a new failure domain in the KV transfer path between them, and it is worth paying only once measurement shows one pool clearly starving the other.
+
+**Capacity is bought in cells.** A cell is a complete regional unit with known behaviour. Growth adds cells rather than enlarging pools, because a pool that grows past its measured envelope degrades non-linearly at the tail, whereas a second cell behaves like the first.
+
+Table. Tier L per-region cell at 50,000 plus peak concurrent sessions across three regions, each sized so that two surviving regions carry the full load. **Modelled**. {#tbl-tier-l}
+
+| Component | Hardware | Scaling driver |
+|---|---|---|
+| Prefill nodes | 8 x B200 with NVFP4 | Compute bound; scales with prompt length |
+| Decode nodes | 16 x H200 or B200 | Bandwidth bound with resident KV; scales with concurrency |
+| KV transfer | NVLink and RDMA fabric | The prefill to decode handoff, and the new failure domain |
+| Guard fleet | 6 x L40S per region | Scales with turns, not with tokens |
+| Judge fleet | 8 x L40S, global | Batch, off-peak, hard budget |
+| Frontier tier | Provisioned throughput | Committed capacity, not on-demand |
+| Control plane | Replicated, with regional caches | Must survive the loss of a region |
+
+Table. Tier L sizing summary. **Modelled** from {tbl:load-chain} scaled to the Tier L load point. {#tbl-tier-l-sizing}
+
+| Quantity | Value |
+|---|---:|
+| Peak concurrent sessions | 50,000 plus |
+| In-flight requests at peak | about 4,300 |
+| Control-path model calls per second | about 5,200 |
+| Control-path tokens per second | about 1,040,000 |
+| Regions | 3, each sized for 2 of 3 surviving |
+| GPU count per region | about 30 plus spares |
+| Utilisation target, decode | 60 to 75% with admission control |
+
+At this scale the availability risk moves from the GPUs to the control plane, which is the cost Section {sec:worse-control-plane} conceded in Part II arriving in its most expensive form. A registry outage that blocks routing takes every region down simultaneously, so regional last-known-good caches and static routes for critical journeys stop being good practice and become mandatory.
+
+The other Tier L discipline is a hard budget for assurance traffic. At 50,000 concurrent sessions, sampling 10 percent of turns for judging is a larger inference workload than most Tier M deployments serve in total. Assurance at this scale is a capacity line item with its own fleet, its own quota and its own off-peak schedule, and treating it as an incidental overhead is how a quality initiative becomes a production incident.
+
+### Reading between the tiers {#sec-tiers-between}
+
+Table. The three tiers side by side. The ratios between columns are more useful than the absolute numbers: GPU count grows roughly linearly with concurrency once past the fixed cost of the first node, while operational complexity grows in steps at the points where a new isolation boundary is introduced. **Modelled**. {#tbl-tiers-compare}
+
+| Dimension | Tier S | Tier M | Tier L |
+|---|---:|---:|---:|
+| Peak concurrent sessions | under 40 | 3,000 | 50,000 plus |
+| Control-path tokens per second | 800 to 1,600 | about 62,000 | about 1,040,000 |
+| GPUs, steady state | 1 | 11 plus 2 spare | about 90 across 3 regions |
+| Distinct serving pools | 1 | 5 plus CPU workers | 7 per region plus global |
+| Fast-tier utilisation target | 20 to 35% | 45 to 60% | 60 to 75% |
+| Frontier posture | Pay as you go | Reserved capacity | Provisioned throughput |
+| Judge posture | Overnight batch | 5 to 20% live sampling, own pool | Dedicated global fleet, off peak |
+| Redundancy | None; written degraded mode | One node may fail per pool | Two of three regions carry full load |
+| Platform engineers | 2 to 3 | 4 to 8 | 12 plus, with on-call rotation |
+
+## Inference Performance, and How to Re-Measure It {#ch-perf}
+
+### Why this chapter refuses to give you a number {#sec-perf-why}
+
+Every published inference benchmark is a measurement of a specific model, at a specific quantization, on specific hardware, with a specific input and output length distribution, at a specific concurrency, on a specific version of a serving stack. Change any one of those and the result changes, sometimes by more than a factor of two. Quoting such a figure as a capacity planning input without reproducing its conditions is the most common way that sizing exercises produce confident wrong answers.
+
+The figures below are therefore presented as anchors: they establish the order of magnitude and the shape of the relationships, and they are labelled **third-party published** so that no reader mistakes them for a guarantee about their own workload. The section that follows them is the operative part of the chapter, because it gives the commands to replace them.
+
+### Published anchors {#sec-perf-anchors}
+
+Table. **Third-party published** inference figures used as anchors in this document, with the conditions under which each was measured. Conditions are part of the figure; a number quoted without them is not a measurement. {#tbl-perf}
+
+| Model and configuration | Measured result | Conditions as published |
+|---|---|---|
+| Llama 3.1 8B, H100, FP8 KV cache | 517.5 output tokens per second aggregate, 742.8 ms median time to first token | 150 requests at concurrency 8, roughly 20k input and 2k output tokens per request |
+| Qwen3-8B, FP8 static, H100 | 16,452 tokens per second aggregate | Saturated ShareGPT-shaped traffic under vLLM |
+| Qwen3-8B, INT4 AWQ, H100 | 9,756 tokens per second aggregate | Same harness and traffic as the FP8 row |
+| Llama 3.3 70B, FP4, B200 | About 4x the H200 throughput on the same model | Vendor-reported comparison, FP4 against FP8 |
+| Llama 3.3 70B, cost per million tokens | About 0.15 dollars on B200 against 0.37 dollars on H200 | Derived from the same vendor comparison, at published instance pricing |
+
+Two observations about how to read these. The 742.8 ms median time to first token in the first row is not a contradiction of the 460 ms budget in Chapter 13; it is a measurement at 20,000 input tokens, which is roughly thirty times the control path's prompt length, and it illustrates precisely why the control path keeps prompts short. And the 4x claim in the fourth row is a format comparison as much as a hardware comparison: FP4 halves the bytes moved per token relative to FP8, and Blackwell has a native path for it, so the gain compounds.
+
+### The re-measurement recipe {#sec-perf-recipe}
+
+The following produces figures for your own model, hardware and traffic shape. Run it before buying anything, and again after every model, format or serving-stack change.
+
+Start the server with the configuration you intend to run in production, not a default one. The context length, cache precision and memory fraction are all capacity decisions and all change the result.
+
+```
+vllm serve <model> \
+  --quantization fp8 \
+  --kv-cache-dtype fp8 \
+  --max-model-len 8192 \
+  --gpu-memory-utilization 0.90 \
+  --max-num-seqs 64
+```
+
+Then drive it with the input and output length distribution your control path actually produces. Measuring with a generic dataset when your prompts are 700 tokens in and 120 tokens out will mislead you in both directions at once.
+
+```
+vllm bench serve \
+  --model <model> \
+  --dataset-name random \
+  --random-input-len 700 \
+  --random-output-len 120 \
+  --max-concurrency 32 \
+  --num-prompts 500 \
+  --percentile-metrics ttft,tpot,itl,e2el
+```
+
+Sweep concurrency rather than measuring one point. A single concurrency figure tells you nothing about where the pool's knee is, and the knee is the only number that matters for capacity planning.
+
+```
+for c in 1 2 4 8 16 32 64 128; do
+  vllm bench serve --model <model> --dataset-name random \
+    --random-input-len 700 --random-output-len 120 \
+    --max-concurrency $c --num-prompts $((c * 20)) \
+    --percentile-metrics ttft,tpot,itl,e2el \
+    --result-filename bench-c$c.json
+done
+```
+
+### What to record, and what to conclude {#sec-perf-record}
+
+Record six quantities at each concurrency point: time to first token at p50 and p99, time per output token, aggregate output tokens per second, request throughput, and the fraction of requests that were queued rather than served immediately. Plot aggregate throughput and p99 time to first token against concurrency on the same axis.
+
+The shape of that plot is the deliverable. Throughput rises with concurrency and then flattens; p99 latency is flat and then rises sharply. The knee is where they cross your latency requirement, and the capacity of one card is the concurrency at that knee, not the concurrency at maximum throughput. Sizing from maximum throughput is how pools end up operating past their knee, where adding load adds queue wait and no throughput at all.
+
+Two derived figures are worth computing immediately. Tokens per second per GPU at the knee, which converts the token demand from {tbl:load-chain} into a card count directly. And cost per million tokens at the knee, computed from the amortised hourly cost of the card, which is the figure that makes the on-prem versus API comparison of Chapter 15 a local calculation rather than an inherited one.
+
+> **Design rule.** No hardware purchase without a knee curve for the intended model, format and traffic shape, produced on a rented or borrowed instance of the candidate card. The cost of a day of cloud rental is negligible against the cost of a fleet sized from someone else's benchmark.
+
+## Behaviour Under Overload {#ch-overload}
+
+### Every system is a queue, and this one has an unusually harsh one {#sec-overload-queue}
+
+Inference pools behave worse under saturation than most services engineers have intuitions for, and the reason is that a GPU pool cannot shed work gracefully by degrading quality. It has a fixed rate of tokens it can produce, requests either fit in the batch or wait, and waiting requests hold their KV cache allocation while they wait, which reduces the memory available for the batch that is running.
+
+Little's Law describes the consequence. Since the number in the system equals arrival rate times time in the system, and time in the system is service time plus queue wait, an arrival rate approaching the service rate makes queue wait grow without bound. In practice a pool at 85 percent utilisation with a 20 ms service time has queue wait several times its own service time, so the observed p99 is dominated by waiting rather than by working. This is the arithmetic behind the low utilisation targets in Chapter 22, and it is why "the GPUs are only 60 percent utilised" is a report of correct operation rather than of waste.
+
+### Admission control is a design feature, not a failure {#sec-overload-admission}
+
+A system without admission control does not avoid overload; it distributes the damage across every request instead of concentrating it in the requests it chose to reject. That is strictly worse, because it converts a partial outage into a total one and destroys the latency of the requests that would otherwise have succeeded.
+
+Admission control needs three components. A measured signal that leads saturation rather than following it, which is queue depth or estimated wait rather than GPU utilisation, since utilisation is already at its maximum by the time the queue is long. A priority order decided in advance, so that when capacity is short the system knows what to protect: interactive user turns first, then rails, then asynchronous assurance, then shadow and canary traffic. And a rejection path that produces a useful response, meaning a named degradation with a retry hint rather than a timeout.
+
+### The degradation ladder {#sec-overload-ladder}
+
+Degradation should be a sequence of decided steps rather than an emergent property of what fails first. The ladder below is ordered by increasing user impact, and each rung is a control the platform can actuate deliberately.
+
+Table. The degradation ladder, in the order it should be applied. Each rung has an actuation mechanism and a user-visible consequence, and both should be tested in production regularly rather than documented and hoped for. **Modelled** design guidance. {#tbl-degradation}
+
+| Rung | Action | User-visible consequence | Actuated by |
+|---:|---|---|---|
+| 1 | Stop shadow, canary and replay traffic | None | Traffic manager, automatic on queue depth |
+| 2 | Reduce judge sampling rate to zero | None; assurance history has a gap | Sampling policy, automatic |
+| 3 | Disable Tier 3 escalation, answer at Tier 2 | Slightly weaker answers on the hardest 1 to 4% of turns | Escalation gate, automatic |
+| 4 | Shorten context and disable optional retrieval | Less contextual answers, more clarifying questions | Planner policy, automatic |
+| 5 | Serve Tier 0 templated answers for known intents | Terse but correct answers on common journeys | Router policy, automatic |
+| 6 | Admission control: reject new sessions, protect existing ones | New users see a named unavailability message | Edge, automatic with a manual override |
+| 7 | Read-only mode: refuse write journeys explicitly | Writes are refused with a clear reason and a retry channel | Manual, with an incident record |
+
+Two properties make this ladder useful rather than decorative. The first four rungs are invisible to users and reclaim a substantial fraction of capacity, because assurance, escalation and long contexts are disproportionately expensive relative to the traffic they serve. And every rung is reversible automatically when the signal recovers, which matters because a ladder that requires a human to climb back down will be left at the bottom.
+
+> **Warning.** An untested degraded mode is not a degraded mode. Each rung should be exercised in production on a schedule, at low traffic, with the results recorded. The failure to discover during an incident is that rung 5's templated answers were never wired to the current intent set.
+
+### What to alert on {#sec-overload-alerts}
+
+Alerting on GPU utilisation is a common mistake, because a healthy pool at its target utilisation looks identical to a saturated one until the queue is already long. Alert instead on queue depth and estimated wait time, on the p99 of time to first token by journey class, on the escalation rate to Tier 3, which spikes before a quality incident becomes visible, on rejection and degradation-rung activation counts, and on the ratio of retry traffic to first-attempt traffic, which is the earliest signal of a retry storm.
+
+## The AI Engineering Capability Model {#ch-skills}
+
+### Why this chapter exists {#sec-skills-why}
+
+Architecture documents describe systems and omit the people, which is how organisations end up with a design they cannot staff. The capabilities below are the ones this architecture actually requires, stated so that a hiring plan or an outsourcing decision can be made from them. Intensity in the tables means depth of skill needed, not headcount: **aware** is being able to follow a runbook, **capable** is being able to operate and tune, and **deep** is being able to diagnose novel failures and extend the system.
+
+::: figure src=skills-matrix.svg id=fig-skills width=full
+The capability matrix by sizing tier, with the intensity required at each and where the capability usually sits organisationally. The lower panels are the two things worth taking from this chapter: the staffing anti-pattern that produces a single point of failure in a person, and a build order that front-loads evaluation because every later decision depends on being able to measure it.
+:::
+
+### The capabilities {#sec-skills-capabilities}
+
+Table. Capabilities required by tier, with intensity and usual organisational home. Intensity is depth, not headcount; several capabilities can and should live in the same person at Tier S. {#tbl-skills}
+
+| Capability | Tier S | Tier M | Tier L | Usually sits with |
+|---|---|---|---|---|
+| Inference serving: vLLM or SGLang operation | capable | deep | deep | Platform or ML infrastructure |
+| Capacity modelling and load testing | aware | capable | deep | Platform |
+| GPU scheduling, MIG and multi-tenancy | aware | capable | deep | ML infrastructure |
+| Rollout, canary and rollback of model weights | aware | capable | deep | ML infrastructure |
+| Quantization and calibration set design | aware | capable | deep | ML engineering |
+| Distillation of routers and classifiers | not needed | capable | deep | ML engineering |
+| Task fine-tuning, LoRA and adapters | aware | capable | deep | ML engineering |
+| Tokenizer, context and prompt budgeting | capable | capable | deep | Shared |
+| Evaluation engineering and golden set curation | capable | deep | deep | Domain plus platform |
+| LLM-as-judge calibration against humans | aware | capable | deep | Evaluation owner |
+| Safety, red teaming and rail tuning | aware | capable | deep | Security plus ML |
+| Regression corpus and drift monitoring | aware | capable | deep | Platform |
+| Distributed tracing and AgentOps | capable | deep | deep | Platform |
+| Contract and manifest tooling | capable | capable | deep | Platform |
+| Cost attribution per journey | aware | capable | deep | Platform plus finance |
+
+### The four capabilities that are hardest to acquire {#sec-skills-scarce}
+
+**Evaluation engineering.** The scarcest and most undervalued capability in the list. It is not writing test cases; it is deciding what correctness means for a domain, curating a golden set that stays representative as traffic changes, designing suites whose failure is diagnostic rather than merely red, and maintaining the regression corpus that grows from production incidents. Organisations reliably underinvest here because evaluation produces no visible feature, and reliably regret it, because every other decision in this document depends on being able to measure whether a change made things worse.
+
+**Judge calibration.** Using a model to score outputs is easy; knowing whether those scores agree with human judgement is the hard part, and it requires periodic human labelling, agreement statistics, and recalibration whenever the judge model changes. An uncalibrated judge is a random number generator with a confident tone, and Chapter 27 treats it as such.
+
+**Quantization with task-specific validation.** Running a quantization tool is a day of work. Knowing that the resulting model still extracts tool arguments correctly, still refuses what it should refuse, and still produces routing margins compatible with the calibrated thresholds is the work that actually matters, and it requires the evaluation capability above as a prerequisite.
+
+**Distributed tracing for agent systems.** Conventional application tracing skills transfer, but agent traces have properties that conventional systems do not: spans carry model, tier, token count and cost; a single logical turn may involve retries and escalations that must be attributable; and the interesting question is usually why a decision was made rather than how long it took. Chapter 28 develops the semantics this requires.
+
+### The staffing anti-pattern {#sec-skills-antipattern}
+
+> **Anti-pattern.** One ML generalist owning serving, quantization, evaluation, safety and cost. It works during the pilot, because at Tier S the work genuinely fits in one competent person's head. It becomes the bus factor in production, and the first responsibility that gets dropped under pressure is always evaluation, because it is the only one with no immediate external consequence. The system then continues to ship changes with no measurement of whether they made it worse, which is the state this entire architecture exists to prevent.
+
+The mitigation is not to hire five specialists at Tier S, which is unaffordable and unnecessary. It is to make ownership explicit even when it lives in one person, to write down what is being deferred rather than allowing it to be quietly dropped, and to treat the first additional hire as the one that removes the evaluation dependency rather than the one that adds a model capability.
+
+### A defensible build order {#sec-skills-order}
+
+The order below is chosen so that each capability makes the next one measurable, which is why it starts somewhere counter-intuitive.
+
+**First, evaluation engineering, before any model is chosen.** Without it, model selection is aesthetic and every subsequent change is unfalsifiable. The first artefact of a serious agent platform should be a golden set, not a prompt.
+
+**Second, serving and observability, then quantization.** You cannot quantize responsibly without being able to measure the result, and you cannot measure the result without traces and evaluation. Serving expertise also produces the knee curves of Chapter 23, which are the input to every hardware decision.
+
+**Third, safety and rail tuning, as traffic grows.** Rails need real traffic to calibrate, because false positive rates on synthetic benign traffic are not informative about real users.
+
+**Fourth, distillation and fine-tuning, last.** These have the highest ceiling and the highest prerequisite cost, and they are only worth doing once the workload is stable enough that a specialised model will not be obsolete before it is deployed. A team that starts here builds a beautifully tuned router for a routing problem that has since changed.
+
+### Build, hire or outsource {#sec-skills-sourcing}
+
+Table. Sourcing guidance by capability class. The pattern is that anything on the critical path of a release decision should be owned internally, and anything that is a one-off transformation can be bought. {#tbl-sourcing}
+
+| Capability class | Recommendation | Reasoning |
+|---|---|---|
+| Evaluation engineering and golden sets | Build and own, always | It encodes what correctness means in your domains, which cannot be outsourced without outsourcing accountability |
+| Judge calibration | Build, with external human labelling capacity | The method is portable; the labels are yours and need domain knowledge |
+| Inference serving operation | Build at Tier M and above; managed service at Tier S | It is on the critical path of every request, and vendor abstractions leak exactly when latency matters |
+| Quantization and distillation | Outsource or consult initially, internalise at Tier L | It is project-shaped work with clear deliverables, and the tooling changes fast |
+| GPU infrastructure and scheduling | Cloud or colocation at Tier S and M; consider owning at Tier L | The crossover follows the same arithmetic as {tbl:frontier-cost} |
+| Red teaming | External, on a schedule, plus internal continuous replay | Independence is the point, and internal teams develop blind spots by construction |
