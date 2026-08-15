@@ -40,6 +40,7 @@ from src.theme import (  # noqa: E402
     NumberedCanvas,
     WhitepaperDoc,
     build_styles,
+    hyphenation_available,
     register_fonts,
 )
 
@@ -169,6 +170,7 @@ def main() -> int:
     size_kb = os.path.getsize(args.dst) / 1024.0
     print(f"built {args.dst}")
     print(f"  fonts     : {fonts.sans_label} / {fonts.mono_label}")
+    print(f"  hyphens   : {'on' if hyphenation_available() else 'OFF, install pyphen'}")
     print(f"  figures   : {renderer.figure_count}")
     print(f"  tables    : {renderer.table_count}")
     print(f"  pages     : {doc.page}")

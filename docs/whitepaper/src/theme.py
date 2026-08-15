@@ -238,7 +238,7 @@ def register_fonts() -> FontReport:
     return report
 
 
-def _hyphenation_available() -> bool:
+def hyphenation_available() -> bool:
     try:
         import pyphen  # noqa: F401
     except Exception:
@@ -257,7 +257,10 @@ def build_styles(fonts: FontReport) -> dict[str, ParagraphStyle]:
     bold = f"{sans}-Bold" if sans != "Helvetica" else "Helvetica-Bold"
     italic = f"{sans}-Italic" if sans != "Helvetica" else "Helvetica-Oblique"
 
-    hyphen = {"hyphenationLang": "en_US"} if _hyphenation_available() else {}
+    # Hyphenating short words buys almost no justification and produces ladders
+    # of hyphens down the right margin, so only long words are broken.
+    hyphen = ({"hyphenationLang": "en_US", "hyphenationMinWordLength": 12}
+              if hyphenation_available() else {})
 
     S: dict[str, ParagraphStyle] = {}
 
