@@ -25,6 +25,11 @@ from .theme import CONTENT_HEIGHT, PALETTE
 
 ROMAN = ["", "I", "II", "III", "IV", "V", "VI", "VII", "VIII", "IX", "X", "XI", "XII"]
 
+# A table taller than this share of the text block may break across pages.
+TALL_TABLE_FRACTION = 0.5
+# Header plus this many body rows must fit beneath a caption before a break.
+MIN_ROWS_WITH_CAPTION = 4
+
 ID_RE = re.compile(r"\s*\{#([\w-]+)\}\s*")
 REF_RE = re.compile(r"\{(fig|tbl|ch|sec):([\w-]+)\}")
 
@@ -169,6 +174,7 @@ class Renderer:
         story: list = []
         first_part_seen = False
         previous_kind = ""
+        pending_caption: str | None = None
 
         for index, block in enumerate(blocks):
             kind = block.kind
@@ -237,14 +243,15 @@ class Renderer:
             if kind == "table-caption":
                 markup = (f"<b>Table {block.attrs['number']}.</b> "
                           + render(self.subst(block.text), self.mono))
-                story.append(Paragraph(markup, self.styles["TableCaption"]))
+                pending_caption = markup
                 continue
 
             if kind == "table":
                 from .tables import build_table
                 rows = [[self.subst(cell) for cell in row] for row in block.rows]
                 table = build_table(rows, block.aligns, self.styles, self.width, self.mono)
-                story.append(table)
+                story.extend(self._table_group(pending_caption, table))
+                pending_caption = None
                 story.append(Spacer(1, 9))
                 continue
 
@@ -370,6 +377,32 @@ class Renderer:
             ("BOTTOMPADDING", (0, 0), (-1, -1), 9),
         ]))
         return outer
+
+    def _table_group(self, caption_markup: str | None, table: Table) -> list:
+        """Keep a caption with its table, but let a tall table break across pages.
+
+        A caption styled keepWithNext binds it to the table as one unbreakable
+        unit, which is right for a small table and wrong for a long one: a table
+        that would fit on a fresh page is moved there whole, stranding whatever
+        precedes it above half a page of white. Past a height threshold the
+        caption is therefore released and the table is allowed to split on its
+        repeated header row, guarded by a conditional break so the caption can
+        never land with fewer than a few rows beneath it.
+        """
+        if caption_markup is None:
+            return [table]
+
+        table_height = table.wrap(self.width, CONTENT_HEIGHT)[1]
+        if table_height <= CONTENT_HEIGHT * TALL_TABLE_FRACTION:
+            return [Paragraph(caption_markup, self.styles["TableCaption"]), table]
+
+        style = self.styles["TableCaption"].clone("TableCaptionSplit")
+        style.keepWithNext = 0
+        caption = Paragraph(caption_markup, style)
+        caption_height = caption.wrap(self.width, CONTENT_HEIGHT)[1]
+        row_heights = getattr(table, "_rowHeights", None) or []
+        keep = caption_height + sum(row_heights[:MIN_ROWS_WITH_CAPTION])
+        return [CondPageBreak(keep), caption, table]
 
     def _figure(self, block: Block) -> list:
         src = block.attrs.get("src")

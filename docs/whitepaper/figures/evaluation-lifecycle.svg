@@ -61,34 +61,34 @@
   <text x="15" y="178" font-family="WPSans" font-size="6.4" fill="#26333F">Domain prompt edit</text>
   <circle cx="199.2" cy="174.6" r="4" fill="#1C5A9E"/>
   <circle cx="261.6" cy="174.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
-  <circle cx="324" cy="174.6" r="4" fill="#1C5A9E"/>
+  <circle cx="324" cy="174.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <line x1="383.4" y1="174.6" x2="389.4" y2="174.6" stroke="#D2DAE2" stroke-width="1"/>
-  <line x1="445.8" y1="174.6" x2="451.8" y2="174.6" stroke="#D2DAE2" stroke-width="1"/>
+  <circle cx="448.8" cy="174.6" r="4" fill="#1C5A9E"/>
   <line x1="8" y1="183" x2="480" y2="183" stroke="#E7ECF1" stroke-width="0.6"/>
   <text x="15" y="195" font-family="WPSans" font-size="6.4" fill="#26333F">New tool added</text>
   <circle cx="199.2" cy="191.6" r="4" fill="#1C5A9E"/>
   <circle cx="261.6" cy="191.6" r="4" fill="#1C5A9E"/>
-  <circle cx="324" cy="191.6" r="4" fill="#1C5A9E"/>
+  <circle cx="324" cy="191.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <circle cx="386.4" cy="191.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
-  <line x1="445.8" y1="191.6" x2="451.8" y2="191.6" stroke="#D2DAE2" stroke-width="1"/>
+  <circle cx="448.8" cy="191.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <line x1="8" y1="200" x2="480" y2="200" stroke="#E7ECF1" stroke-width="0.6"/>
   <text x="15" y="212" font-family="WPSans" font-size="6.4" fill="#26333F">New skill added</text>
   <circle cx="199.2" cy="208.6" r="4" fill="#1C5A9E"/>
   <circle cx="261.6" cy="208.6" r="4" fill="#1C5A9E"/>
   <circle cx="324" cy="208.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <circle cx="386.4" cy="208.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
-  <circle cx="448.8" cy="208.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="448.8" cy="208.6" r="4" fill="#1C5A9E"/>
   <line x1="8" y1="217" x2="480" y2="217" stroke="#E7ECF1" stroke-width="0.6"/>
   <text x="15" y="229" font-family="WPSans" font-size="6.4" fill="#26333F">Model or quantization swap</text>
   <circle cx="199.2" cy="225.6" r="4" fill="#1C5A9E"/>
   <circle cx="261.6" cy="225.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <circle cx="324" cy="225.6" r="4" fill="#1C5A9E"/>
   <circle cx="386.4" cy="225.6" r="4" fill="#1C5A9E"/>
-  <circle cx="448.8" cy="225.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="448.8" cy="225.6" r="4" fill="#1C5A9E"/>
   <line x1="8" y1="234" x2="480" y2="234" stroke="#E7ECF1" stroke-width="0.6"/>
   <text x="15" y="246" font-family="WPSans" font-size="6.4" fill="#26333F">Central routing policy change</text>
   <circle cx="199.2" cy="242.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
-  <circle cx="261.6" cy="242.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="261.6" cy="242.6" r="4" fill="#1C5A9E"/>
   <circle cx="324" cy="242.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <circle cx="386.4" cy="242.6" r="4" fill="#1C5A9E"/>
   <circle cx="448.8" cy="242.6" r="4" fill="#1C5A9E"/>
@@ -97,14 +97,14 @@
   <circle cx="199.2" cy="259.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <line x1="258.6" y1="259.6" x2="264.6" y2="259.6" stroke="#D2DAE2" stroke-width="1"/>
   <circle cx="324" cy="259.6" r="4" fill="#1C5A9E"/>
-  <circle cx="386.4" cy="259.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
-  <line x1="445.8" y1="259.6" x2="451.8" y2="259.6" stroke="#D2DAE2" stroke-width="1"/>
+  <circle cx="386.4" cy="259.6" r="4" fill="#1C5A9E"/>
+  <circle cx="448.8" cy="259.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <line x1="8" y1="268" x2="480" y2="268" stroke="#E7ECF1" stroke-width="0.6"/>
   <text x="15" y="280" font-family="WPSans" font-size="6.4" fill="#26333F">Manifest version bump</text>
-  <circle cx="199.2" cy="276.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
+  <circle cx="199.2" cy="276.6" r="4" fill="#1C5A9E"/>
   <circle cx="261.6" cy="276.6" r="4" fill="#1C5A9E"/>
   <circle cx="324" cy="276.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
-  <line x1="383.4" y1="276.6" x2="389.4" y2="276.6" stroke="#D2DAE2" stroke-width="1"/>
+  <circle cx="386.4" cy="276.6" r="4" fill="#FFFFFF" stroke="#1C5A9E" stroke-width="1.2"/>
   <circle cx="448.8" cy="276.6" r="4" fill="#1C5A9E"/>
   <line x1="8" y1="285" x2="480" y2="285" stroke="#D2DAE2" stroke-width="0.7"/>
   <circle cx="14" cy="299" r="4" fill="#1C5A9E"/>

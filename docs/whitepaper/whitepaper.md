@@ -31,15 +31,15 @@ The second is that **the model never holds authority**. Entitlement, limits, ide
 
 The third is that **model capability is tiered, and the fast path is local**. Roughly two thirds of production turns should be resolvable with no model at all. Most of the remainder need a small quantized model, served inside the estate, answering in tens of milliseconds. Frontier reasoning is reserved for cross-domain decomposition, contested policy interpretation and plan repair, which together should account for a few percent of turns. Chapter 15 works the counterfactual in detail: routing the same journey's control path through a frontier API instead costs roughly 458 ms versus 2,115 ms end to end on identical domain work, a factor of about 4.6, and buys a set of second-order liabilities that latency alone does not reveal, including shared provider quota coupling user traffic to evaluation traffic, and raw utterances leaving the estate on exactly the hop where capability was gained least.
 
+::: figure src=reference-architecture.svg id=fig-arch width=full
+The reference architecture. The synchronous request path is deliberately short and owned end to end by the platform team. Control planes on the left are what make federation governable rather than merely distributed. The model plane on the right is tiered, with the fast path resident in the estate and frontier capacity reserved for escalation. Note what is absent: no path by which one domain calls another, and no point at which a model grants itself authority.
+:::
+
 The document then does the work that architecture papers usually skip. Part II gives each rejected alternative its strongest form and states the specific mechanism by which it fails at scale, along with the observation that would prove the criticism wrong. Chapter 11 is an honest accounting of what this design costs: additional network hops on every journey, a genuinely harder debugging story, a platform team headcount floor that does not amortise below a certain scale, and a new control-plane dependency that becomes a correlated failure mode. Part IV converts a business number into a GPU count through an explicit chain of assumptions, sizes three deployment tiers, and states the accuracy price of each quantization format rather than hiding it. Part V covers assurance, and Part VI is the practical residue: anti-patterns, a phased roadmap, and a question bank for design review.
 
 The intended outcome is not agreement. It is that a technical audience can locate precisely where they disagree, and know what measurement would settle it.
 
 > **Design rule.** Prefer the fewest reasoning hops that still preserve domain autonomy, enforceable authority and independent deployability. Every additional hop must be justified by a capability that cannot be obtained more cheaply, and every model call must be justified by a decision that deterministic code cannot make.
-
-::: figure src=reference-architecture.svg id=fig-arch width=full
-The reference architecture. The synchronous request path is deliberately short and owned end to end by the platform team. Control planes on the left are what make federation governable rather than merely distributed. The model plane on the right is tiered, with the fast path resident in the estate and frontier capacity reserved for escalation. Note what is absent: no path by which one domain calls another, and no point at which a model grants itself authority.
-:::
 
 ## The Problem, Stated Precisely Enough to Argue With {#ch-problem}
 
@@ -1206,7 +1206,7 @@ Table. Tier L sizing summary. **Modelled** from {tbl:load-chain} scaled to the T
 | Quantity | Value |
 |---|---:|
 | Peak concurrent sessions | 50,000 plus |
-| In-flight requests at peak | about 4,300 |
+| In-flight requests at peak | about 4,400 |
 | Control-path model calls per second | about 5,200 |
 | Control-path tokens per second | about 1,040,000 |
 | Regions | 3, each sized for 2 of 3 surviving |
@@ -1429,7 +1429,7 @@ The distinction that decides whether an evaluation programme survives contact wi
 For a gate to be defensible it needs three properties, all of which the reference implementation demonstrates. The change must be detected by the platform rather than declared by the changing team, which it does by comparing runtime snapshots and observing a prompt fingerprint move from `8ab1` to `91fd`. The suites must be selected from the change type by rule rather than by judgement, which is why a prompt edit in a domain participating in cross-domain journeys selects `cross_domain` whether or not the changing team would have thought of it. And the verdict must be bound to the artefact, which the `manifest-published` and `eval-executed` checks enforce by hash.
 
 ::: figure src=evaluation-lifecycle.svg id=fig-evals width=full
-The evaluation lifecycle as a computed gate. The matrix in the middle is the operative artefact: it maps change types to the suites they require, so that suite selection is a lookup rather than a decision made under release pressure. The closing note states why the auditor must not be the team that made the change.
+The evaluation lifecycle as a computed gate. The matrix in the middle is drawn from Table {tbl:eval-matrix}, which is the normative version: it maps change types to the suites they require, so that suite selection is a lookup rather than a decision made under release pressure. The closing note states why the auditor must not be the team that made the change.
 :::
 
 ### The hierarchy {#sec-eval-hierarchy}

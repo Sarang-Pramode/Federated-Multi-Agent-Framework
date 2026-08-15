@@ -49,7 +49,7 @@
   <text x="474" y="206.8" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">50,000 plus</text>
   <line x1="14" y1="210" x2="474" y2="210" stroke="#E7ECF1" stroke-width="0.5"/>
   <text x="14" y="219.3" font-family="WPSans" font-size="6.5" fill="#5D6C7B">In flight requests at peak</text>
-  <text x="474" y="219.3" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">about 4,300</text>
+  <text x="474" y="219.3" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">about 4,400</text>
   <line x1="14" y1="222.5" x2="474" y2="222.5" stroke="#E7ECF1" stroke-width="0.5"/>
   <text x="14" y="231.8" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Control path calls per second</text>
   <text x="474" y="231.8" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">about 5,200</text>

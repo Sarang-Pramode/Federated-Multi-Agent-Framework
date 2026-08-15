@@ -11,13 +11,66 @@ the page. Heights stay below ~600 so a figure plus caption fits one page.
 from __future__ import annotations
 
 import os
+import re
 
 from svgkit import C, FONT, MONO, Canvas, wrap
 
 W = 488.0
-OUT = os.path.join(os.path.dirname(os.path.abspath(__file__)), "figures")
+HERE = os.path.dirname(os.path.abspath(__file__))
+OUT = os.path.join(HERE, "figures")
+SOURCE = os.path.join(HERE, "whitepaper.md")
 
 FIGURES: dict[str, callable] = {}
+
+
+def table_from_source(table_id: str) -> tuple[list[str], list[tuple[str, list[str]]]]:
+    """Read a pipe table out of the white paper by its caption id.
+
+    A figure that restates a table must not be able to disagree with it, so the
+    figure reads the table rather than keeping a second copy of the numbers.
+    """
+    with open(SOURCE, encoding="utf-8") as handle:
+        lines = handle.read().splitlines()
+
+    start = next((i for i, line in enumerate(lines)
+                  if line.startswith("Table.") and f"{{#{table_id}}}" in line), None)
+    if start is None:
+        raise SystemExit(f"table {table_id} not found in {SOURCE}")
+
+    grid = []
+    for line in lines[start + 1:]:
+        if line.startswith("|"):
+            grid.append([cell.strip() for cell in line.strip().strip("|").split("|")])
+        elif grid:
+            break
+
+    header = grid[0][1:]
+    body = [(row[0], row[1:]) for row in grid[2:]]
+    return header, body
+
+
+def _key(label: str) -> str:
+    words = re.sub(r"[^a-z0-9 ]", " ", label.lower()).split()
+    return " ".join(w for w in words if w != "model")
+
+
+def sizing_rows(table_id: str, labels: list[str]) -> list[tuple[str, str]]:
+    """Pair short figure labels with the values held in a two-column table.
+
+    The figure abbreviates the labels to fit the column, so the rows are matched
+    on a normalised key rather than on the printed text, and a label that no
+    longer resolves is a build error rather than a silently stale number.
+    """
+    _, body = table_from_source(table_id)
+    values = {_key(quantity): cells[0] for quantity, cells in body}
+    rows = []
+    for entry in labels:
+        label, suffix = entry if isinstance(entry, tuple) else (entry, "")
+        value = values.get(_key(label))
+        if value is None:
+            raise SystemExit(f"{table_id} has no row matching {label!r}")
+        rows.append((label, f"{value} - {suffix}" if suffix else value))
+    return rows
 
 
 def figure(name):
@@ -958,14 +1011,14 @@ def topology_tier_s() -> Canvas:
             "Do not buy HBM-class hardware at this tier. You are buying the ability to measure your own workload, not throughput you cannot yet use.",
             "The expensive mistake at Tier S is skipping telemetry. Without per-stage traces you will size Tier M from guesses.",
         ],
-        [
-            ("Peak concurrent sessions", "under 40"),
-            ("In flight requests at peak", "3 to 6"),
-            ("Control path calls per second", "4 to 8"),
-            ("Control path tokens per second", "800 to 1,600"),
-            ("GPU count, steady state", "1"),
-            ("Utilisation target", "20 to 35% - headroom is the point"),
-        ],
+        sizing_rows("tbl-tier-s", [
+            "Peak concurrent sessions",
+            "In flight requests at peak",
+            "Control path calls per second",
+            "Control path tokens per second",
+            "GPU count, steady state",
+            ("Utilisation target", "headroom is the point"),
+        ]),
     )
 
 
@@ -1009,15 +1062,15 @@ def topology_tier_m() -> Canvas:
             "Size the fast tier on p99 under burst, not on mean throughput. A router at 85% utilisation has queue wait that dominates its own 20 ms service time.",
             "Reserve frontier capacity once escalation volume is predictable; pay-as-you-go quota becomes the binding constraint before your GPUs do.",
         ],
-        [
-            ("Peak concurrent sessions", "3,000"),
-            ("In flight requests at peak", "about 260"),
-            ("Control path calls per second", "about 310"),
-            ("Control path tokens per second", "about 62,000"),
-            ("Guard rail calls per second", "about 340"),
-            ("GPU count, steady state", "11 plus 2 spare"),
-            ("Utilisation target, fast tier", "45 to 60%"),
-        ],
+        sizing_rows("tbl-tier-m-sizing", [
+            "Peak concurrent sessions",
+            "In flight requests at peak",
+            "Control path calls per second",
+            "Control path tokens per second",
+            "Guardrail calls per second",
+            "GPU count, steady state",
+            "Utilisation target, fast tier",
+        ]),
     )
 
 
@@ -1062,15 +1115,15 @@ def topology_tier_l() -> Canvas:
             "Capacity is bought in cells. Growth adds cells with known behaviour rather than enlarging one pool whose tail latency degrades non-linearly.",
             "Judge and shadow traffic must have a hard budget. At 50,000 concurrent sessions, 10% sampling is a larger workload than most Tier M deployments serve in total.",
         ],
-        [
-            ("Peak concurrent sessions", "50,000 plus"),
-            ("In flight requests at peak", "about 4,300"),
-            ("Control path calls per second", "about 5,200"),
-            ("Control path tokens per second", "about 1,040,000"),
-            ("Regions", "3, each sized for 2 of 3 surviving"),
-            ("GPU count per region", "about 30 plus spares"),
-            ("Utilisation target, decode", "60 to 75% with admission control"),
-        ],
+        sizing_rows("tbl-tier-l-sizing", [
+            "Peak concurrent sessions",
+            "In flight requests at peak",
+            "Control path calls per second",
+            "Control path tokens per second",
+            "Regions",
+            "GPU count per region",
+            "Utilisation target, decode",
+        ]),
     )
 
 
@@ -1413,7 +1466,9 @@ def evaluation_lifecycle() -> Canvas:
     c.text(8, y, "Which suites a change type triggers", size=7.2, fill=C["ink"],
            weight="bold")
     y += 10
-    cols = ["Domain golden", "Contract", "Safety rails", "Latency budget", "Cross domain"]
+    header, body = table_from_source("tbl-eval-matrix")
+    glyphs = {"required": 2, "review": 1, "not triggered": 0}
+    cols = [col.replace("Cross-domain", "Cross domain") for col in header]
     col_x = 168.0
     col_w = (W - 16 - (col_x - 8)) / len(cols)
     c.rect(8, y, W - 16, 18, fill=C["wash2"], rx=2)
@@ -1422,15 +1477,7 @@ def evaluation_lifecycle() -> Canvas:
         c.text(col_x + index * col_w + col_w / 2, y + 12, col, size=6.1, fill=C["faint"],
                anchor="middle", weight="bold")
     y += 18
-    rows = [
-        ("Domain prompt edit", [2, 1, 2, 0, 0]),
-        ("New tool added", [2, 2, 2, 1, 0]),
-        ("New skill added", [2, 2, 1, 1, 1]),
-        ("Model or quantization swap", [2, 1, 2, 2, 1]),
-        ("Central routing policy change", [1, 1, 1, 2, 2]),
-        ("Guardrail threshold change", [1, 0, 2, 1, 0]),
-        ("Manifest version bump", [1, 2, 1, 0, 2]),
-    ]
+    rows = [(label, [glyphs[cell.lower()] for cell in cells]) for label, cells in body]
     for label, marks in rows:
         c.line(8, y, W - 8, y, stroke=C["rule_soft"], sw=0.6)
         c.text(15, y + 12, label, size=6.4, fill=C["body"])

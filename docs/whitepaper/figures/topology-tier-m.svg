@@ -55,7 +55,7 @@
   <text x="14" y="263.5" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Control path tokens per second</text>
   <text x="474" y="263.5" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">about 62,000</text>
   <line x1="14" y1="266.7" x2="474" y2="266.7" stroke="#E7ECF1" stroke-width="0.5"/>
-  <text x="14" y="276" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Guard rail calls per second</text>
+  <text x="14" y="276" font-family="WPSans" font-size="6.5" fill="#5D6C7B">Guardrail calls per second</text>
   <text x="474" y="276" font-family="WPSans" font-size="6.5" fill="#16202B" text-anchor="end" font-weight="bold">about 340</text>
   <line x1="14" y1="279.2" x2="474" y2="279.2" stroke="#E7ECF1" stroke-width="0.5"/>
   <text x="14" y="288.5" font-family="WPSans" font-size="6.5" fill="#5D6C7B">GPU count, steady state</text>
