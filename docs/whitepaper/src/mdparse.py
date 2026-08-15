@@ -9,7 +9,8 @@ the renderer predictable:
 * GitHub pipe tables with alignment row
 * ``>`` blockquotes, rendered as callout panels
 * fenced code blocks
-* ``::: figure src=... width=...`` / ``::: pagebreak`` / ``::: refs`` directives
+* ``::: figure id=... width=...`` / ``::: pagebreak`` / ``::: refs`` directives,
+  where a figure block holds a Markdown image line and its caption
 * YAML-ish front matter delimited by ``---``
 
 A paragraph whose text begins with ``Table.`` is treated as the caption of the
@@ -27,6 +28,7 @@ BULLET_RE = re.compile(r"^(\s*)[-*]\s+(.*)$")
 ORDERED_RE = re.compile(r"^(\s*)(\d+)[.)]\s+(.*)$")
 DIRECTIVE_RE = re.compile(r"^:::\s*(\w[\w-]*)\s*(.*)$")
 FENCE_RE = re.compile(r"^(```|~~~)\s*(\w*)\s*$")
+IMAGE_RE = re.compile(r"^!\[[^\]]*\]\(([^)\s]+)\)$")
 RULE_RE = re.compile(r"^(?:-{3,}|\*{3,}|_{3,})$")
 
 
@@ -154,8 +156,17 @@ def parse(text: str) -> tuple[dict, list[Block]]:
                 i += 1
             i += 1
             if name == "figure":
-                caption = " ".join(s.strip() for s in body if s.strip()).strip()
-                blocks.append(Block(kind="figure", text=caption, attrs=attrs))
+                # The image is written in standard Markdown so that GitHub shows
+                # the diagram; the caption is whatever else is in the block.
+                caption_lines = []
+                for entry in (s.strip() for s in body if s.strip()):
+                    image = IMAGE_RE.match(entry)
+                    if image:
+                        attrs["src"] = image.group(1).rsplit("/", 1)[-1]
+                    else:
+                        caption_lines.append(entry)
+                blocks.append(Block(kind="figure", text=" ".join(caption_lines).strip(),
+                                    attrs=attrs))
             elif name == "refs":
                 entries = [s.strip() for s in body if s.strip()]
                 blocks.append(Block(kind="refs", items=entries))

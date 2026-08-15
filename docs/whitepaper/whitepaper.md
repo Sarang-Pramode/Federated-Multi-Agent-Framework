@@ -31,7 +31,8 @@ The second is that **the model never holds authority**. Entitlement, limits, ide
 
 The third is that **model capability is tiered, and the fast path is local**. Roughly two thirds of production turns should be resolvable with no model at all. Most of the remainder need a small quantized model, served inside the estate, answering in tens of milliseconds. Frontier reasoning is reserved for cross-domain decomposition, contested policy interpretation and plan repair, which together should account for a few percent of turns. Chapter 15 works the counterfactual in detail: routing the same journey's control path through a frontier API instead costs roughly 458 ms versus 2,115 ms end to end on identical domain work, a factor of about 4.6, and buys a set of second-order liabilities that latency alone does not reveal, including shared provider quota coupling user traffic to evaluation traffic, and raw utterances leaving the estate on exactly the hop where capability was gained least.
 
-::: figure src=reference-architecture.svg id=fig-arch width=full
+::: figure id=fig-arch width=full
+![Reference architecture](figures/reference-architecture.svg)
 The reference architecture. The synchronous request path is deliberately short and owned end to end by the platform team. Control planes on the left are what make federation governable rather than merely distributed. The model plane on the right is tiered, with the fast path resident in the estate and frontier capacity reserved for escalation. Note what is absent: no path by which one domain calls another, and no point at which a model grants itself authority.
 :::
 
@@ -71,7 +72,8 @@ Every design decision in this document can be traced to a tension between three 
 
 **Autonomy is what makes the platform adoptable.** If joining the platform costs a domain team its release independence, the platform's growth is capped by the platform team's capacity, which is precisely the bottleneck federation exists to remove.
 
-::: figure src=pattern-comparison.svg id=fig-patterns width=full
+::: figure id=fig-patterns width=full
+![Three architecture patterns compared](figures/pattern-comparison.svg)
 The three candidate shapes, with the mechanism of failure named in each panel rather than left implicit. Panel C is a superset of the others: a bounded domain may legitimately be implemented as panel A behind its agent card, and two consenting peers may exchange messages directly if their contract says so. What panel C adds is an owner of the end-to-end deadline, a single trace root, and an artefact stating what the system is permitted to do.
 :::
 
@@ -121,7 +123,8 @@ Being precise about what a prototype proves is a matter of professional hygiene,
 
 The value of the demonstration is not that it works. It is that each step converts an architectural assertion into something an observer could catch being false.
 
-::: figure src=demo-steps.svg id=fig-demo width=full
+::: figure id=fig-demo width=full
+![The twelve demonstration steps](figures/demo-steps.svg)
 The twelve steps, the concrete artefact each one produces, and the claim it makes testable. The most important row is step 7: a semantic regression that is caught not by a general-purpose safety filter but by a domain evaluation case selected automatically from the shape of the change.
 :::
 
@@ -219,7 +222,8 @@ The system prompt is a shared mutable global variable. That framing is not rheto
 
 When the rewards team needs to correct its multiplier language, it edits a region of a file that also governs how transactions are looked up, how out-of-scope requests are refused, and how the agent decides between two similar capabilities. There is no mechanism that confines the effect of the edit to rewards, because the model attends over the whole prompt. The rewards team therefore cannot know, from the diff alone, what else it might have changed. Neither can anyone else. The only sound response is to re-verify everything, which is exactly what the reference implementation's federated design avoids: in the federated case a prompt change inside Rewards moved one bundle hash from `m-rew-11` to `m-rew-12` and triggered four named suites, and the auditor independently confirmed that nothing outside that bundle became reachable.
 
-::: figure src=change-surface.svg id=fig-change width=full
+::: figure id=fig-change width=full
+![Change surface and blast radius](figures/change-surface.svg)
 The same change under three architectures. The difference is not that federated teams are more careful; it is that a manifest plus an independent reachability check turns "what changed" into a computable set. Without that artefact, the honest engineering answer to "what must we re-test" is "everything", and the practical answer becomes "whatever we have time for", which is not the same thing.
 :::
 
@@ -352,7 +356,8 @@ A critical vulnerability in a transitive dependency requires the whole artefact 
 
 One process means one resource envelope. A retrieval-heavy domain that wants large memory forces that memory allocation on every replica, including the replicas serving requests that never touch it. More seriously, the failure modes are shared: a thread pool exhausted by one domain's slow dependency starves every domain in the same process, a memory leak in one module degrades all of them, and a garbage collection pause caused by one domain's allocation pattern is experienced by every request in flight. There is no per-domain circuit breaker to open, because there is no boundary at which to open one.
 
-::: figure src=failure-isolation.svg id=fig-isolation width=full
+::: figure id=fig-isolation width=full
+![Failure isolation](figures/failure-isolation.svg)
 The same fault under two architectures, and the mechanisms that make the difference. Note that fault containment is not a property of drawing boxes with gaps between them. It is the presence of six specific mechanisms: per-dependency budgets, per-domain breakers, bulkheaded pools, named partial results, idempotent writes, and a pre-agreed degraded mode.
 :::
 
@@ -514,7 +519,8 @@ Notice what these have in common. Each is a decision about the shape of the inte
 
 A budget that is not divided is not a budget. The following division is the one this document defends, and it is stated as a target rather than a measurement so that a reader can dispute individual lines.
 
-::: figure src=central-pipeline.svg id=fig-pipeline width=full
+::: figure id=fig-pipeline width=full
+![The central agent pipeline with its latency budget](figures/central-pipeline.svg)
 The central agent decomposed into stages, with the p50 budget each stage is allowed and the model tier it uses. Two features of the diagram carry most of the argument: the critical path contains at most two model calls before domain execution, and everything in the lower band is assurance work that is measured continuously and never allowed to block a user.
 :::
 
@@ -596,7 +602,8 @@ Tier 0 deserves a defence because it is the tier most often skipped. A determini
 
 > **Design rule.** Escalation is a decision with a cost, not a default. A turn moves up a tier only when the tier below can name why it could not decide, and that reason is recorded on the trace. "The model was available" is not a reason.
 
-::: figure src=model-tiers.svg id=fig-tiers width=full
+::: figure id=fig-tiers width=full
+![The model tiering ladder and escalation policy](figures/model-tiers.svg)
 The four tiers, with the work each is appropriate for, its per-call latency and the share of production turns it should absorb. The lower panel is the part that is usually missing from tiering discussions: an escalation policy that says when not to escalate is what keeps the ladder from collapsing into "always use the biggest model".
 :::
 
@@ -675,7 +682,8 @@ Table. Stage-by-stage comparison of the same read-path journey with an on-prem q
 
 The end-to-end regression is a factor of 4.6, and the control-path regression is a factor of 7.0. The second figure is the honest one, because it isolates the part of the system the choice actually affects. A reader who believes the API figures are pessimistic should note that even at a uniform 120 ms per frontier call, four control-path calls plus rails still put the journey above 1.1 s, which is outside a conversational budget before any domain has been slow.
 
-::: figure src=latency-waterfall.svg id=fig-waterfall width=full
+::: figure id=fig-waterfall width=full
+![Latency waterfall, on-prem control path against a frontier API](figures/latency-waterfall.svg)
 The same journey with the control path on-prem and on a frontier API. Identical domain work of 180 ms appears in both bars, so the entire difference is architectural. The lower panels are the part of the comparison that latency alone does not show, and the closing note states the converse discipline: this is an argument about placement, not about model quality.
 :::
 
@@ -751,7 +759,8 @@ Three distinctions are worth fixing before the taxonomy, because conflating them
 
 Rails belong at trust boundaries, and there are exactly four in this architecture. Placing them anywhere else produces controls that are either redundant or unenforceable.
 
-::: figure src=guardrail-placement.svg id=fig-rails width=full
+::: figure id=fig-rails width=full
+![Guardrail placement map](figures/guardrail-placement.svg)
 Where rails attach, and what each set is responsible for. The middle band is the one most often missing: retrieved documents and tool output cross a trust boundary and must be treated as hostile input, not as trusted context. The lower band is asynchronous assurance, which is deliberately never allowed to block a user, and the table states the fail-open or fail-closed posture per control.
 :::
 
@@ -847,7 +856,8 @@ What makes this worse than a simple latency problem is the behaviour it induces.
 
 The alternative is a cascade in which every turn pays for the cheapest checks, and only the turns that look ambiguous pay for the expensive ones. This is the same escalation logic as Chapter 14 applied to safety rather than capability, and it works for the same reason: the distribution of difficulty is skewed.
 
-::: figure src=guardrail-cascade.svg id=fig-cascade width=full
+::: figure id=fig-cascade width=full
+![The guardrail cascade with latency and coverage](figures/guardrail-cascade.svg)
 The cascade, with the share of turns reaching each stage, the latency each stage contributes and the hardware it needs. The arithmetic panel is the argument: the same coverage that would cost 65 ms on every turn costs about 22 ms on average, because the deepest check only runs on the 12 percent of turns that reached it. The lower band is the part that keeps the cascade honest, which is that the rails themselves are evaluated.
 :::
 
@@ -912,7 +922,8 @@ Sizing conversations begin with the wrong number. Someone has a registered user 
 
 The purpose of this chapter is not to produce a GPU count for a hypothetical organisation. It is to make the chain of conversion explicit, so that when the answer turns out to be wrong, the specific assumption that was wrong can be identified and corrected. A capacity model that produces a number without exposing its assumptions cannot be debugged, and every capacity model is eventually wrong.
 
-::: figure src=load-funnel.svg id=fig-funnel width=full
+::: figure id=fig-funnel width=full
+![The load conversion funnel](figures/load-funnel.svg)
 The conversion chain worked for the mid tier. Each row is an assumption, and the arrow between rows is where a local measurement must replace the value used here. The lower panels list the multipliers that are routinely underestimated: fan-out per turn and the amplification from retries, rails and assurance traffic, which together often exceed the base load they multiply.
 :::
 
@@ -1019,7 +1030,8 @@ The corollary is a diagnosis worth knowing. If a serving pool is rejecting or qu
 
 GPU selection goes wrong in a predictable way: a team picks the most capable card the budget allows, then discovers that the constraint that actually binds their workload was something the card does not address. The discipline is to name the binding constraint first, in the language of Chapter 19, and select from it.
 
-::: figure src=gpu-decision.svg id=fig-gpu width=full
+::: figure id=fig-gpu width=full
+![GPU selection decision tree](figures/gpu-decision.svg)
 The decision tree, ordered so that the cheapest sufficient answer is reached first. The lower panel lists the three sizing errors that cost real money, all of which are versions of the same mistake: selecting hardware from a specification that is not the binding constraint for the work in question.
 :::
 
@@ -1062,7 +1074,8 @@ If the model does not fit on one card, the next decision is not automatically a 
 
 Quantization reduces the numerical precision of weights, and sometimes activations and the KV cache, to move fewer bytes and use faster hardware paths. The benefit is throughput and capacity. The cost is accuracy, and the professional obligation is to state the cost rather than let it be discovered later by users.
 
-::: figure src=quantization-tradeoff.svg id=fig-quant width=full
+::: figure id=fig-quant width=full
+![The quantization tradeoff: accuracy against throughput](figures/quantization-tradeoff.svg)
 Published Qwen3-8B figures on a single H100 with vLLM. The upper panel is accuracy on MMLU, with the axis starting at 72.8 so that the INT4 gap is visible rather than flattened. The lower panel is saturated aggregate throughput, where FP8 wins because Hopper has native FP8 tensor cores. The two panels rank the formats differently, which is the entire point of the chapter.
 :::
 
@@ -1132,7 +1145,8 @@ Table. Tier S sizing, derived from the chain in {tbl:load-chain} at under 40 pea
 | GPU count, steady state | 1 |
 | Utilisation target | 20 to 35% |
 
-::: figure src=topology-tier-s.svg id=fig-tier-s width=full
+::: figure id=fig-tier-s width=full
+![Tier S deployment topology](figures/topology-tier-s.svg)
 The single-node pilot topology. One GPU holds the router, the guard classifier and a small synthesis model with isolated caches; frontier work and judges are rented rather than hosted. The notes are the operational commitments that make this tier honest: a written degraded mode, no premature hardware, and telemetry from the first day.
 :::
 
@@ -1146,7 +1160,8 @@ The single-node pilot topology. One GPU holds the router, the guard classifier a
 
 ### Tier M: 1,000 to 5,000 concurrent {#sec-tier-m}
 
-::: figure src=topology-tier-m.svg id=fig-tier-m width=full
+::: figure id=fig-tier-m width=full
+![Tier M deployment topology](figures/topology-tier-m.svg)
 The regional production topology, with pools separated by function rather than merged for utilisation. The upper band is latency-critical and scaled for p99; the lower band is throughput work that must never be able to consume the fast path's capacity. The notes state the three failure modes this separation exists to prevent.
 :::
 
@@ -1179,7 +1194,8 @@ Three notes carry the reasoning. Separate pools exist to stop assurance and rail
 
 ### Tier L: more than 50,000 concurrent {#sec-tier-l}
 
-::: figure src=topology-tier-l.svg id=fig-tier-l width=full
+::: figure id=fig-tier-l width=full
+![Tier L deployment topology](figures/topology-tier-l.svg)
 The cell-based multi-region topology. The unit of capacity is a region cell that is replicated rather than a pool that is enlarged, prefill and decode are disaggregated so that long prompts cannot stall the decode queue, and each region is sized so that two of three can absorb the whole load. The notes name the availability risk at this scale, which is the control plane rather than the GPUs.
 :::
 
@@ -1349,7 +1365,8 @@ Alerting on GPU utilisation is a common mistake, because a healthy pool at its t
 
 Architecture documents describe systems and omit the people, which is how organisations end up with a design they cannot staff. The capabilities below are the ones this architecture actually requires, stated so that a hiring plan or an outsourcing decision can be made from them. Intensity in the tables means depth of skill needed, not headcount: **aware** is being able to follow a runbook, **capable** is being able to operate and tune, and **deep** is being able to diagnose novel failures and extend the system.
 
-::: figure src=skills-matrix.svg id=fig-skills width=full
+::: figure id=fig-skills width=full
+![The AI engineering skills matrix](figures/skills-matrix.svg)
 The capability matrix by sizing tier, with the intensity required at each and where the capability usually sits organisationally. The lower panels are the two things worth taking from this chapter: the staffing anti-pattern that produces a single point of failure in a person, and a build order that front-loads evaluation because every later decision depends on being able to measure it.
 :::
 
@@ -1428,7 +1445,8 @@ The distinction that decides whether an evaluation programme survives contact wi
 
 For a gate to be defensible it needs three properties, all of which the reference implementation demonstrates. The change must be detected by the platform rather than declared by the changing team, which it does by comparing runtime snapshots and observing a prompt fingerprint move from `8ab1` to `91fd`. The suites must be selected from the change type by rule rather than by judgement, which is why a prompt edit in a domain participating in cross-domain journeys selects `cross_domain` whether or not the changing team would have thought of it. And the verdict must be bound to the artefact, which the `manifest-published` and `eval-executed` checks enforce by hash.
 
-::: figure src=evaluation-lifecycle.svg id=fig-evals width=full
+::: figure id=fig-evals width=full
+![The evaluation lifecycle as a computed gate](figures/evaluation-lifecycle.svg)
 The evaluation lifecycle as a computed gate. The matrix in the middle is drawn from Table {tbl:eval-matrix}, which is the normative version: it maps change types to the suites they require, so that suite selection is a lookup rather than a decision made under release pressure. The closing note states why the auditor must not be the team that made the change.
 :::
 

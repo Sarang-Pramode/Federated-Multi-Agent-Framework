@@ -44,6 +44,15 @@ and `make_figures.py` holds one function per figure. Diagram type is set to the
 `WPSans` alias, which `build.py` maps onto the same embedded family as the body
 text. Do not hand-edit files in `figures/`; change the generator and re-run it.
 
+A figure that restates a table reads that table out of `whitepaper.md` at
+generation time through `table_from_source` and `sizing_rows`, so the picture
+and the prose cannot disagree. A label that stops matching a table row fails the
+figure build rather than printing a stale number.
+
+Each figure is written into the document with a Markdown image line inside a
+`::: figure` block, which is what lets GitHub render the diagram when reading
+`whitepaper.md` directly while the PDF build takes the same path from `src`.
+
 ## Markdown subset
 
 The parser in `src/mdparse.py` supports only what the document uses.
@@ -61,7 +70,7 @@ The parser in `src/mdparse.py` supports only what the document uses.
 | Pipe table with `---` row | Table with repeating header and auto column widths |
 | `Table. Caption text. {#tbl-id}` | Auto-numbered caption for the table below it |
 | ` ```lang ` fence | Monospaced panel |
-| `::: figure src=x.svg width=wide id=fig-x` | Auto-numbered figure with caption |
+| `::: figure id=fig-x width=full` | Auto-numbered figure; the block holds a Markdown image line and the caption |
 | `::: refs` | Reference list with hanging indent |
 | `::: pagebreak` | Forced page break |
 
